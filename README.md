@@ -95,4 +95,4 @@ Technology in harmony with the laws of nature, not against them.
 
 © 2025 Marcel C. Mulder / Plasma Dynamica — All Rights Reserved under HHL-π
 
----fe51ad036a5f138a02b599e468d3c39495dcc62c9bb22465e2fb89270e087c54
+---
