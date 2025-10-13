@@ -65,7 +65,7 @@ This technology is dedicated to the **common heritage of humankind**.
 - Institutional users must sign a dedicated HHL-π agreement.  
 - Derivative works must maintain cryptographic provenance headers.
 
-Full license text: ([https://github.com/PlasmaDynamica/hexOSAI_v1_DefensivePublication](https://github.com/EllenBosMarcelMulder/.-hexLICences-./blob/main/Humanity%20Heritage%20License%20(HHL-π).txt))license/Humanity_Heritage_License_HHLπ_v3.txt)
+Full license text: ([https://github.com/PlasmaDynamica/hexOSAI_v1_DefensivePublication](https://github.com/EllenBosMarcelMulder/.-hexLICences-./blob/main/Humanity%20Heritage%20License%20(HHL-π).txt) (license/Humanity_Heritage_License_HHLπ_v3.txt)
 
 ---
 
