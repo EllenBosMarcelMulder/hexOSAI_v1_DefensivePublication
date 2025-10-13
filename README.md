@@ -50,7 +50,6 @@ Copy code
 
 | Archive | SHA-256 Hash |
 |----------|--------------|
-| `hexOSAI_v1_core.zip` | `7A3F6C44B89B2B90F7DB77C72E91CC8E3A4AEF9CD32F...` |
 | `self-stabilizing_AI_system.zip` | `FFEC98CF16D112DD7E702535E2451CF1AD72C84B049A5A3F71CC959F6791C008` |
 
 All archives are privately timestamped and retained by the inventor for evidentiary purposes.
