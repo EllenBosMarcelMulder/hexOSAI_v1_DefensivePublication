@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.::hexOSAI v1::. - Self-Stabilizing Resonance Field AI Module</title>
+  <meta name="description" content="Defensive publication for the .::hexOSAI v1::. module, a self-stabilizing resonance field architecture for artificial intelligence systems.">
+  <meta name="author" content="Marcel C. Mulder">
+  <!-- hexBIN protocol metadata for provenance and authenticity verification -->
+  <meta name="hexBIN-protocol" content="DFPS-2025-HHLπ-HEXBIN-L0">
+  <meta name="PAK-root" content="SHA256(H₀+Hₙ+meta)">
+  <style>
+    :root {
+      --primary-bg: #0a0a12;
+      --secondary-bg: #111122;
+      --text-color: #ccddee;
+      --highlight-color: #66aaff;
+      --accent-color: #ff9966;
+      --grid-color: rgba(100, 150, 255, 0.1);
+      --code-bg: rgba(40, 40, 80, 0.5);
+      --license-bg: rgba(2, 2, 3, 0.7);
+      --warning-color: #ff6633;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      background: var(--primary-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      border-bottom: 1px solid rgba(100, 150, 255, 0.2);
+      padding-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: var(--highlight-color);
+      margin-bottom: 0.5rem;
+      font-weight: 100;
+      letter-spacing: 0.1em;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      color: var(--accent-color);
+      margin-top: 2rem;
+      border-bottom: 1px solid rgba(255, 153, 102, 0.3);
+      padding-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.4rem;
+      color: var(--highlight-color);
+      margin-top: 1.5rem;
+    }
+
+    pre, code {
+      background: var(--code-bg);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      font-family: 'Courier New', monospace;
+      overflow-x: auto;
+    }
+
+    pre {
+      padding: 1rem;
+      margin: 1rem 0;
+      white-space: pre-wrap; 
+    }
+
+    .warning {
+      background: rgba(255, 102, 51, 0.1);
+      border-left: 3px solid var(--warning-color);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 5px;
+    }
+
+    .license {
+      background: var(--license-bg);
+      padding: 1rem;
+      margin-top: 2rem;
+      border-radius: 5px;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(100, 150, 255, 0.2);
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(204, 221, 238, 0.7);
+    }
+
+    .grid-background {
+      position: fixed;
+      top: 0;
+      left: 0; 
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+  </style>
+
+</head>
+<body>
+  <h1>.::hexOSAI v1::.</h1>
+  <p>Self-Stabilizing Resonance Field AI Module</p>
+
+  <div class="warning">
+    <h3>PRIOR ART AND INTELLECTUAL PROPERTY NOTICE</h3>
+    <p>This document establishes prior art for the .::hexOSAI v1::. technology. All concepts, methodologies, algorithms, and implementations described herein are protected under international copyright law.</p>
+    <p>Any attempt to patent, commercially exploit, or militarize this technology without explicit authorization from the inventor constitutes a violation of these terms and will be subject to legal action.</p>
+  </div>
+
+  <h2>Abstract</h2>
+  <p>hexOSAI v1 is a modular AI architecture composed of coupled resonance field units that achieve dynamic stability through adaptive synchronization, noise injection, and integrity-based recovery. The system maintains coherence and robust performance in the presence of perturbations by combining real-time analysis of field properties like coherence, stability, and entropy with a novel noise-sensitive recovery protocol.</p>
+
+  <h2>Key Innovations</h2>
+  <ul>
+    <li>Multi-field resonant synchronization with adaptive noise</li>
+    <li>Realtime computation of field coherence, stability, entropy</li> 
+    <li>Noise-driven, sigmoidally-weighted integrity measure</li>
+    <li>Adaptive recovery protocol triggered by integrity loss</li>
+  </ul>
+
+  <h2>Potential Applications</h2>
+  <ul>
+    <li>Robust AI for autonomous systems in noisy environments</li>
+    <li>Neuromorphic computing and brain-inspired AI</li>
+    <li>Swarm intelligence and multi-agent coordination</li>
+    <li>Quantum error correction and stabilization</li>
+  </ul>
+
+  <h2>Core Components</h2>
+  <pre><code>
+// core/resonance-recovery-protocol.js
+export class ResonanceRecoveryProtocol {
+  constructor(threshold = 0.8) {
+    this.threshold = threshold;
+    this.recoveryCount = 0;
+    this.lastAmplitude = 0.01;
+  }
+
+  recover(kappa, integrity, noise = 0) {
+    if (!Array.isArray(kappa) || kappa.length === 0) return kappa;
+
+    if (integrity < this.threshold) {
+      this.recoveryCount++; 
+      const amp = this.computeAmplitude(integrity, noise);
+      const recovered = this.addNoise(this.normalize(kappa), amp);
+      
+      // Gentle feedback towards mean
+      const mean = recovered.reduce((a,b) => a + b, 0) / recovered.length;
+      const balanced = recovered.map(v => v * 0.7 + mean * 0.3);
+      
+      return balanced;
+    }
+
+    return kappa; // No recovery needed  
+  }
+}
+  </code></pre>
+
+  <pre><code>  
+// core/global-field-supervisor.js  
+export class GlobalFieldSupervisor {
+  constructor(multiField) {
+    this.multiField = multiField;
+  }
+  
+  analyze() {
+    const kappa = this.multiField.kappa || [];
+    
+    const coherence = this.computeCoherence(kappa);
+    const entropy = this.computeEntropy(kappa); 
+    const stability = this.computeStability(kappa, coherence, entropy);
+    const noise = this.computeNoiseLevel(kappa);
+    const integrity = this.computeIntegrity(coherence, stability, entropy, noise);
+    
+    return { kappa, coherence, entropy, stability, noise, integrity };
+  }
+  
+  computeIntegrity(coherence, stability, entropy, noise) {
+    const raw = (coherence + stability + (1 - entropy)) / 3;
+    const sigmoid = 1 / (1 + Math.exp(-8 * (raw - 0.5))); 
+    const noiseFactor = 1 - 0.3 * noise;
+    return Math.max(0, Math.min(1, sigmoid * noiseFactor));
+  }
+}
+  </code></pre>
+
+  <h2>Cryptographic Verification</h2>
+  <p>
+    SHA-256 (hexOSAI_v1_core.zip) = 
+    7a3f6c44b89b2b90f7db77c72e91cc8e3a4aef9cd32f…
+  </p>
+  <p>Timestamped archive retained by the inventor.</p>
+
+  <h2>Experimental Results</h2>
+  <p>The following JSON data demonstrates a representative parameter sweep over the hexOSAI system, showing dynamic variations in field coherence, stability, entropy and integrity in response to different omega, delta, variation and threshold settings:</p>
+
+  <pre><code>  
+[
+  {
+    "omega": 0.3,
+    "delta": 0.01,
+    "variation": 0,
+    "integrityThreshold": 0.5,
+    "coherence": 0.957365719341206,
+    "stability": 0.02446522884474933, 
+    "entropy": 0.9329004904964566,
+    "integrity": 0.22200015406904713
+  },
+  {
+    "omega": 0.3,
+    "delta": 0.01,
+    "variation": 0.02,
+    "integrityThreshold": 0.65,
+    "coherence": 0.9573634112126526,
+    "stability": 0.02605787667862003,
+    "entropy": 0.9313055345340325,
+    "integrity": 0.22263017626441167
+  },
+  ... 
+]
+  </code></pre>
+
+  <p>This empirical data evidences the key adaptive properties of the hexOSAI architecture in executable form, satisfying the legal standard of enablement. The full dataset is available on request.</p>
+
+  <h2>Test Results Verification</h2>
+  <pre><code>
+SHA-256 (self-stabilizing AI system.zip) =    
+FFEC98CF16D112DD7E702535E2451CF1AD72C84B049A5A3F71CC959F6791C008
+  </code></pre>
+  <p>Stored privately by the inventor as experimental evidence (13 Oct 2025).</p>
+
+
+
+  <div class="license">
+    <h2>Humanity Heritage License (HHL-π)</h2>
+    <p>This work is hereby dedicated to the common heritage of humankind. The licensor's intent is to enable broad humanitarian uses while explicitly forbidding military exploitation.</p>
+    <p>Institutional use requires a separate HHL-π agreement to be negotiated with the inventor. Individual use for humanitarian purposes is granted free of charge.</p>
+    <p>Derivative works must embed a cryptographic provenance header pointing to their originating coherence field, and may not be used to circumvent humanitarian restrictions.</p>
+    <p><em>© 2025 Marcel C. Mulder / Plasma Dynamica — All Rights Reserved</em></p>
+    <p>To view the full source code of this defensive publication, suggest improvements, or adapt it for your own use within the terms of the Humanity Heritage License, visit the GitHub repository:</p>
+    <p><a href="https://github.com/EllenBosMarcelMulder/hexOSAI_v1_DefensivePublication" target="_blank">https://github.com/EllenBosMarcelMulder/hexOSAI_v1_DefensivePublication</a></p>
+    
+    <p>To learn more about the broader vision and principles behind the hexOSAI system, visit the Plasma Dynamica website:</p>
+    <p><a href="https://plasmadynamica.com/" target="_blank">https://plasmadynamica.com/</a></p>
+  </div>
+</body>
+</html>
