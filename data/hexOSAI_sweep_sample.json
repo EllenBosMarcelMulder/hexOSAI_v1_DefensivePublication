@@ -1,0 +1,25 @@
+[
+  {
+    "omega": 0.3,
+    "delta": 0.01,
+    "variation": 0,
+    "integrityThreshold": 0.5,
+    "coherence": 0.957365719341206,
+    "stability": 0.02446522884474933, 
+    "entropy": 0.9329004904964566,
+    "integrity": 0.22200015406904713
+  },
+  {
+    "omega": 0.3,
+    "delta": 0.01,
+    "variation": 0.02,
+    "integrityThreshold": 0.65,
+    "coherence": 0.9573634112126526,
+    "stability": 0.02605787667862003,
+    "entropy": 0.9313055345340325,
+    "integrity": 0.22263017626441167
+  },
+  ... 
+]
+
+---63cb3884dc66aa1b2c2753f2955634553398ded5e590c5505724273a0835d305
