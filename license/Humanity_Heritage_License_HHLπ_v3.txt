@@ -42,4 +42,6 @@ This Work (the "Technology") — including design files, source code, documentat
 10. Severability & Survival
 10.1 If any provision of this License is found unenforceable, the remainder shall remain in full force. Provisions that are required to effect the humanitarian restrictions shall survive termination.
 
----cdc035a453837b977c8a92e6d886a8a23437a4890069a5c37f6ad4ea1a7a10a4
+11. To licence this product, the name of Ellen Bos must be on the licence.
+
+---04bbada69ba03b7c1d77e9b9d258130778e940cf80d34d69ae7565beb87ad271
