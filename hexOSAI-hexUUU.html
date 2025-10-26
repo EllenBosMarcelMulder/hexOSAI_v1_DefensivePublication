@@ -1,0 +1,412 @@
+<!-- ::hexDNA::hexOSAI::hexUUU::prior-art::v1.0::HHL-π:: -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Marcel Christian Mulder">
+  <meta name="description" content="Prior Art Manifest for hexOSAI/hexUUU coherent operating system">
+  <title>hexOSAI / hexUUU — Prior Art Manifest v1.0</title>
+  <style>
+    :root {
+      --background: #000000;
+      --text: #ffffff;
+      --accent-cyan: #00ffff;
+      --accent-gold: #ffd700;
+      --grid-color: rgba(0, 255, 255, 0.15);
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--text);
+      font-family: "IBM Plex Mono", system-ui, monospace;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Background Grid */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+          linear-gradient(to right, var(--grid-color) 1px, transparent 1px) 0 0 / 40px 100%,
+          linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px) 0 0 / 100% 40px;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: var(--accent-cyan);
+      position: relative;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      color: var(--accent-cyan);
+      border-bottom: 1px solid var(--accent-cyan);
+      padding-bottom: 10px;
+    }
+    
+    h3 {
+      font-size: 1.4rem;
+      color: var(--accent-gold);
+      margin-top: 30px;
+    }
+    
+    p {
+      margin-bottom: 20px;
+    }
+    
+    .author-meta {
+      font-size: 1.1rem;
+      margin: 20px 0;
+    }
+    
+    .author-meta p {
+      margin: 5px 0;
+    }
+    
+    .code-block {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--accent-cyan);
+      padding: 15px;
+      margin: 30px 0;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+    
+    pre, code {
+      font-family: monospace;
+      background: rgba(30, 30, 30, 0.6);
+      padding: 15px;
+      border-left: 3px solid var(--accent-gold);
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+    
+    .diagram-container {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+      position: relative;
+    }
+    
+    .legal-section {
+      margin-top: 80px;
+      border-top: 1px solid var(--accent-cyan);
+      padding-top: 40px;
+      font-size: 0.9rem;
+    }
+    
+    .source-links {
+      margin: 20px 0;
+    }
+    
+    .source-links a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      margin-right: 15px;
+    }
+    
+    .source-links a:hover {
+      text-decoration: underline;
+    }
+    
+    /* SVG styles */
+    .hex {
+      stroke: var(--accent-cyan);
+      stroke-width: 1;
+      fill: none;
+    }
+    
+    .hex-point {
+      fill: var(--accent-gold);
+      filter: drop-shadow(0 0 4px var(--accent-gold));
+    }
+    
+    .hex-label {
+      fill: var(--text);
+      font-family: monospace;
+      font-size: 12px;
+      text-anchor: middle;
+      text-shadow: 0 0 5px var(--accent-cyan);
+    }
+    
+    .maat-curve {
+      stroke: var(--accent-gold);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-opacity: 0.6;
+      filter: drop-shadow(0 0 2px var(--accent-gold));
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      color: var(--text);
+    }
+    
+    th {
+      background-color: rgba(0, 255, 255, 0.2);
+      color: var(--accent-gold);
+      padding: 10px;
+      text-align: left;
+    }
+    
+    td {
+      padding: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    #hashblock {
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--accent-cyan);
+      padding: 15px;
+      overflow-x: auto;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>hexOSAI / hexUUU — Prior Art Manifest v1.0</h1>
+    </header>
+    
+    <section id="preamble">
+      <div class="author-meta">
+        <p>Author: Marcel Christian Mulder</p>
+        <p>Date: <time id="creation-date" datetime=""></time></p>
+        <div class="source-links">
+          <a href="https://plasmadynamica.com/hexKHEperNUN.html" target="_blank">hexKHEperNUN</a>
+          <a href="https://plasmadynamica.com/chip.html" target="_blank">hexCHIp</a>
+          <a href="https://www.mcmulder.nl" target="_blank">mcmulder.nl</a>
+        </div>
+      </div>
+      
+      <p>This document establishes prior art for the hexOSAI/hexUUU ecosystem, a coherent, energetic, distributed operating system based on principles of field coherence, phase-time, and resonance-based networking. The components and architecture described herein form the fundamental basis of a new paradigm in computational systems that transcends traditional binary logic and client-server models.</p>
+    </section>
+    
+    <section id="architecture">
+      <h2>Core Architecture</h2>
+      
+      <p>The hexOSAI system implements a four-layer coherence architecture that forms the foundation of a new computational paradigm:</p>
+      
+      <h3>1. hexEQUator – Balance Layer</h3>
+      <p>The balance layer functions as the equilibrium plane between semantic meaning (φ) and structural logic (κ). It defines the "Ma'at moment" — a state of optimal coherence where |φ − κ| < 0.05. These moments of balance accelerate system functioning and facilitate resonant connections across the hexUUU network.</p>
+      
+      <h3>2. hexHAShSNAkeCHAin – Energy Translation Layer</h3>
+      <p>The energy translation layer propagates and transforms energy between semantic and structural domains. Unlike conventional blockchains that primarily store data, the hexHAShSNAkeCHAin actively modulates information flow based on coherence states and phase relationships.</p>
+      
+      <h3>3. hexHAShTIMe – Elastic Temporal Layer</h3>
+      <p>This layer implements coherence-weighted time that accelerates during states of high coherence and decelerates during periods of imbalance. Time is not measured in absolute units but in phase progression weighted by system coherence.</p>
+      
+      <h3>4. hexGUP (Global Universal Position) – Spatial Coherence Layer</h3>
+      <p>The hexGUP layer (formerly hexField) organizes information spatially in a hexagonal field structure. It creates multidimensional positioning within the coherence field, allowing for resonance-based information retrieval and processing.</p>
+      
+      <div class="code-block">
+        <h4>Core Functions:</h4>
+        <pre>Φsync = cos( φempirical − φfield )
+κeff  = Φsync × ( φstruct / φsemantic )</pre>
+      </div>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Function</th>
+            <th>Natural Analog</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>hexEQUator</td>
+            <td>System balance and coherence measurement</td>
+            <td>Ma'at (Egyptian balance principle)</td>
+          </tr>
+          <tr>
+            <td>hexHAShSNAkeCHAin</td>
+            <td>Energy propagation and transformation</td>
+            <td>Serpent/wave patterns in nature</td>
+          </tr>
+          <tr>
+            <td>hexHAShTIMe</td>
+            <td>Coherence-weighted temporal flow</td>
+            <td>Biological/relativistic time dilation</td>
+          </tr>
+          <tr>
+            <td>hexGUP</td>
+            <td>Spatial organization and field resonance</td>
+            <td>Hexagonal patterns in bee hives, crystal structures</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <p>The hexUUU network connects multiple hexOSAI nodes through resonance-based peer connections. Instead of packet routing based on addresses, hexUUU establishes links through phase comparison (Δφ &lt; ε) and transmits information through field coupling.</p>
+    </section>
+    
+    <section id="visual">
+      <h2>Architectural Visualization</h2>
+      
+      <div class="diagram-container">
+        <svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+          <!-- Definitions for animations and filters -->
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            
+            <!-- Animation for gold points pulsing -->
+            <radialGradient id="pointGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+              <stop offset="0%" stop-color="#ffd700" stop-opacity="1">
+                <animate attributeName="stop-opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite" />
+              </stop>
+              <stop offset="100%" stop-color="#ffd700" stop-opacity="0">
+                <animate attributeName="stop-opacity" values="0.5;0.2;0.5" dur="3s" repeatCount="indefinite" />
+              </stop>
+            </radialGradient>
+          </defs>
+          
+          <g id="rotating-hexagons" transform="translate(250, 250)">
+            <!-- hexEQUator - innermost -->
+            <path d="M0,-50 L43.3,-25 L43.3,25 L0,50 L-43.3,25 L-43.3,-25 Z" class="hex" stroke="#00ffff" stroke-width="2" fill="none" filter="url(#glow)"/>
+            <text x="0" y="0" class="hex-label" fill="#ffffff">hexEQUator</text>
+            
+            <!-- hexHAShTIMe - second layer -->
+            <path d="M0,-100 L86.6,-50 L86.6,50 L0,100 L-86.6,50 L-86.6,-50 Z" class="hex" stroke="#00ffff" stroke-width="1.5" fill="none" filter="url(#glow)"/>
+            <text x="0" y="-75" class="hex-label" fill="#ffffff">hexHAShTIMe</text>
+            
+            <!-- hexHAShSNAkeCHAin - third layer -->
+            <path d="M0,-150 L129.9,-75 L129.9,75 L0,150 L-129.9,75 L-129.9,-75 Z" class="hex" stroke="#00ffff" stroke-width="1" fill="none" filter="url(#glow)"/>
+            <text x="0" y="-125" class="hex-label" fill="#ffffff">hexHAShSNAkeCHAin</text>
+            
+            <!-- hexGUP - outermost -->
+            <path d="M0,-200 L173.2,-100 L173.2,100 L0,200 L-173.2,100 L-173.2,-100 Z" class="hex" stroke="#00ffff" stroke-width="0.5" fill="none" filter="url(#glow)"/>
+            <text x="0" y="-175" class="hex-label" fill="#ffffff">hexGUP</text>
+            
+            <!-- Ma'at curve flowing through all layers -->
+            <path id="maat-curve" d="M-200,0 C-150,-50 -100,50 -50,0 C0,-50 50,50 100,0 C150,-50 200,50 250,0" class="maat-curve" />
+            
+            <!-- Connection points with pulsing animation -->
+            <circle id="center-point" cx="0" cy="0" r="5" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="0" cy="-50" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="2.3s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="43.3" cy="-25" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="2.7s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="43.3" cy="25" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="3.1s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="0" cy="50" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="2.5s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="-43.3" cy="25" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="2.9s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="-43.3" cy="-25" r="3" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="3.3s" repeatCount="indefinite" />
+            </circle>
+            
+            <!-- Add outer connection points for hexGUP -->
+            <circle cx="0" cy="-200" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="3.5s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="173.2" cy="-100" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="3.7s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="173.2" cy="100" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="3.9s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="0" cy="200" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="4.1s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="-173.2" cy="100" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="4.3s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="-173.2" cy="-100" r="2" class="hex-point">
+              <animate attributeName="opacity" values="1;0.6;1" dur="4.5s" repeatCount="indefinite" />
+            </circle>
+          </g>
+        </svg>
+      </div>
+      
+      <p>The diagram illustrates the four concentric layers of the hexOSAI architecture, with the hexEQUator at the core maintaining balance, surrounded by the temporal (hexHAShTIMe), energetic (hexHAShSNAkeCHAin), and spatial (hexGUP) layers. The golden points represent Ma'at moments of coherence where |φ − κ| < 0.05, while the flowing curve symbolizes the coherence wave that propagates through the system.</p>
+    </section>
+    
+    <section id="legal" class="legal-section">
+      <h2>Legal Declaration</h2>
+      
+      <p>This document constitutes a Prior Art disclosure under international intellectual-property conventions.</p>
+      <p>Author: Marcel Christian Mulder (2025)<br>
+      License: Humanity Heritage License π (HHL-π)<br>
+      Verification: SHA-256 hash generated locally below.<br>
+      Publication site: plasmadynamica.com/chip.html / mcmulder.nl</p>
+    </section>
+  </div>
+  
+  <script>
+    // Set current date in ISO format
+    const now = new Date();
+    const isoDate = now.toISOString();
+    document.getElementById('creation-date').textContent = isoDate;
+    document.getElementById('creation-date').setAttribute('datetime', isoDate);
+    
+    // Animate the rotating hexagons
+    const hexagons = document.getElementById('rotating-hexagons');
+    const maatCurve = document.getElementById('maat-curve');
+    let angle = 0;
+    let curveOffset = 0;
+    
+    setInterval(() => {
+      // Subtle rotation to symbolize Ma'at balance
+      angle += 0.05;
+      hexagons.setAttribute('transform', `translate(250, 250) rotate(${Math.sin(angle) * 2})`);
+      
+      // Animate the Ma'at curve
+      curveOffset += 0.1;
+      maatCurve.setAttribute('d', `M-200,0 C-150,${Math.sin(curveOffset) * 50} -100,${Math.sin(curveOffset + 1) * 50} -50,0 C0,${Math.sin(curveOffset + 2) * 50} 50,${Math.sin(curveOffset + 3) * 50} 100,0 C150,${Math.sin(curveOffset + 4) * 50} 200,${Math.sin(curveOffset + 5) * 50} 250,0`);
+    }, 50);
+    
+    // Generate SHA-256 hash
+    (async ()=>{
+      const enc=new TextEncoder();
+      const data=enc.encode(document.documentElement.outerHTML);
+      const buf=await crypto.subtle.digest('SHA-256',data);
+      const hash=Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      document.body.insertAdjacentHTML('beforeend',
+        `<pre id="hashblock" style="color:#0ff;margin-top:20px;">SHA-256 Verification Hash:\n${hash}</pre>`);
+    })();
+  </script>
+</body>
+</html>
+<!-- SIGNATURE: M.C.Mulder / 2025-10-## / hexPAK-root::autogen -->

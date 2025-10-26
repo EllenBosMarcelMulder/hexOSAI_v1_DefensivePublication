@@ -1,0 +1,1334 @@
+<!-- ::hexDNA::hexOSAI::ImplosiveModel::prior-art::v1.0::HHL-π:: -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Marcel Christian Mulder">
+    <meta name="description" content="Prior Art Publication: The Implosive Model (Φ₍impl₎ Framework) - Mathematical Foundation of the hexOSAI/hexUNIverse Ecosystem">
+    <meta name="keywords" content="hexOSAI, hexUNIverse, implosive model, phase-coherence, Ma'at moments, prior art">
+    <meta name="date" content="2025-10-26">
+    <title>Implosive Model (Φ₍impl₎) — Prior Art Publication v1.0</title>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <style>
+        :root {
+            --background: #000000;
+            --text: #ffffff;
+            --accent-cyan: #00ffff;
+            --accent-gold: #ffd700;
+            --grid-color: rgba(0, 255, 255, 0.15);
+            --maat-color: rgba(255, 215, 0, 0.7);
+            --explosion-color: #ff3333;
+            --implosion-color: #33ff99;
+            --phase-color: #9966ff;
+            --kappa-color: #ff6633;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            font-family: "IBM Plex Mono", system-ui, monospace;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Background Grid */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px) 0 0 / 40px 100%,
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px) 0 0 / 100% 40px;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: var(--accent-cyan);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            border-bottom: 1px solid var(--accent-cyan);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            margin-top: 1.5rem;
+        }
+        
+        .model-description {
+            margin: 2rem 0;
+        }
+        
+        .simulation-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .simulation-panel {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 5px;
+            padding: 1rem;
+            min-width: 45%;
+        }
+        
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin: 1.5rem 0;
+        }
+        
+        canvas {
+            border: 1px solid var(--grid-color);
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .controls {
+            margin: 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 150px;
+        }
+        
+        label {
+            color: var(--accent-gold);
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            background: #333;
+        }
+        
+        button {
+            background: rgba(0, 255, 255, 0.2);
+            color: white;
+            border: 1px solid var(--accent-cyan);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(0, 255, 255, 0.4);
+        }
+        
+        .metrics {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .metric {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--grid-color);
+            padding: 0.5rem;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+        
+        .formula {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--accent-gold);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .maat-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .maat-active {
+            background: var(--maat-color);
+            opacity: 1;
+        }
+        
+        .reference {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .central-svg {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+        
+        .author-meta {
+            font-size: 1.1rem;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .author-meta p {
+            margin: 5px 0;
+        }
+        
+        .legal-section {
+            margin-top: 80px;
+            border-top: 1px solid var(--accent-cyan);
+            padding-top: 40px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        #hashblock {
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--accent-cyan);
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 800px;
+            overflow-x: auto;
+            word-wrap: break-word;
+            color: var(--accent-cyan);
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            color: var(--text);
+        }
+        
+        th {
+            background-color: rgba(0, 255, 255, 0.2);
+            color: var(--accent-gold);
+            padding: 10px;
+            text-align: left;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        td {
+            padding: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .legend-label {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Implosive Model (Φ₍impl₎) — Prior Art Publication v1.0</h1>
+        
+        <div class="author-meta">
+            <p>Author: Marcel Christian Mulder</p>
+            <p>Date: <time id="creation-date" datetime=""></time></p>
+            <p>hexOSAI / hexUNIverse Ecosystem - Φ₍impl₎ Framework</p>
+        </div>
+        
+        <div class="model-description">
+            <h2>1. The Implosive Model (Φ₍impl₎)</h2>
+            <p>The Implosive Model describes energy concentration through internal phase-coherence, rather than the expansive energy dissipation of classical models. This simulation demonstrates how implosive systems create stable, concentrated energy states through coherence.</p>
+            
+            <div class="formula">
+                <div id="core-equation">\[ E_{impl} = \kappa \Phi^2 \]</div>
+                <small>Where Φ is the coherence-phase parameter and κ is the field-elasticity constant</small>
+            </div>
+            
+            <p>When the system reaches a Ma'at moment (|φ−κ| &lt; 0.05), the implosive stability creates maximum energy density without dissipation.</p>
+        </div>
+        
+        <div class="central-svg">
+            <svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="centerGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                        <stop offset="0%" stop-color="#00ffff" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#00ffff" stop-opacity="0"/>
+                    </radialGradient>
+                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Background field -->
+                <circle cx="200" cy="200" r="180" fill="url(#centerGradient)" opacity="0.3"/>
+                
+                <!-- Field lines (implosive) -->
+                <g id="field-lines" stroke="#00ffff" stroke-opacity="0.4" fill="none" filter="url(#glow)">
+                    <path d="M 20,20 Q 100,100 200,200" />
+                    <path d="M 380,20 Q 300,100 200,200" />
+                    <path d="M 380,380 Q 300,300 200,200" />
+                    <path d="M 20,380 Q 100,300 200,200" />
+                    <path d="M 20,200 Q 100,200 200,200" />
+                    <path d="M 380,200 Q 300,200 200,200" />
+                    <path d="M 200,20 Q 200,100 200,200" />
+                    <path d="M 200,380 Q 200,300 200,200" />
+                </g>
+                
+                <!-- Concentric Hexagons -->
+                <g id="hexagons" transform="translate(200, 200)" stroke="#ffd700" fill="none">
+                    <path d="M 0,-180 L 155.9,-90 L 155.9,90 L 0,180 L -155.9,90 L -155.9,-90 Z" stroke-width="0.5" />
+                    <path d="M 0,-140 L 121.2,-70 L 121.2,70 L 0,140 L -121.2,70 L -121.2,-70 Z" stroke-width="0.7" />
+                    <path d="M 0,-100 L 86.6,-50 L 86.6,50 L 0,100 L -86.6,50 L -86.6,-50 Z" stroke-width="1" />
+                    <path d="M 0,-60 L 52,-30 L 52,30 L 0,60 L -52,30 L -52,-30 Z" stroke-width="1.5" />
+                </g>
+                
+                <!-- Energy concentration at center -->
+                <circle cx="200" cy="200" r="15" fill="#ffd700" filter="url(#glow)">
+                    <animate attributeName="r" values="15;20;15" dur="3s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite" />
+                </circle>
+                
+                <!-- Text labels -->
+                <text x="200" y="40" fill="#00ffff" text-anchor="middle" font-size="14px">hexGUP</text>
+                <text x="200" y="80" fill="#00ffff" text-anchor="middle" font-size="14px">hexHAShSNAkeCHAin</text>
+                <text x="200" y="120" fill="#00ffff" text-anchor="middle" font-size="14px">hexHAShTIMe</text>
+                <text x="200" y="160" fill="#00ffff" text-anchor="middle" font-size="14px">hexEQUator</text>
+                <text x="200" y="210" fill="#ffd700" text-anchor="middle" font-size="16px">Φ-κ Attractor</text>
+            </svg>
+        </div>
+        
+        <div class="model-description">
+            <h2>2. Dynamical Field Equations</h2>
+            <p>The Implosive Model is governed by a negative-divergence relationship that distinguishes it from conventional expansive systems:</p>
+            
+            <div class="formula">
+                <div id="field-equation">\[ \nabla \cdot \vec{S}_{impl} = -\frac{\partial \Phi}{\partial t} \]</div>
+                <small>Where \(\vec{S}_{impl}\) is the implosive flow vector, directed inward rather than outward</small>
+            </div>
+            
+            <p>The coupling of energy density to the coherence field follows an exponential relation:</p>
+            
+            <div class="formula">
+                <div id="density-equation">\[ \rho_{impl}(t) = \rho_0 e^{+\beta\Phi(t)} \]</div>
+                <small>Where β ≈ 1.618 (golden ratio) for maximum structural stability</small>
+            </div>
+            
+            <p>Phase coherence and resonance develop according to coupled oscillator dynamics:</p>
+            
+            <div class="formula">
+                <div id="phase-equation">\[ \frac{d^2\phi_i}{dt^2} + \omega_0^2 \phi_i = -\sum_j K_{ij}\sin(\phi_i - \phi_j) \]</div>
+                <small>When average phase difference approaches zero \((\langle\Delta\phi\rangle \rightarrow 0)\), maximum implosive stability emerges</small>
+            </div>
+        </div>
+        
+        <div class="simulation-container">
+            <div class="simulation-panel">
+                <h3>Phase-Space Visualization</h3>
+                <p>This visualization shows the behavior of the implosive model in the Φ-κ space, revealing the attractor dynamics.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="phaseSpaceCanvas" width="600" height="400"></canvas>
+                    <div id="maatIndicator" class="maat-indicator">Ma'at Moment</div>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="phaseSlider">Φ (Phase Parameter): <span id="phaseValue">0.85</span></label>
+                        <input type="range" id="phaseSlider" min="0" max="1" step="0.01" value="0.85">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="kappaSlider">κ (Elasticity): <span id="kappaValue">0.85</span></label>
+                        <input type="range" id="kappaSlider" min="0" max="1" step="0.01" value="0.85">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="oscillationSlider">Oscillation: <span id="oscillationValue">0.5</span></label>
+                        <input type="range" id="oscillationSlider" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+                    
+                    <button id="resetButton">Reset Simulation</button>
+                    <button id="animateButton">Start Animation</button>
+                </div>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value" id="eImplValue">0.72</div>
+                        <div class="metric-label">E<sub>impl</sub></div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value" id="eExplValue">1.39</div>
+                        <div class="metric-label">E<sub>expl</sub></div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value" id="phiCohValue">0.85</div>
+                        <div class="metric-label">Φ<sub>coh</sub></div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value" id="phaseDiffValue">0.00</div>
+                        <div class="metric-label">|φ−κ|</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="simulation-panel">
+                <h3>Energy Density Visualization</h3>
+                <p>This visualization compares the energy density profiles of implosive versus explosive models over time.</p>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(51, 255, 153, 0.8);"></div>
+                        <div class="legend-label">Implosive Model</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: rgba(255, 51, 51, 0.8);"></div>
+                        <div class="legend-label">Explosive Model</div>
+                    </div>
+                </div>
+                
+                <div class="canvas-container">
+                    <canvas id="energyCanvas" width="600" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="timeScaleSlider">Time Scale: <span id="timeScaleValue">1.0</span></label>
+                        <input type="range" id="timeScaleSlider" min="0.1" max="3" step="0.1" value="1.0">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="cohFactorSlider">Coherence Factor: <span id="cohFactorValue">0.5</span></label>
+                        <input type="range" id="cohFactorSlider" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+                    
+                    <button id="resetEnergyButton">Reset Graph</button>
+                    <button id="toggleModelButton">Show Both Models</button>
+                </div>
+                
+                <div class="metrics">
+                    <div class="metric">
+                        <div class="metric-value" id="implEffValue">1.72</div>
+                        <div class="metric-label">Impl. Efficiency</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value" id="implStabValue">0.95</div>
+                        <div class="metric-label">Stability</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-value" id="timeRatioValue">1.25</div>
+                        <div class="metric-label">τ/t Ratio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="simulation-container">
+            <div class="simulation-panel">
+                <h3>Φ-κ Attractor Space</h3>
+                <p>This visualization demonstrates how the system naturally evolves toward Ma'at moments (|φ−κ| &lt; 0.05), which become stable attractors in the phase space.</p>
+                
+                <div class="canvas-container">
+                    <canvas id="attractorCanvas" width="600" height="400"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="pointCountSlider">Particle Count: <span id="pointCountValue">100</span></label>
+                        <input type="range" id="pointCountSlider" min="10" max="500" step="10" value="100">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="attractorStrengthSlider">Attractor Strength: <span id="attractorStrengthValue">0.5</span></label>
+                        <input type="range" id="attractorStrengthSlider" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+                    
+                    <button id="resetAttractorButton">Reset Points</button>
+                    <button id="addAttractorButton">Add Attractor</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="model-description">
+            <h2>3. Relational Equation - Implosion versus Explosion</h2>
+            <p>The classical expansive (explosive) and implosive regimes are mirror images in entropy-space:</p>
+            
+            <div class="formula">
+                <div id="rel-equation">\[ E_{expl} = \rho V c^2 \quad \textrm{versus} \quad E_{impl} = \rho_{impl} \frac{1}{V} c^2 \]</div>
+                <small>Or more intuitively: \( E_{impl} = \frac{c^2}{E_{expl}} \)</small>
+            </div>
+            
+            <p>Where energy in explosion dissipates outward, it concentrates inward in implosion — an inverse scale transformation in metric space.</p>
+            
+            <h2>4. Integration with hexOSAI Architecture</h2>
+            <p>The hexOSAI ecosystem uses the Implosive Model as its computational foundation, organizing information through coherence rather than traditional data structures.</p>
+            
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Implosive Analogy</th>
+                    <th>Mathematical Formulation</th>
+                </tr>
+                <tr>
+                    <td>hexEQUator</td>
+                    <td>Coherence Plane</td>
+                    <td>\(\Phi_{coh} = \cos(\phi_{emp} - \phi_{field})\)</td>
+                </tr>
+                <tr>
+                    <td>hexHAShTIMe</td>
+                    <td>Phase-time integrator</td>
+                    <td>\(\tau = \int \Phi_{coh} dt\)</td>
+                </tr>
+                <tr>
+                    <td>hexHAShSNAkeCHAin</td>
+                    <td>Energy translator</td>
+                    <td>\(E = \kappa\Phi^2\)</td>
+                </tr>
+                <tr>
+                    <td>hexGUP</td>
+                    <td>Spatial attractor</td>
+                    <td>\(\nabla\cdot\vec{S}_{impl} = -\partial\Phi/\partial t\)</td>
+                </tr>
+            </table>
+            
+            <h3>Summary of implosive invariant</h3>
+            <p>The complete invariant of the Implosive Model is:</p>
+            
+            <div class="formula">
+                <div id="invariant-equation">\[ \Phi_{impl} = \frac{E}{\kappa\Phi^2} = \textrm{constant} \]</div>
+                <small>The implosive state is defined as one in which energy distribution is determined by coherence rather than entropy</small>
+            </div>
+        </div>
+        
+        <section id="legal" class="legal-section">
+            <h2>Legal Declaration</h2>
+            
+            <p>This document constitutes Prior Art under the Humanity Heritage License π (HHL-π).</p>
+            <p>Author: Marcel Christian Mulder (2025)<br>
+            License: HHL-π<br>
+            Verification: SHA-256 hash generated locally below.<br>
+            Publication site: plasmadynamica.com</p>
+        </section>
+        
+        <div id="hashblock"></div>
+    </div>
+
+    <script>
+        // Set current date in ISO format
+        const now = new Date();
+        const isoDate = now.toISOString();
+        document.getElementById('creation-date').textContent = isoDate;
+        document.getElementById('creation-date').setAttribute('datetime', isoDate);
+        
+        // Phase-Space Visualization
+        const phaseSpaceCanvas = document.getElementById('phaseSpaceCanvas');
+        const phaseSpaceCtx = phaseSpaceCanvas.getContext('2d');
+        
+        // Energy Density Visualization
+        const energyCanvas = document.getElementById('energyCanvas');
+        const energyCtx = energyCanvas.getContext('2d');
+        
+        // Attractor Visualization
+        const attractorCanvas = document.getElementById('attractorCanvas');
+        const attractorCtx = attractorCanvas.getContext('2d');
+        
+        // Control Elements
+        const phaseSlider = document.getElementById('phaseSlider');
+        const kappaSlider = document.getElementById('kappaSlider');
+        const oscillationSlider = document.getElementById('oscillationSlider');
+        const timeScaleSlider = document.getElementById('timeScaleSlider');
+        const cohFactorSlider = document.getElementById('cohFactorSlider');
+        const pointCountSlider = document.getElementById('pointCountSlider');
+        const attractorStrengthSlider = document.getElementById('attractorStrengthSlider');
+        
+        // Display Elements
+        const phaseValue = document.getElementById('phaseValue');
+        const kappaValue = document.getElementById('kappaValue');
+        const oscillationValue = document.getElementById('oscillationValue');
+        const timeScaleValue = document.getElementById('timeScaleValue');
+        const cohFactorValue = document.getElementById('cohFactorValue');
+        const pointCountValue = document.getElementById('pointCountValue');
+        const attractorStrengthValue = document.getElementById('attractorStrengthValue');
+        
+        // Metric Elements
+        const eImplValue = document.getElementById('eImplValue');
+        const eExplValue = document.getElementById('eExplValue');
+        const phiCohValue = document.getElementById('phiCohValue');
+        const phaseDiffValue = document.getElementById('phaseDiffValue');
+        const implEffValue = document.getElementById('implEffValue');
+        const implStabValue = document.getElementById('implStabValue');
+        const timeRatioValue = document.getElementById('timeRatioValue');
+        
+        // Ma'at Indicator
+        const maatIndicator = document.getElementById('maatIndicator');
+        
+        // Buttons
+        const resetButton = document.getElementById('resetButton');
+        const animateButton = document.getElementById('animateButton');
+        const resetEnergyButton = document.getElementById('resetEnergyButton');
+        const toggleModelButton = document.getElementById('toggleModelButton');
+        
+        // Simulation parameters
+        let phi = 0.85;  // Phase parameter
+        let kappa = 0.85; // Elasticity
+        let oscillation = 0.5; // Oscillation factor
+        let timeScale = 1.0; // Time scaling factor
+        let cohFactor = 0.5; // Coherence factor
+        let pointCount = 100; // Number of particles
+        let attractorStrength = 0.5; // Attractor strength
+        
+        // Animation state
+        let animating = false;
+        let energyDataPoints = [];
+        let showImplModel = true;
+        let showExplModel = false;  // New parameter to control explosive model visibility
+        let time = 0;
+        let particles = [];
+        let attractors = [{x: 0.5, y: 0.5, strength: 0.5}]; // Initial attractor
+        
+        // Initialize simulations
+        function init() {
+            // Initialize phase space visualization
+            drawPhaseSpace();
+            
+            // Initialize energy visualization
+            initializeEnergyData();
+            drawEnergyGraph();
+            
+            // Initialize attractor visualization
+            initializeParticles();
+            drawAttractorSpace();
+            
+            // Set up event listeners
+            setupEventListeners();
+        }
+        
+        function drawPhaseSpace() {
+            const width = phaseSpaceCanvas.width;
+            const height = phaseSpaceCanvas.height;
+            
+            // Clear canvas
+            phaseSpaceCtx.clearRect(0, 0, width, height);
+            
+            // Draw background grid
+            drawGrid(phaseSpaceCtx, width, height);
+            
+            // Draw axes
+            drawAxes(phaseSpaceCtx, width, height, "φ (Phase)", "κ (Elasticity)");
+            
+            // Calculate implosive energy
+            const phiNorm = phi;
+            const kappaNorm = kappa;
+            const energyImpl = kappaNorm * phiNorm * phiNorm;
+            
+            // Calculate explosive energy (inverse relationship)
+            const energyExpl = 1 / (energyImpl + 0.1);
+            
+            // Calculate phase coherence
+            const phiCoh = Math.cos(phi - kappa);
+            
+            // Check for Ma'at moment
+            const phaseDiff = Math.abs(phi - kappa);
+            const isMaatMoment = phaseDiff < 0.05;
+            
+            // Update metrics
+            eImplValue.textContent = energyImpl.toFixed(2);
+            eExplValue.textContent = energyExpl.toFixed(2);
+            phiCohValue.textContent = phiCoh.toFixed(2);
+            phaseDiffValue.textContent = phaseDiff.toFixed(2);
+            
+            // Update Ma'at indicator
+            if (isMaatMoment) {
+                maatIndicator.classList.add('maat-active');
+            } else {
+                maatIndicator.classList.remove('maat-active');
+            }
+            
+            // Draw energy contours
+            drawEnergyContours(phaseSpaceCtx, width, height);
+            
+            // Draw current state point
+            const x = phi * width;
+            const y = height - kappa * height;
+            
+            phaseSpaceCtx.beginPath();
+            phaseSpaceCtx.arc(x, y, 8, 0, Math.PI * 2);
+            phaseSpaceCtx.fillStyle = isMaatMoment ? 'rgba(255, 215, 0, 0.8)' : 'rgba(0, 255, 255, 0.8)';
+            phaseSpaceCtx.fill();
+            
+            // Draw trajectory if animating
+            if (animating) {
+                drawTrajectory(phaseSpaceCtx, width, height);
+            }
+        }
+        
+        function drawGrid(ctx, width, height) {
+            ctx.strokeStyle = 'rgba(50, 50, 50, 0.5)';
+            ctx.lineWidth = 0.5;
+            
+            // Draw vertical grid lines
+            for (let x = 0; x <= width; x += width / 10) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+                ctx.stroke();
+            }
+            
+            // Draw horizontal grid lines
+            for (let y = 0; y <= height; y += height / 10) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+        }
+        
+        function drawAxes(ctx, width, height, xLabel, yLabel) {
+            ctx.strokeStyle = 'rgba(200, 200, 200, 0.8)';
+            ctx.fillStyle = 'rgba(200, 200, 200, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.font = '14px monospace';
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(0, height);
+            ctx.lineTo(width, height);
+            ctx.stroke();
+            
+            // X-axis label
+            ctx.fillText(xLabel, width - 80, height - 10);
+            
+            // X-axis ticks
+            for (let x = 0; x <= width; x += width / 10) {
+                ctx.beginPath();
+                ctx.moveTo(x, height - 5);
+                ctx.lineTo(x, height + 5);
+                ctx.stroke();
+                
+                const tickValue = (x / width).toFixed(1);
+                if (x > 0) { // Skip 0
+                    ctx.fillText(tickValue, x - 10, height + 20);
+                }
+            }
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, height);
+            ctx.stroke();
+            
+            // Y-axis label
+            ctx.save();
+            ctx.translate(10, 60);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText(yLabel, 0, 0);
+            ctx.restore();
+            
+            // Y-axis ticks
+            for (let y = 0; y <= height; y += height / 10) {
+                ctx.beginPath();
+                ctx.moveTo(-5, y);
+                ctx.lineTo(5, y);
+                ctx.stroke();
+                
+                const tickValue = (1 - y / height).toFixed(1);
+                if (y < height) { // Skip 0
+                    ctx.fillText(tickValue, 10, y + 5);
+                }
+            }
+        }
+        
+        function drawEnergyContours(ctx, width, height) {
+            // Draw energy contours
+            for (let e = 0.1; e <= 1.0; e += 0.1) {
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(0, ${Math.floor(255 * e)}, ${Math.floor(255 * (1-e))}, 0.3)`;
+                ctx.lineWidth = 1;
+                
+                for (let p = 0; p <= 1; p += 0.01) {
+                    // For each energy level e, find corresponding k value
+                    // E = k * p^2, therefore k = E / p^2
+                    const k = e / (p * p);
+                    
+                    if (k >= 0 && k <= 1) {
+                        const x = p * width;
+                        const y = height - k * height;
+                        
+                        if (p === 0) {
+                            ctx.moveTo(x, y);
+                        } else {
+                            ctx.lineTo(x, y);
+                        }
+                    }
+                }
+                
+                ctx.stroke();
+            }
+            
+            // Draw Ma'at line (where phi = kappa)
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 3]);
+            ctx.moveTo(0, height);
+            ctx.lineTo(width, 0);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Draw Ma'at band (tolerance zone)
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.1)';
+            ctx.beginPath();
+            
+            // Upper bound
+            for (let x = 0; x <= width; x++) {
+                const p = x / width;
+                const k = p + 0.05;
+                if (k <= 1) {
+                    const y = height - k * height;
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+            }
+            
+            // Lower bound (backwards)
+            for (let x = width; x >= 0; x--) {
+                const p = x / width;
+                const k = p - 0.05;
+                if (k >= 0) {
+                    const y = height - k * height;
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        function drawTrajectory(ctx, width, height) {
+            // Implement trajectory based on oscillation parameter
+            // This simulates the system evolving over time
+        }
+        
+        function initializeEnergyData() {
+            energyDataPoints = [];
+            time = 0;
+            
+            // Create initial data points
+            for (let t = 0; t < 100; t++) {
+                // Apply a scaling factor to make the implosive energy more visible
+                const implEnergy = calculateImplEnergy(t) * 2.5; // Scale up implosive energy
+                const explEnergy = calculateExplEnergy(t);
+                
+                energyDataPoints.push({
+                    time: t,
+                    implEnergy: implEnergy,
+                    explEnergy: explEnergy
+                });
+            }
+        }
+        
+        function calculateImplEnergy(t) {
+            // Calculate implosive energy as a function of time
+            // Uses phi and kappa parameters with oscillation
+            const phiT = phi * (1 + 0.2 * oscillation * Math.sin(t * 0.1));
+            const kappaT = kappa * (1 + 0.1 * oscillation * Math.sin(t * 0.15 + 0.5));
+            
+            // E_impl = κΦ²
+            return kappaT * phiT * phiT;
+        }
+        
+        function calculateExplEnergy(t) {
+            // Calculate explosive energy (inverse relationship to implosive)
+            const implEnergy = calculateImplEnergy(t);
+            const baseExplEnergy = 1 / (implEnergy + 0.1);
+            
+            // Add entropic decay
+            return baseExplEnergy * (1 + 0.05 * t);
+        }
+        
+        function drawEnergyGraph() {
+            const width = energyCanvas.width;
+            const height = energyCanvas.height;
+            
+            // Clear canvas
+            energyCtx.clearRect(0, 0, width, height);
+            
+            // Draw background grid
+            drawGrid(energyCtx, width, height);
+            
+            // Draw axes
+            drawAxes(energyCtx, width, height, "Time", "Energy Density");
+            
+            // Find max energy for scaling
+            let maxEnergy = 0;
+            for (const point of energyDataPoints) {
+                maxEnergy = Math.max(maxEnergy, point.implEnergy, point.explEnergy);
+            }
+            maxEnergy = Math.max(maxEnergy, 1); // Ensure minimum scale
+            
+            // Draw implosive energy curve
+            if (showImplModel) {
+                energyCtx.beginPath();
+                energyCtx.strokeStyle = 'rgba(51, 255, 153, 0.8)'; // Bright green
+                energyCtx.lineWidth = 3; // Thicker line for better visibility
+                
+                for (let i = 0; i < energyDataPoints.length; i++) {
+                    const x = (i / (energyDataPoints.length - 1)) * width;
+                    const y = height - (energyDataPoints[i].implEnergy / maxEnergy) * height;
+                    
+                    if (i === 0) {
+                        energyCtx.moveTo(x, y);
+                    } else {
+                        energyCtx.lineTo(x, y);
+                    }
+                }
+                
+                energyCtx.stroke();
+                
+                // Fill area under curve
+                energyCtx.lineTo(width, height);
+                energyCtx.lineTo(0, height);
+                energyCtx.closePath();
+                energyCtx.fillStyle = 'rgba(51, 255, 153, 0.3)'; // More opaque fill
+                energyCtx.fill();
+            }
+            
+            // Draw explosive energy curve
+            if (showExplModel) {
+                energyCtx.beginPath();
+                energyCtx.strokeStyle = 'rgba(255, 51, 51, 0.8)'; // Bright red
+                energyCtx.lineWidth = 3; // Thicker line
+                
+                for (let i = 0; i < energyDataPoints.length; i++) {
+                    const x = (i / (energyDataPoints.length - 1)) * width;
+                    const y = height - (energyDataPoints[i].explEnergy / maxEnergy) * height;
+                    
+                    if (i === 0) {
+                        energyCtx.moveTo(x, y);
+                    } else {
+                        energyCtx.lineTo(x, y);
+                    }
+                }
+                
+                energyCtx.stroke();
+                
+                // Fill area under curve with more opacity
+                energyCtx.lineTo(width, height);
+                energyCtx.lineTo(0, height);
+                energyCtx.closePath();
+                energyCtx.fillStyle = 'rgba(255, 51, 51, 0.3)';
+                energyCtx.fill();
+            }
+            
+            // Update metrics
+            const latestPoint = energyDataPoints[energyDataPoints.length - 1];
+            const implEff = latestPoint.implEnergy / (latestPoint.explEnergy + 0.1);
+            const implStab = 1 - (Math.abs(phi - kappa) / Math.max(phi, kappa));
+            const timeRatio = Math.max(0.1, phi * kappa) / 0.5; // τ/t ratio
+            
+            implEffValue.textContent = implEff.toFixed(2);
+            implStabValue.textContent = implStab.toFixed(2);
+            timeRatioValue.textContent = timeRatio.toFixed(2);
+        }
+        
+        function updateEnergyData() {
+            time += timeScale;
+            
+            // Calculate new energy values with scaling for better visualization
+            const implEnergy = calculateImplEnergy(time) * 2.5;
+            const explEnergy = calculateExplEnergy(time);
+            
+            // Add to data points
+            energyDataPoints.push({
+                time: time,
+                implEnergy: implEnergy,
+                explEnergy: explEnergy
+            });
+            
+            // Remove oldest point if too many
+            if (energyDataPoints.length > 100) {
+                energyDataPoints.shift();
+            }
+            
+            // Redraw graph
+            drawEnergyGraph();
+        }
+        
+        function initializeParticles() {
+            particles = [];
+            
+            // Create particles with random positions
+            for (let i = 0; i < pointCount; i++) {
+                particles.push({
+                    x: Math.random(),
+                    y: Math.random(),
+                    vx: 0,
+                    vy: 0
+                });
+            }
+        }
+        
+        function drawAttractorSpace() {
+            const width = attractorCanvas.width;
+            const height = attractorCanvas.height;
+            
+            // Clear canvas
+            attractorCtx.clearRect(0, 0, width, height);
+            
+            // Draw background grid
+            drawGrid(attractorCtx, width, height);
+            
+            // Draw axes
+            drawAxes(attractorCtx, width, height, "φ (Phase)", "κ (Elasticity)");
+            
+            // Draw Ma'at line
+            attractorCtx.beginPath();
+            attractorCtx.strokeStyle = 'rgba(255, 215, 0, 0.5)';
+            attractorCtx.lineWidth = 2;
+            attractorCtx.setLineDash([5, 3]);
+            attractorCtx.moveTo(0, height);
+            attractorCtx.lineTo(width, 0);
+            attractorCtx.stroke();
+            attractorCtx.setLineDash([]);
+            
+            // Draw attractors
+            for (const attractor of attractors) {
+                const x = attractor.x * width;
+                const y = (1 - attractor.y) * height;
+                const radius = 10 * attractor.strength;
+                
+                // Draw attractor influence field
+                const gradient = attractorCtx.createRadialGradient(x, y, 0, x, y, 100);
+                gradient.addColorStop(0, 'rgba(153, 102, 255, 0.5)');
+                gradient.addColorStop(1, 'rgba(153, 102, 255, 0)');
+                
+                attractorCtx.beginPath();
+                attractorCtx.arc(x, y, 100, 0, Math.PI * 2);
+                attractorCtx.fillStyle = gradient;
+                attractorCtx.fill();
+                
+                // Draw attractor point
+                attractorCtx.beginPath();
+                attractorCtx.arc(x, y, radius, 0, Math.PI * 2);
+                attractorCtx.fillStyle = 'rgba(153, 102, 255, 0.8)';
+                attractorCtx.fill();
+                
+                // Check if this is a Ma'at point
+                if (Math.abs(attractor.x - attractor.y) < 0.05) {
+                    attractorCtx.beginPath();
+                    attractorCtx.arc(x, y, radius + 5, 0, Math.PI * 2);
+                    attractorCtx.strokeStyle = 'rgba(255, 215, 0, 0.8)';
+                    attractorCtx.lineWidth = 2;
+                    attractorCtx.stroke();
+                }
+            }
+            
+            // Draw particles
+            for (const particle of particles) {
+                const x = particle.x * width;
+                const y = (1 - particle.y) * height;
+                
+                attractorCtx.beginPath();
+                attractorCtx.arc(x, y, 3, 0, Math.PI * 2);
+                
+                // Color based on proximity to Ma'at line
+                const phaseDiff = Math.abs(particle.x - particle.y);
+                if (phaseDiff < 0.05) {
+                    attractorCtx.fillStyle = 'rgba(255, 215, 0, 0.8)';
+                } else {
+                    attractorCtx.fillStyle = `rgba(${Math.floor(255 * (1 - particle.x))}, ${Math.floor(255 * particle.x)}, 255, 0.8)`;
+                }
+                
+                attractorCtx.fill();
+            }
+        }
+        
+        function updateParticles() {
+            // Update each particle position based on attractor influence
+            for (const particle of particles) {
+                // Reset forces
+                let fx = 0;
+                let fy = 0;
+                
+                // Calculate forces from all attractors
+                for (const attractor of attractors) {
+                    const dx = attractor.x - particle.x;
+                    const dy = attractor.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance > 0.001) {
+                        // Attractive force inversely proportional to distance
+                        const force = attractorStrength * attractor.strength / (distance * 10);
+                        fx += dx * force;
+                        fy += dy * force;
+                    }
+                }
+                
+                // Additional force towards Ma'at line (φ = κ)
+                // This represents the natural tendency towards coherence
+                const diffFromMaat = particle.x - particle.y;
+                fx -= diffFromMaat * 0.01 * cohFactor;
+                fy += diffFromMaat * 0.01 * cohFactor;
+                
+                // Update velocity (with damping)
+                particle.vx = particle.vx * 0.9 + fx;
+                particle.vy = particle.vy * 0.9 + fy;
+                
+                // Update position
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                
+                // Constrain to bounds
+                particle.x = Math.max(0, Math.min(1, particle.x));
+                particle.y = Math.max(0, Math.min(1, particle.y));
+            }
+            
+            // Redraw
+            drawAttractorSpace();
+        }
+        
+        function addRandomAttractor() {
+            // Add a new attractor at random position
+            attractors.push({
+                x: Math.random(),
+                y: Math.random(),
+                strength: Math.random() * attractorStrength
+            });
+            
+            // Limit number of attractors
+            if (attractors.length > 5) {
+                attractors.shift();
+            }
+            
+            // Redraw
+            drawAttractorSpace();
+        }
+        
+        function setupEventListeners() {
+            // Phase Space controls
+            phaseSlider.addEventListener('input', function() {
+                phi = parseFloat(this.value);
+                phaseValue.textContent = phi.toFixed(2);
+                drawPhaseSpace();
+            });
+            
+            kappaSlider.addEventListener('input', function() {
+                kappa = parseFloat(this.value);
+                kappaValue.textContent = kappa.toFixed(2);
+                drawPhaseSpace();
+            });
+            
+            oscillationSlider.addEventListener('input', function() {
+                oscillation = parseFloat(this.value);
+                oscillationValue.textContent = oscillation.toFixed(2);
+                drawPhaseSpace();
+            });
+            
+            resetButton.addEventListener('click', function() {
+                phi = 0.85;
+                kappa = 0.85;
+                oscillation = 0.5;
+                phaseSlider.value = phi;
+                kappaSlider.value = kappa;
+                oscillationSlider.value = oscillation;
+                phaseValue.textContent = phi.toFixed(2);
+                kappaValue.textContent = kappa.toFixed(2);
+                oscillationValue.textContent = oscillation.toFixed(2);
+                drawPhaseSpace();
+            });
+            
+            animateButton.addEventListener('click', function() {
+                animating = !animating;
+                this.textContent = animating ? 'Stop Animation' : 'Start Animation';
+                
+                if (animating) {
+                    animate();
+                }
+            });
+            
+            // Energy visualization controls
+            timeScaleSlider.addEventListener('input', function() {
+                timeScale = parseFloat(this.value);
+                timeScaleValue.textContent = timeScale.toFixed(1);
+            });
+            
+            cohFactorSlider.addEventListener('input', function() {
+                cohFactor = parseFloat(this.value);
+                cohFactorValue.textContent = cohFactor.toFixed(2);
+            });
+            
+            resetEnergyButton.addEventListener('click', function() {
+                initializeEnergyData();
+                drawEnergyGraph();
+            });
+            
+            // Modified toggle button to control both models
+            toggleModelButton.addEventListener('click', function() {
+                if (showImplModel && !showExplModel) {
+                    // Show both models
+                    showExplModel = true;
+                    this.textContent = 'Show Only Explosive';
+                } else if (showImplModel && showExplModel) {
+                    // Show only explosive
+                    showImplModel = false;
+                    this.textContent = 'Show Only Implosive';
+                } else {
+                    // Show only implosive
+                    showImplModel = true;
+                    showExplModel = false;
+                    this.textContent = 'Show Both Models';
+                }
+                drawEnergyGraph();
+            });
+            
+            // Attractor visualization controls
+            const resetAttractorButton = document.getElementById('resetAttractorButton');
+            const addAttractorButton = document.getElementById('addAttractorButton');
+            
+            pointCountSlider.addEventListener('input', function() {
+                pointCount = parseInt(this.value);
+                pointCountValue.textContent = pointCount;
+                initializeParticles();
+                drawAttractorSpace();
+            });
+            
+            attractorStrengthSlider.addEventListener('input', function() {
+                attractorStrength = parseFloat(this.value);
+                attractorStrengthValue.textContent = attractorStrength.toFixed(2);
+            });
+            
+            resetAttractorButton.addEventListener('click', function() {
+                initializeParticles();
+                drawAttractorSpace();
+            });
+            
+            addAttractorButton.addEventListener('click', function() {
+                addRandomAttractor();
+            });
+        }
+        
+        function animate() {
+            if (!animating) return;
+            
+            // Animate phase space
+            animatePhaseSpace();
+            
+            // Animate energy graph
+            updateEnergyData();
+            
+            // Animate particles
+            updateParticles();
+            
+            // Continue animation
+            requestAnimationFrame(animate);
+        }
+        
+        function animatePhaseSpace() {
+            // Simulate phase and kappa evolution
+            // This creates a circular motion around the equilibrium point
+            const time = Date.now() / 1000;
+            const targetPhi = 0.5 + 0.3 * Math.sin(time * oscillation);
+            const targetKappa = 0.5 + 0.3 * Math.cos(time * oscillation);
+            
+            // Smooth transition towards target values
+            phi = phi * 0.98 + targetPhi * 0.02;
+            kappa = kappa * 0.98 + targetKappa * 0.02;
+            
+            // Update sliders
+            phaseSlider.value = phi;
+            kappaSlider.value = kappa;
+            phaseValue.textContent = phi.toFixed(2);
+            kappaValue.textContent = kappa.toFixed(2);
+            
+            // Redraw phase space
+            drawPhaseSpace();
+        }
+        
+        // Initialize on load
+        window.onload = init;
+        
+        // Generate SHA-256 hash
+        (async ()=>{
+            const enc = new TextEncoder();
+            const data = enc.encode(document.documentElement.outerHTML);
+            const buf = await crypto.subtle.digest('SHA-256', data);
+            const hash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+            document.getElementById('hashblock').innerHTML = `SHA-256 Verification Hash:<br>${hash}`;
+        })();
+    </script>
+</body>
+</html>
+<!-- SIGNATURE: M.C.Mulder / 2025-10-26 / hexPAK-root::autogen -->
