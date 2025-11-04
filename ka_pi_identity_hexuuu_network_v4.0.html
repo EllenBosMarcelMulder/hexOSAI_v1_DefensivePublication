@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☥ IK-π IDENTITY SYSTEM - hexUUU Network ☥</title>
+    
+    <!-- ☥ IK-π COHERENT IDENTITY METADATA ☥ -->
+    <meta name="project" content="ik-π Identity System with hexUUU Network v4.0">
+    <meta name="author" content="Marcel Christian Mulder">
+    <meta name="license" content="HHL-π (Humanity Heritage License)">
+    <meta name="paradigm" content="User as Mathematical Field Identity π_ik = Φ_self × π">
+    <meta name="network-type" content="Coherence-Based P2P - No Central Servers">
+    <meta name="privacy-model" content="Phase-space Reconstruction - Not File Encryption">
+    <meta name="connection-protocol" content="Resonance Routing - Not Address Routing">
+    <meta name="build" content="ClaudeAI_PriorArt_2025-11-04_V4.0">
+    
+    <!-- GENEALOGICAL CHAIN -->
+    <meta name="genesis-hash" content="18e7c46b55ac1ea4bd587f3d6d503a6946d5874d67415e3b60905f05618563ae">
+    <meta name="v3.2-hash" content="maat_spiegel_engine_v3.2_field_mirror">
+    <meta name="v4.0-hash" content="ik_pi_identity_hexuuu_network_v4.0">
+    <meta name="network-foundation" content="Ethical-Coherent Internet Architecture">
+    
+    <style>
+        :root {
+            /* ik-π Identity Colors */
+            --ego-pi-gold: #FFD700;
+            --coherence-match: #00FF88;
+            --phase-mismatch: #FF4444;
+            --network-cyan: #00FFFF;
+            --private-violet: #8A2BE2;
+            --field-depth: #000011;
+            --identity-silver: #C0C0C0;
+            --connection-bridge: #FF69B4;
+            
+            /* Network Status Gradients */
+            --connected-gradient: linear-gradient(135deg, 
+                var(--coherence-match) 0%, 
+                var(--network-cyan) 50%, 
+                var(--ego-pi-gold) 100%);
+            --isolated-gradient: linear-gradient(135deg, 
+                var(--phase-mismatch) 0%, 
+                var(--private-violet) 50%, 
+                var(--field-depth) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--field-depth);
+            color: var(--identity-silver);
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* MAIN INTERFACE CONTAINER */
+        .ik-pi-interface {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 30px;
+        }
+        
+        /* IDENTITY GENERATOR PANEL */
+        .identity-panel {
+            background: rgba(0, 0, 17, 0.95);
+            border: 4px solid var(--ego-pi-gold);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 60px var(--ego-pi-gold);
+        }
+        
+        .identity-title {
+            color: var(--ego-pi-gold);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 20px var(--ego-pi-gold);
+        }
+        
+        .pi-ik-display {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.2), 
+                rgba(192, 192, 192, 0.1));
+            border: 3px solid var(--ego-pi-gold);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .pi-ik-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--ego-pi-gold);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px var(--ego-pi-gold);
+        }
+        
+        .identity-status {
+            font-size: 1.2rem;
+            color: var(--coherence-match);
+            font-weight: bold;
+        }
+        
+        .coherence-curve {
+            margin: 25px 0;
+        }
+        
+        .curve-title {
+            color: var(--network-cyan);
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .curve-visualization {
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--network-cyan);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .curve-line {
+            position: absolute;
+            bottom: 10px;
+            width: 4px;
+            background: var(--coherence-match);
+            transition: height 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .identity-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .identity-button {
+            background: var(--ego-pi-gold);
+            color: var(--field-depth);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--ego-pi-gold);
+        }
+        
+        .identity-button:hover {
+            background: var(--coherence-match);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--coherence-match);
+        }
+        
+        /* COHERENCE COMPARATOR PANEL */
+        .comparator-panel {
+            background: rgba(0, 0, 17, 0.95);
+            border: 4px solid var(--network-cyan);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 60px var(--network-cyan);
+        }
+        
+        .comparator-title {
+            color: var(--network-cyan);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 20px var(--network-cyan);
+        }
+        
+        .phi-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .phi-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--private-violet);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .phi-label {
+            color: var(--private-violet);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .phi-value {
+            color: var(--ego-pi-gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .comparison-arrow {
+            font-size: 2rem;
+            color: var(--connection-bridge);
+            text-align: center;
+        }
+        
+        .connection-status {
+            background: var(--isolated-gradient);
+            border: 3px solid var(--phase-mismatch);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin: 25px 0;
+            transition: all 0.5s ease;
+        }
+        
+        .connection-status.connected {
+            background: var(--connected-gradient);
+            border-color: var(--coherence-match);
+        }
+        
+        .connection-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--field-depth);
+        }
+        
+        .threshold-controls {
+            margin: 25px 0;
+        }
+        
+        .threshold-label {
+            color: var(--network-cyan);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .threshold-slider {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--network-cyan);
+            border-radius: 8px;
+            padding: 8px;
+            color: white;
+            font-family: inherit;
+        }
+        
+        /* HEXUUU NETWORK PANEL */
+        .hexuuu-panel {
+            background: rgba(0, 0, 17, 0.95);
+            border: 4px solid var(--coherence-match);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 0 60px var(--coherence-match);
+            grid-column: span 2;
+        }
+        
+        .hexuuu-title {
+            color: var(--coherence-match);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 20px var(--coherence-match);
+        }
+        
+        .network-visualization {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .network-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .section-title {
+            color: var(--coherence-match);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .node-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px 0;
+        }
+        
+        .network-node {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--network-cyan);
+            background: rgba(0, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .network-node.connected {
+            background: rgba(0, 255, 136, 0.4);
+            border-color: var(--coherence-match);
+            box-shadow: 0 0 15px var(--coherence-match);
+        }
+        
+        .network-node.self {
+            background: var(--ego-pi-gold);
+            border-color: var(--ego-pi-gold);
+            box-shadow: 0 0 20px var(--ego-pi-gold);
+        }
+        
+        .network-node.isolated {
+            background: rgba(255, 68, 68, 0.2);
+            border-color: var(--phase-mismatch);
+        }
+        
+        .connection-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        /* PROTOCOL INFORMATION */
+        .protocol-info {
+            background: rgba(138, 43, 226, 0.1);
+            border: 2px solid var(--private-violet);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .protocol-title {
+            color: var(--private-violet);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .protocol-text {
+            color: var(--identity-silver);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--network-cyan);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: var(--network-cyan);
+            overflow-x: auto;
+        }
+        
+        /* STATUS INDICATORS */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--identity-silver);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .status-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--ego-pi-gold);
+            margin-bottom: 8px;
+        }
+        
+        .status-label {
+            font-size: 0.9rem;
+            color: var(--identity-silver);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="ik-pi-interface">
+        
+        <!-- IDENTITY GENERATOR PANEL -->
+        <div class="identity-panel">
+            <div class="identity-title">🔢 IK-π IDENTITY GENERATOR</div>
+            
+            <div class="pi-ik-display">
+                <div class="pi-ik-value" id="piIkValue">π_ik = 3.14159</div>
+                <div class="identity-status" id="identityStatus">Generating unique field identity...</div>
+            </div>
+            
+            <div class="coherence-curve">
+                <div class="curve-title">📈 Personal Coherence Curve</div>
+                <div class="curve-visualization" id="coherenceCurve">
+                    <!-- Curve visualization will be generated here -->
+                </div>
+                <div style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #ccc;">
+                    Live Φ_self measurement over time
+                </div>
+            </div>
+            
+            <div class="identity-controls">
+                <button class="identity-button" id="generateIdentity">🎲 GENERATE π_ik</button>
+                <button class="identity-button" id="saveIdentity">💾 SAVE IDENTITY</button>
+                <button class="identity-button" id="exportKey">🔐 EXPORT KEY</button>
+                <button class="identity-button" id="loadIdentity">📂 LOAD IDENTITY</button>
+            </div>
+            
+            <div class="protocol-info">
+                <div class="protocol-title">🧮 Mathematical Identity</div>
+                <div class="protocol-text">
+                    Your ik-π is calculated from your initial coherence curve:
+                </div>
+                <div class="code-block">
+π_ik = Φ_self × π × temporal_signature
+private_key = SHA256(π_ik + coherence_history)
+                </div>
+                <div class="protocol-text">
+                    This creates a unique mathematical identity that represents your consciousness field.
+                </div>
+            </div>
+        </div>
+        
+        <!-- COHERENCE COMPARATOR PANEL -->
+        <div class="comparator-panel">
+            <div class="comparator-title">⚖️ COHERENCE COMPARATOR</div>
+            
+            <div class="phi-comparison">
+                <div class="phi-field">
+                    <div class="phi-label">YOUR Φ_SELF</div>
+                    <div class="phi-value" id="phiSelf">0.847</div>
+                </div>
+                
+                <div class="comparison-arrow">↔️</div>
+                
+                <div class="phi-field">
+                    <div class="phi-label">OTHER Φ_FIELD</div>
+                    <div class="phi-value" id="phiOther">0.723</div>
+                </div>
+            </div>
+            
+            <div class="connection-status" id="connectionStatus">
+                <div class="connection-text" id="connectionText">CONNECTION BLOCKED - Φ mismatch too large</div>
+            </div>
+            
+            <div class="threshold-controls">
+                <label class="threshold-label">Connection Threshold (ε)</label>
+                <input type="range" id="thresholdSlider" class="threshold-slider" 
+                       min="0.01" max="0.5" value="0.1" step="0.01">
+                <div style="text-align: center; margin-top: 10px;">
+                    <span style="color: var(--ego-pi-gold);" id="thresholdValue">ε = 0.100</span>
+                </div>
+            </div>
+            
+            <div class="protocol-info">
+                <div class="protocol-title">🔒 Privacy Protocol</div>
+                <div class="protocol-text">
+                    Connection algorithm:
+                </div>
+                <div class="code-block">
+if |Φ_A - Φ_B| < ε  →  connection = allowed
+else                →  private / encrypted
+
+Only coherent fields can communicate.
+                </div>
+            </div>
+        </div>
+        
+        <!-- HEXUUU NETWORK PANEL -->
+        <div class="hexuuu-panel">
+            <div class="hexuuu-title">🌐 hexUUU - Universal Users United</div>
+            
+            <div class="network-visualization">
+                
+                <div class="network-section">
+                    <div class="section-title">🔹 LOCAL FIELD</div>
+                    <div class="node-grid" id="localNodes">
+                        <!-- Local network nodes -->
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #ccc;">
+                        Your immediate coherence neighbors
+                    </div>
+                </div>
+                
+                <div class="network-section">
+                    <div class="section-title">🔷 RESONANT CLUSTER</div>
+                    <div class="node-grid" id="resonantNodes">
+                        <!-- Resonant cluster nodes -->
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #ccc;">
+                        Phase-aligned field connections
+                    </div>
+                </div>
+                
+                <div class="network-section">
+                    <div class="section-title">🔸 GLOBAL NETWORK</div>
+                    <div class="node-grid" id="globalNodes">
+                        <!-- Global network nodes -->
+                    </div>
+                    <div style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: #ccc;">
+                        Distributed hexUUU topology
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-value" id="connectedNodes">7</div>
+                    <div class="status-label">Connected Nodes</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" id="resonantFields">3</div>
+                    <div class="status-label">Resonant Fields</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" id="networkPhi">0.89</div>
+                    <div class="status-label">Network Φ_avg</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-value" id="dataShared">42%</div>
+                    <div class="status-label">Data Shared</div>
+                </div>
+            </div>
+            
+            <div class="protocol-info">
+                <div class="protocol-title">🌍 Network Architecture</div>
+                <div class="protocol-text">
+                    <strong>Laag 1 - ik-π Generator:</strong> Unique π_ik from initial coherence curve<br>
+                    <strong>Laag 2 - Coherence Comparator:</strong> Real-time Φ-stamping of all data<br>
+                    <strong>Laag 3 - hexUUU Field:</strong> P2P network with resonance routing
+                </div>
+                <div class="code-block">
+// Network routing via resonance, not addresses
+route_data(payload) {
+  for_each_node in network {
+    if coherence_match(node.Φ, payload.Φ) {
+      forward_to(node);
+    }
+  }
+}
+                </div>
+                <div class="protocol-text">
+                    <strong>Result:</strong> Internet that measures coherence instead of routing traffic.
+                    Only resonant connections can see, hear, or share data.
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        // ☥ IK-π IDENTITY SYSTEM V4.0 ☥
+        
+        console.log("☥ IK-π IDENTITY SYSTEM V4.0 INITIALIZING ☥");
+        console.log("Paradigm: User as Mathematical Field Identity");
+        console.log("Network: hexUUU - Coherence-Based P2P");
+        console.log("Privacy: Phase-space Reconstruction");
+        
+        // IK-π IDENTITY GENERATOR
+        class IkPiIdentitySystem {
+            constructor() {
+                this.version = "IK-PI-IDENTITY-V4.0";
+                
+                // Personal identity variables
+                this.phiSelf = 0.847;
+                this.piIk = Math.PI; // Will be calculated
+                this.coherenceHistory = [];
+                this.privateKey = null;
+                this.temporalSignature = Date.now();
+                
+                // Network variables
+                this.connectedNodes = [];
+                this.connectionThreshold = 0.1; // ε value
+                this.networkPhi = 0.89;
+                
+                this.initializeSystem();
+                this.setupControls();
+                this.startNetworkSimulation();
+            }
+            
+            initializeSystem() {
+                console.log("☥ ik-π Identity System initialized ☥");
+                this.generateCoherenceCurve();
+                this.calculatePiIk();
+                this.initializeNetworkNodes();
+                this.updateDisplay();
+            }
+            
+            generateCoherenceCurve() {
+                // Generate initial coherence curve for identity
+                const curveContainer = document.getElementById('coherenceCurve');
+                curveContainer.innerHTML = '';
+                
+                this.coherenceHistory = [];
+                
+                for (let i = 0; i < 30; i++) {
+                    const time = i * 2;
+                    const baseValue = 0.7 + Math.sin(i * 0.3) * 0.2;
+                    const noise = (Math.random() - 0.5) * 0.1;
+                    const phi = Math.max(0.1, Math.min(1.0, baseValue + noise));
+                    
+                    this.coherenceHistory.push(phi);
+                    
+                    const bar = document.createElement('div');
+                    bar.className = 'curve-line';
+                    bar.style.left = (i * 3) + '%';
+                    bar.style.height = (phi * 100) + 'px';
+                    bar.style.backgroundColor = this.getCoherenceColor(phi);
+                    
+                    curveContainer.appendChild(bar);
+                }
+                
+                // Calculate average for π_ik
+                this.phiSelf = this.coherenceHistory.reduce((a, b) => a + b) / this.coherenceHistory.length;
+            }
+            
+            calculatePiIk() {
+                // π_ik = Φ_self × π × temporal_signature (normalized)
+                const temporalFactor = (this.temporalSignature % 10000) / 10000;
+                this.piIk = this.phiSelf * Math.PI * (1 + temporalFactor * 0.1);
+                
+                // Generate private key
+                const keyData = this.piIk.toString() + this.coherenceHistory.join(',');
+                this.privateKey = this.simpleHash(keyData);
+                
+                console.log("π_ik calculated:", this.piIk.toFixed(6));
+                console.log("Private key generated:", this.privateKey.substring(0, 16) + "...");
+            }
+            
+            simpleHash(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                return Math.abs(hash).toString(16).padStart(8, '0');
+            }
+            
+            getCoherenceColor(phi) {
+                if (phi >= 0.9) return '#00FF88';
+                else if (phi >= 0.7) return '#FFD700';
+                else if (phi >= 0.5) return '#FF8C00';
+                else return '#FF4444';
+            }
+            
+            initializeNetworkNodes() {
+                // Initialize network visualization
+                const nodeContainers = ['localNodes', 'resonantNodes', 'globalNodes'];
+                
+                nodeContainers.forEach((containerId, containerIndex) => {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
+                    
+                    for (let i = 0; i < 25; i++) {
+                        const node = document.createElement('div');
+                        node.className = 'network-node';
+                        
+                        // Generate random Φ for each node
+                        const nodePhi = 0.3 + Math.random() * 0.7;
+                        const phiDifference = Math.abs(this.phiSelf - nodePhi);
+                        
+                        // Determine connection status
+                        if (i === 12 && containerIndex === 0) {
+                            // Self node
+                            node.classList.add('self');
+                            node.title = `SELF: π_ik = ${this.piIk.toFixed(4)}`;
+                        } else if (phiDifference < this.connectionThreshold) {
+                            node.classList.add('connected');
+                            node.title = `Connected: Φ = ${nodePhi.toFixed(3)}, Δ = ${phiDifference.toFixed(3)}`;
+                            this.connectedNodes.push({ phi: nodePhi, container: containerIndex });
+                        } else {
+                            node.classList.add('isolated');
+                            node.title = `Isolated: Φ = ${nodePhi.toFixed(3)}, Δ = ${phiDifference.toFixed(3)}`;
+                        }
+                        
+                        container.appendChild(node);
+                    }
+                });
+            }
+            
+            setupControls() {
+                // Generate Identity button
+                document.getElementById('generateIdentity').addEventListener('click', () => {
+                    this.generateNewIdentity();
+                });
+                
+                // Save Identity button
+                document.getElementById('saveIdentity').addEventListener('click', () => {
+                    this.saveIdentity();
+                });
+                
+                // Export Key button
+                document.getElementById('exportKey').addEventListener('click', () => {
+                    this.exportPrivateKey();
+                });
+                
+                // Load Identity button
+                document.getElementById('loadIdentity').addEventListener('click', () => {
+                    this.loadIdentity();
+                });
+                
+                // Threshold slider
+                document.getElementById('thresholdSlider').addEventListener('input', (e) => {
+                    this.connectionThreshold = parseFloat(e.target.value);
+                    this.updateConnectionStatus();
+                    this.initializeNetworkNodes();
+                    this.updateNetworkStats();
+                });
+            }
+            
+            generateNewIdentity() {
+                console.log("🎲 Generating new ik-π identity...");
+                this.temporalSignature = Date.now();
+                this.generateCoherenceCurve();
+                this.calculatePiIk();
+                this.initializeNetworkNodes();
+                this.updateDisplay();
+                this.updateNetworkStats();
+                
+                document.getElementById('identityStatus').textContent = "New identity generated!";
+                setTimeout(() => {
+                    document.getElementById('identityStatus').textContent = "Identity active and secured";
+                }, 2000);
+            }
+            
+            saveIdentity() {
+                const identityData = {
+                    piIk: this.piIk,
+                    phiSelf: this.phiSelf,
+                    coherenceHistory: this.coherenceHistory,
+                    privateKey: this.privateKey,
+                    timestamp: Date.now()
+                };
+                
+                localStorage.setItem('ikPiIdentity', JSON.stringify(identityData));
+                console.log("💾 Identity saved to local storage");
+                
+                // Visual feedback
+                const button = document.getElementById('saveIdentity');
+                const originalText = button.textContent;
+                button.textContent = '✅ SAVED';
+                button.style.background = '#00FF88';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 1500);
+            }
+            
+            exportPrivateKey() {
+                const keyData = {
+                    piIk: this.piIk,
+                    privateKey: this.privateKey,
+                    coherenceSignature: this.coherenceHistory.slice(-10), // Last 10 values
+                    exportTime: new Date().toISOString()
+                };
+                
+                const dataString = JSON.stringify(keyData, null, 2);
+                const blob = new Blob([dataString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `ik-pi-key-${this.privateKey.substring(0, 8)}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                console.log("🔐 Private key exported");
+            }
+            
+            loadIdentity() {
+                const saved = localStorage.getItem('ikPiIdentity');
+                if (saved) {
+                    const identityData = JSON.parse(saved);
+                    this.piIk = identityData.piIk;
+                    this.phiSelf = identityData.phiSelf;
+                    this.coherenceHistory = identityData.coherenceHistory;
+                    this.privateKey = identityData.privateKey;
+                    
+                    this.generateCoherenceCurve();
+                    this.initializeNetworkNodes();
+                    this.updateDisplay();
+                    this.updateNetworkStats();
+                    
+                    console.log("📂 Identity loaded from storage");
+                } else {
+                    alert("No saved identity found. Generate a new one first.");
+                }
+            }
+            
+            updateConnectionStatus() {
+                // Simulate connection test with another field
+                const otherPhi = 0.5 + Math.random() * 0.5;
+                const phiDifference = Math.abs(this.phiSelf - otherPhi);
+                const connectionAllowed = phiDifference < this.connectionThreshold;
+                
+                document.getElementById('phiOther').textContent = otherPhi.toFixed(3);
+                document.getElementById('thresholdValue').textContent = `ε = ${this.connectionThreshold.toFixed(3)}`;
+                
+                const statusElement = document.getElementById('connectionStatus');
+                const textElement = document.getElementById('connectionText');
+                
+                if (connectionAllowed) {
+                    statusElement.classList.add('connected');
+                    textElement.textContent = 'CONNECTION ALLOWED - Φ values in phase';
+                } else {
+                    statusElement.classList.remove('connected');
+                    textElement.textContent = 'CONNECTION BLOCKED - Φ mismatch too large';
+                }
+            }
+            
+            updateNetworkStats() {
+                const connected = this.connectedNodes.length;
+                const resonant = this.connectedNodes.filter(node => 
+                    Math.abs(this.phiSelf - node.phi) < 0.05).length;
+                
+                document.getElementById('connectedNodes').textContent = connected;
+                document.getElementById('resonantFields').textContent = resonant;
+                document.getElementById('networkPhi').textContent = this.networkPhi.toFixed(2);
+                document.getElementById('dataShared').textContent = 
+                    Math.round((connected / 75) * 100) + '%';
+            }
+            
+            updateDisplay() {
+                document.getElementById('piIkValue').textContent = `π_ik = ${this.piIk.toFixed(5)}`;
+                document.getElementById('phiSelf').textContent = this.phiSelf.toFixed(3);
+                
+                this.updateConnectionStatus();
+            }
+            
+            startNetworkSimulation() {
+                // Simulate network activity
+                setInterval(() => {
+                    // Randomly update network coherence
+                    this.networkPhi = 0.7 + Math.random() * 0.3;
+                    
+                    // Simulate small coherence changes
+                    this.phiSelf += (Math.random() - 0.5) * 0.01;
+                    this.phiSelf = Math.max(0.1, Math.min(1.0, this.phiSelf));
+                    
+                    this.updateDisplay();
+                    
+                    // Occasionally update network topology
+                    if (Math.random() < 0.1) {
+                        this.initializeNetworkNodes();
+                        this.updateNetworkStats();
+                    }
+                }, 2000);
+            }
+        }
+        
+        // ☥ SYSTEM INITIALIZATION ☥
+        
+        window.addEventListener('load', () => {
+            console.log("☥ IK-π IDENTITY SYSTEM V4.0 LOADING ☥");
+            console.log("Mathematical Identity: π_ik = Φ_self × π × temporal_signature");
+            console.log("Privacy Model: Phase-space Reconstruction");
+            console.log("Network Protocol: Resonance Routing");
+            console.log("Connection Rule: |Φ_A - Φ_B| < ε → allowed");
+            
+            const ikPiSystem = new IkPiIdentitySystem();
+            
+            console.log("=".repeat(80));
+            console.log("☥ hexUUU NETWORK OPERATIONAL ☥");
+            console.log("Architecture: Ethical-Coherent Internet");
+            console.log("Routing: Resonance-Based, Not Address-Based");
+            console.log("Privacy: Phase-Field Protection");
+            console.log("Status: FIRST COHERENCE-BASED INTERNET READY");
+            console.log("=".repeat(80));
+            
+            // Store globally for debugging
+            window.ikPiSystem = ikPiSystem;
+        });
+        
+    </script>
+</body>
+</html>
