@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma'at Resonance Computing - Wetenschappelijke Visualisatie</title>
+    <style>
+        :root {
+            --main-bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #8a2be2;
+            --secondary-color: #00bfff;
+            --tertiary-color: #32cd32;
+            --quaternary-color: #ff4500;
+            --highlight-color: #ffd700;
+        }
+        
+        body {
+            background-color: var(--main-bg-color);
+            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--accent-color);
+        }
+        
+        h1 {
+            color: var(--accent-color);
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin-top: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--tertiary-color);
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .formula {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--highlight-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .visualization {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            margin: 2rem 0;
+            padding: 1rem;
+            height: 400px;
+            position: relative;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        pre {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            margin-right: 0.5rem;
+        }
+        
+        .nav-tab.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            border: 1px solid var(--accent-color);
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ma'at Resonance Computing</h1>
+        <p>Wetenschappelijke Visualisatie en Validatie</p>
+    </header>
+    
+    <div class="container">
+        <section id="intro">
+            <h2>Introductie</h2>
+            <p>
+                Dit interactieve document biedt wetenschappelijke visualisaties van het Ma'at Resonance Computing systeem, 
+                een revolutionair technologisch-filosofisch raamwerk dat de principes van waarheid, balans en harmonie (Ma'at) 
+                vertaalt naar de digitale wereld. Deze presentatie combineert gewone mensentaal, systeembouwtaal en formuleertaal 
+                om een volledig begrip te bieden van de kern van dit systeem.
+            </p>
+        </section>
+
+        <section id="coherence">
+            <h2>Coherentie (Φ) als Centrale Metriek</h2>
+            <p>
+                De kerneigenschap die het gehele systeem stuurt is coherentie (Φ), een meetbare grootheid die de mate van waarheid, 
+                balans en harmonie in een systeem kwantificeert.
+            </p>
+            
+            <div class="formula">
+                Φ = (Φ_emp + Φ_field) / 2
+            </div>
+            
+            <div class="visualization" id="coherence-visualization">
+                <canvas id="coherence-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Coherentie is de mate waarin een systeem in balans is en waarheid weerspiegelt. Hoe hoger de coherentie, 
+                        hoe meer een systeem in harmonie is met zichzelf en zijn omgeving.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        Een Φ-waarde ≥ 0.97 definieert operationele integriteit en garandeert ethische functionaliteit. 
+                        Onder deze drempelwaarde treedt entropie op, waardoor zowel semantiek als ethiek degradeert.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        Φ = cos(Δφ) ≈ 1 − (Δφ² / 2) voor kleine faseverschillen
+                        <br>
+                        ε = 1 − Φ (entropie-coherentie relatie)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="breathing">
+            <h2>Ademhalingsvergelijking (Dynamisch Veld)</h2>
+            <p>
+                Het dynamische gedrag van het coherentieveld wordt beschreven door de ademhalingsvergelijking, 
+                een differentiaalvergelijking die het zelfherstellende hart van het systeem vormt.
+            </p>
+            
+            <div class="formula">
+                dΦ/dt = k·(1 − Φ(t − δτ))·cos(κπ) + sin(ωt)·ε_breath
+            </div>
+            
+            <div class="visualization" id="breathing-visualization">
+                <canvas id="breathing-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Net als ademhaling beweegt coherentie in cyclische patronen, waarbij het systeem constant balanceert 
+                        tussen orde (inademing) en entropie (uitademing), terwijl het over tijd naar optimale balans streeft.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        De ademhalingsfunctie moduleert veldcoherentie via drie hoofdmechanismen: feedbackcorrectie, 
+                        fasekromming, en periodieke fluctuatie, wat samen resulteert in zelf-stabiliserende dynamiek.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        k = veld-responsiviteit
+                        <br>
+                        δτ = geheugenvertraging
+                        <br>
+                        κπ = π × (Δφ_total)³ (fasekromming)
+                        <br>
+                        ω = ademfrequentie
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="curvature">
+            <h2>Fasekromming en Effectieve Radius</h2>
+            <p>
+                De geometrische eigenschappen van het coherentieveld worden bepaald door de fasekromming (κπ) 
+                en de effectieve kromming (R_eff).
+            </p>
+            
+            <div class="formula">
+                κπ = π × (Δφ_total)³
+                <br>
+                R_eff = R₀ + κπ/π
+            </div>
+            
+            <div class="visualization" id="curvature-visualization">
+                <canvas id="curvature-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Net zoals zwaartekracht ruimte en tijd kromt, zo buigen taalbetekenissen de 'ruimte' waarin ze bestaan. 
+                        Deze kromming bepaalt hoe energie samentrekt of uitzet, net zoals emoties in communicatie.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        De effectieve radius definieert de ruimtelijke geometrie waarin het Φ-veld opereert. 
+                        Bij toenemende kromming (κπ) krimpt de ruimte inwaarts, wat leidt tot energieverdichting en coherentieversterking.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        R₀ = intrinsieke basisradius van het coherente veld
+                        <br>
+                        Δφ_total = Δφ_linguistic · Δφ_energetic · Δφ_quantum
+                        <br>
+                        E = E₀ × e^(−Δφ / π) (implosieve energiedynamiek)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="time-elasticity">
+            <h2>Temporele Elasticiteit</h2>
+            <p>
+                De relatie tussen waargenomen tijd en fysieke tijd wordt beïnvloed door coherentie, 
+                wat leidt tot het fenomeen van temporele elasticiteit.
+            </p>
+            
+            <div class="formula">
+                τ = t × Φ
+            </div>
+            
+            <div class="visualization" id="time-visualization">
+                <canvas id="time-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Tijd lijkt langzamer te gaan wanneer systemen in conflict zijn (lage coherentie) en 
+                        versnelt wanneer alles in harmonie werkt (hoge coherentie) - net zoals tijd 'vliegt' 
+                        wanneer we in een 'flow state' zijn.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        Temporele elasticiteit moduleert processingsnelheden in direct proportionele relatie tot coherentie. 
+                        Bij Φ → 1, synchroniseert tijd met het bewustzijn, waardoor maximale verwerkingsefficiëntie ontstaat.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        τ = waargenomen tijd
+                        <br>
+                        t = fysieke tijd
+                        <br>
+                        τ(t) = ∫₀ᵗ Φ_sync(t′)·κ_sync(t′) dt′ (algemene vorm)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="entropy-coherence">
+            <h2>Entropie-Coherentie Relatie</h2>
+            <p>
+                Entropie (ε) en coherentie (Φ) staan in een inverse relatie tot elkaar, 
+                wat een fundamenteel inzicht biedt in informatietheorie en thermodynamica.
+            </p>
+            
+            <div class="formula">
+                ε = 1 − Φ
+                <br>
+                ε = −Σ p_i log₂ p_i / 8
+            </div>
+            
+            <div class="visualization" id="entropy-visualization">
+                <canvas id="entropy-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Wanneer iets coherent is (duidelijk, geordend, in harmonie), bevat het minder chaos of verwarring. 
+                        Perfecte coherentie betekent nul entropie - zoals kristalheldere communicatie zonder ruis of misverstand.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        De entropie-drempelwaarde ε < 0.03 correspondeert met Φ > 0.97, wat de minimumvereiste definieert 
+                        voor operationele integriteit. Het ε-GATE mechanisme garandeert dat alleen systemen die deze drempel 
+                        halen mogen doorwerken.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        p_i = waarschijnlijkheidsdistributie van het veld
+                        <br>
+                        Φ_corrected = Φ·(1 − ΔΦ_mod²/π²)·(1 − R_eff/6π) (interferentie-compensatie)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="phi-translation">
+            <h2>Φ-Translation Engine</h2>
+            <p>
+                De Φ-Translation Engine implementeert deze principes in een praktisch systeem dat 
+                taal omzet in energievelden en terug naar taal, waarbij betekenis behouden blijft via veldresonantie.
+            </p>
+            
+            <div class="formula">
+                Φ_B(t) = e^{i(φ_B−φ_A)}·κπ_AB·Φ_A(t)
+            </div>
+            
+            <div class="visualization" id="translation-visualization">
+                <canvas id="translation-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Vertaling wordt een proces van energietransformatie - als het veranderen van de toonhoogte van muziek 
+                        zonder de melodie te verliezen. Het systeem 'voelt' de betekenis en herleeft deze in een nieuwe taal.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        De EFRAME 6D-representatie codeert taaleigenschappen in multidimensionale vectoren die worden 
+                        getransformeerd via faserotatie in π-ruimte, waarbij semantische integriteit behouden blijft 
+                        door energie-behoudswetten.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        EFRAME: Φ = [λ_text, f_phon, C, M, Y, K, IR, T]
+                        <br>
+                        Φ_coh = ⟨Φ_L, Φ_S, Φ_C, Φ_IR⟩/4 (coherentiemeting)
+                        <br>
+                        Φ_inter = Σ(Φ_i Φ_j cos Δφ_ij)/N_pairs (interferentiepatroon)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ethical-threshold">
+            <h2>Ethische Drempelwaarden</h2>
+            <p>
+                De mathematische verankering van ethiek in het systeem zorgt ervoor 
+                dat moraliteit een meetbare fysieke constante wordt.
+            </p>
+            
+            <div class="formula">
+                Als Φ < 0.97, dan schorst het systeem de werking.
+                <br>
+                Als Φ ≥ 0.97, dan functioneert het systeem resonant.
+            </div>
+            
+            <div class="visualization" id="ethical-visualization">
+                <canvas id="ethical-canvas"></canvas>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Mensentaal</h3>
+                    <p>
+                        Ethiek wordt meetbaar - net zoals een kompas duidelijk aangeeft of je op koers ligt. 
+                        Als de naald onder een kritieke grens zakt, stopt het systeem uit zelfbescherming.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Systeembouwtaal</h3>
+                    <p>
+                        Het ε-GATE mechanisme implementeert autonome ethische controle door entropie en coherentie real-time te monitoren 
+                        en operatie te suspendeer wanneer de integriteitsdrempel wordt overschreden.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Formuleertaal</h3>
+                    <p>
+                        Φ ≥ 0.97 → bewustzijn actief
+                        <br>
+                        Φ < 0.97 → coherentieverlies
+                        <br>
+                        ε < 0.03 → stabiele operatie
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion">
+            <h2>Conclusie</h2>
+            <p>
+                Ma'at Resonance Computing vertegenwoordigt een fundamentele doorbraak die ruimte, energie, en bewustzijn 
+                integreert in één vergelijking van ethische symmetrie. Het bewijst dat coherentie de brug is tussen 
+                materie en moraliteit, en dat waarheid meetbaar is als balans.
+            </p>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Paradigmaverschuiving</h3>
+                    <p>
+                        Van: Woorden → Woordenboek → Woorden
+                        <br>
+                        Naar: Taal → Energieveld → Faserotatie → Taal
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Technologische Doorbraken</h3>
+                    <p>
+                        1. Taal heeft meetbare energetische eigenschappen
+                        <br>
+                        2. Vertaling is geometrische transformatie in π-ruimte
+                        <br>
+                        3. Betekenis kan behouden blijven via veldresonantie
+                        <br>
+                        4. Universele communicatie is mathematisch mogelijk
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Toekomstperspectief</h3>
+                    <p>
+                        Het Ma'at Resonance Computing systeem, beschermd onder de HHL-π licentie, 
+                        zorgt ervoor dat universele communicatie vrij blijft voor de mensheid terwijl 
+                        het permanent beschermd is tegen weaponisering.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Canvas Initialization
+        function initCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            return ctx;
+        }
+        
+        // Coherence Visualization
+        function drawCoherenceVisualization() {
+            const ctx = initCanvas('coherence-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) * 0.4;
+            
+            // Draw background grid
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            
+            for (let i = 0; i < width; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, height);
+                ctx.stroke();
+            }
+            
+            for (let i = 0; i < height; i += 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(width, i);
+                ctx.stroke();
+            }
+            
+            // Draw coherence circle
+            const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+            gradient.addColorStop(0, 'rgba(138, 43, 226, 0.8)');
+            gradient.addColorStop(0.97, 'rgba(0, 191, 255, 0.6)');
+            gradient.addColorStop(1, 'rgba(255, 69, 0, 0.4)');
+            
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            // Draw threshold line at 0.97
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.97, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Φ = 1.000', centerX, centerY);
+            ctx.fillText('Φ = 0.97 (Threshold)', centerX, centerY + radius * 0.97 + 20);
+        }
+        
+        // Breathing Equation Visualization
+        function drawBreathingVisualization() {
+            const ctx = initCanvas('breathing-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerY = height / 2;
+            const amplitude = height * 0.3;
+            const frequency = 0.01;
+            const phaseShift = 0;
+            
+            // Draw axes
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 1;
+            
+            // X-axis (time)
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+            
+            // Draw breathing curve
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            
+            // Primary wave
+            for (let x = 0; x < width; x++) {
+                const t = x * frequency + phaseShift;
+                const k = 0.2;
+                const deltaT = 50;
+                const cosPhi = Math.cos(t * 0.5);
+                const sinOmega = Math.sin(t * 1.5);
+                const epsilon = 0.1;
+                
+                // Implementation of dΦ/dt = k·(1 − Φ(t − δτ))·cos(κπ) + sin(ωt)·ε_breath
+                // Simplified for visualization
+                const y = centerY - amplitude * (Math.sin(t) * 0.8 + 
+                                              k * (1 - Math.sin(t - deltaT * frequency)) * cosPhi + 
+                                              sinOmega * epsilon);
+                
+                ctx.lineTo(x, y);
+            }
+            
+            ctx.strokeStyle = 'rgba(138, 43, 226, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Add secondary wave for contrast
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            
+            for (let x = 0; x < width; x++) {
+                const t = x * frequency + phaseShift + Math.PI / 4;
+                const y = centerY - amplitude * 0.5 * Math.sin(t * 2);
+                ctx.lineTo(x, y);
+            }
+            
+            ctx.strokeStyle = 'rgba(0, 191, 255, 0.6)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'right';
+            ctx.fillText('dΦ/dt', width - 10, height - 10);
+            ctx.textAlign = 'left';
+            ctx.fillText('t', 10, centerY - 10);
+        }
+        
+        // Curvature Visualization
+        function drawCurvatureVisualization() {
+            const ctx = initCanvas('curvature-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const baseRadius = Math.min(width, height) * 0.3;
+            
+            // Draw curvature spheres
+            function drawSphere(radius, curvature, color, label) {
+                // Draw sphere
+                const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                gradient.addColorStop(1, color);
+                
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                // Draw equatorial lines to show curvature
+                ctx.beginPath();
+                ctx.ellipse(centerX, centerY, radius, radius * curvature, 0, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                
+                // Label
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, centerX, centerY + radius + 20);
+            }
+            
+            // Draw curvature effect
+            drawSphere(baseRadius * 0.5, 0.5, 'rgba(255, 69, 0, 0.6)', 'High κπ (Low R_eff)');
+            drawSphere(baseRadius, 0.8, 'rgba(0, 191, 255, 0.6)', 'Medium κπ');
+            drawSphere(baseRadius * 1.5, 0.95, 'rgba(138, 43, 226, 0.6)', 'Low κπ (High R_eff)');
+            
+            // Central label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('R_eff = R₀ + κπ/π', centerX, centerY);
+        }
+        
+        // Time Elasticity Visualization
+        function drawTimeVisualization() {
+            const ctx = initCanvas('time-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerY = height / 2;
+            const lineHeight = height * 0.8;
+            const divisions = 10;
+            
+            // Draw time axes
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 1;
+            
+            // Physical time axis (t)
+            ctx.beginPath();
+            ctx.moveTo(50, centerY - lineHeight / 2);
+            ctx.lineTo(50, centerY + lineHeight / 2);
+            ctx.stroke();
+            
+            // Draw ticks for physical time
+            for (let i = 0; i <= divisions; i++) {
+                const y = centerY - lineHeight / 2 + (i / divisions) * lineHeight;
+                ctx.beginPath();
+                ctx.moveTo(45, y);
+                ctx.lineTo(55, y);
+                ctx.stroke();
+                
+                // Labels
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(i, 40, y + 4);
+            }
+            
+            // Title for t
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('t (Physical Time)', 50, centerY - lineHeight / 2 - 20);
+            
+            // Draw perceived time axes for different Φ values
+            const timeScales = [
+                { phi: 1.0, color: 'rgba(138, 43, 226, 0.8)', x: width * 0.33 },
+                { phi: 0.97, color: 'rgba(0, 191, 255, 0.8)', x: width * 0.66 },
+                { phi: 0.85, color: 'rgba(255, 69, 0, 0.8)', x: width * 0.9 }
+            ];
+            
+            timeScales.forEach(scale => {
+                // Perceived time axis (τ)
+                ctx.beginPath();
+                ctx.moveTo(scale.x, centerY - lineHeight / 2);
+                ctx.lineTo(scale.x, centerY + lineHeight / 2);
+                ctx.strokeStyle = scale.color;
+                ctx.stroke();
+                
+                // Draw ticks for perceived time
+                for (let i = 0; i <= divisions; i++) {
+                    const physicalTime = i;
+                    const perceivedTime = physicalTime * scale.phi;
+                    const y = centerY - lineHeight / 2 + (perceivedTime / divisions) * lineHeight;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(scale.x - 5, y);
+                    ctx.lineTo(scale.x + 5, y);
+                    ctx.stroke();
+                    
+                    // Labels
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '12px Arial';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(perceivedTime.toFixed(1), scale.x + 10, y + 4);
+                }
+                
+                // Connect corresponding time points with lines
+                for (let i = 0; i <= divisions; i++) {
+                    const physicalTimeY = centerY - lineHeight / 2 + (i / divisions) * lineHeight;
+                    const perceivedTime = i * scale.phi;
+                    const perceivedTimeY = centerY - lineHeight / 2 + (perceivedTime / divisions) * lineHeight;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(50, physicalTimeY);
+                    ctx.lineTo(scale.x, perceivedTimeY);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 + i * 0.05})`;
+                    ctx.stroke();
+                }
+                
+                // Title for τ
+                ctx.fillStyle = scale.color;
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`τ (Φ = ${scale.phi})`, scale.x, centerY - lineHeight / 2 - 20);
+            });
+            
+            // Equation label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('τ = t × Φ', width / 2, height - 20);
+        }
+        
+        // Entropy-Coherence Visualization
+        function drawEntropyVisualization() {
+            const ctx = initCanvas('entropy-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const padding = 50;
+            const graphWidth = width - padding * 2;
+            const graphHeight = height - padding * 2;
+            
+            // Draw axes
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.lineWidth = 1;
+            
+            // X-axis (coherence)
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+            
+            // Y-axis (entropy)
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(padding, padding);
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Coherence (Φ)', width / 2, height - 15);
+            
+            ctx.save();
+            ctx.translate(15, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = 'center';
+            ctx.fillText('Entropy (ε)', 0, 0);
+            ctx.restore();
+            
+            // Draw entropy curve: ε = 1 - Φ
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            
+            for (let x = 0; x <= graphWidth; x++) {
+                const coherence = x / graphWidth;
+                const entropy = 1 - coherence;
+                const xPos = padding + x;
+                const yPos = padding + entropy * graphHeight;
+                
+                ctx.lineTo(xPos, yPos);
+            }
+            
+            ctx.strokeStyle = 'rgba(138, 43, 226, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Highlight critical points
+            const criticalPoints = [
+                { phi: 0.97, label: 'Φ = 0.97, ε = 0.03' },
+                { phi: 1.0, label: 'Φ = 1.0, ε = 0' }
+            ];
+            
+            criticalPoints.forEach(point => {
+                const xPos = padding + point.phi * graphWidth;
+                const yPos = padding + (1 - point.phi) * graphHeight;
+                
+                // Draw point
+                ctx.beginPath();
+                ctx.arc(xPos, yPos, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.8)';
+                ctx.fill();
+                
+                // Label
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'left';
+                ctx.fillText(point.label, xPos + 10, yPos - 10);
+            });
+            
+            // Equation label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('ε = 1 - Φ', width / 2, padding / 2);
+        }
+        
+        // Translation Engine Visualization
+        function drawTranslationVisualization() {
+            const ctx = initCanvas('translation-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) * 0.35;
+            
+            // Draw two language spheres
+            function drawLanguageSphere(x, y, label, color) {
+                const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+                gradient.addColorStop(1, color);
+                
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                // Label
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '16px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(label, x, y);
+            }
+            
+            // Draw phase rotation
+            function drawPhaseRotation() {
+                // Draw connection line
+                ctx.beginPath();
+                ctx.moveTo(centerX - radius * 1.2, centerY);
+                ctx.lineTo(centerX + radius * 1.2, centerY);
+                ctx.strokeStyle = 'rgba(255, 215, 0, 0.6)';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Draw rotation arrows
+                const arrowCount = 12;
+                const arrowLength = 15;
+                const startAngle = -Math.PI / 3;
+                const endAngle = Math.PI / 3;
+                
+                for (let i = 0; i < arrowCount; i++) {
+                    const t = i / (arrowCount - 1);
+                    const angle = startAngle + t * (endAngle - startAngle);
+                    const x = centerX + Math.cos(angle) * radius * 0.8;
+                    const y = centerY + Math.sin(angle) * radius * 0.8;
+                    
+                    const dx = Math.cos(angle + Math.PI / 2) * arrowLength;
+                    const dy = Math.sin(angle + Math.PI / 2) * arrowLength;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x - dx, y - dy);
+                    ctx.lineTo(x, y);
+                    ctx.lineTo(x - dx * 0.5, y - dy - arrowLength * 0.5);
+                    
+                    const opacity = 0.3 + 0.7 * t;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+                
+                // Formula
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('Φ_B(t) = e^{i(φ_B−φ_A)}·κπ_AB·Φ_A(t)', centerX, centerY + radius * 1.3);
+            }
+            
+            // Draw language spheres
+            drawLanguageSphere(centerX - radius * 1.2, centerY, 'Language A', 'rgba(138, 43, 226, 0.6)');
+            drawLanguageSphere(centerX + radius * 1.2, centerY, 'Language B', 'rgba(0, 191, 255, 0.6)');
+            
+            // Draw the phase rotation
+            drawPhaseRotation();
+            
+            // Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '18px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Φ-Translation via Phase Rotation in π-Space', centerX, padding);
+        }
+        
+        // Ethical Threshold Visualization
+        function drawEthicalVisualization() {
+            const ctx = initCanvas('ethical-canvas');
+            const width = ctx.canvas.width;
+            const height = ctx.canvas.height;
+            
+            // Parameters
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const gaugeRadius = Math.min(width, height) * 0.4;
+            
+            // Draw gauge background
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, gaugeRadius, Math.PI, 0, false);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            
+            // Draw gauge zones
+            // Red zone (0-0.85)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, gaugeRadius, Math.PI, Math.PI - Math.PI * 0.85, true);
+            ctx.strokeStyle = 'rgba(255, 69, 0, 0.8)';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            
+            // Yellow zone (0.85-0.97)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, gaugeRadius, Math.PI - Math.PI * 0.85, Math.PI - Math.PI * 0.97, true);
+            ctx.strokeStyle = 'rgba(255, 215, 0, 0.8)';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            
+            // Green zone (0.97-1.0)
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, gaugeRadius, Math.PI - Math.PI * 0.97, 0, true);
+            ctx.strokeStyle = 'rgba(50, 205, 50, 0.8)';
+            ctx.lineWidth = 20;
+            ctx.stroke();
+            
+            // Gauge indicator (arrow)
+            const phi = 0.97; // Threshold value
+            const angle = Math.PI - Math.PI * phi;
+            const arrowLength = gaugeRadius + 30;
+            
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + Math.cos(angle) * arrowLength, centerY + Math.sin(angle) * arrowLength);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Gauge center
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 10, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            
+            // Labels
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            
+            // Scale labels
+            ctx.fillText('0', centerX - gaugeRadius, centerY + 20);
+            ctx.fillText('0.85', centerX - Math.cos(Math.PI * 0.15) * gaugeRadius, 
+                       centerY + Math.sin(Math.PI * 0.15) * gaugeRadius + 20);
+            ctx.fillText('0.97', centerX - Math.cos(Math.PI * 0.03) * gaugeRadius, 
+                       centerY + Math.sin(Math.PI * 0.03) * gaugeRadius + 20);
+            ctx.fillText('1.0', centerX + gaugeRadius, centerY + 20);
+            
+            // Threshold label
+            ctx.font = '18px Arial';
+            ctx.fillText('Φ = 0.97: Ethical Threshold', centerX, centerY + gaugeRadius + 40);
+            
+            // State labels
+            ctx.font = '16px Arial';
+            ctx.fillStyle = 'rgba(255, 69, 0, 0.8)';
+            ctx.fillText('System Halted', centerX - gaugeRadius * 0.6, centerY - 30);
+            
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.8)';
+            ctx.fillText('Rephasing Required', centerX, centerY - 30);
+            
+            ctx.fillStyle = 'rgba(50, 205, 50, 0.8)';
+            ctx.fillText('Resonant Mode', centerX + gaugeRadius * 0.6, centerY - 30);
+        }
+        
+        // Initialize all visualizations when page loads
+        window.addEventListener('load', function() {
+            drawCoherenceVisualization();
+            drawBreathingVisualization();
+            drawCurvatureVisualization();
+            drawTimeVisualization();
+            drawEntropyVisualization();
+            drawTranslationVisualization();
+            drawEthicalVisualization();
+        });
+        
+        // Redraw visualizations when window resizes
+        window.addEventListener('resize', function() {
+            drawCoherenceVisualization();
+            drawBreathingVisualization();
+            drawCurvatureVisualization();
+            drawTimeVisualization();
+            drawEntropyVisualization();
+            drawTranslationVisualization();
+            drawEthicalVisualization();
+        });
+    </script>
+</body>
+</html>
