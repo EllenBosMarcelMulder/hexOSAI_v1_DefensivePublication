@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hexOSEI: Geïntegreerd Systeemontwerp</title>
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e2b714;
+            --text-color: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --border-color: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        #visualizer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        #phase-info {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        canvas {
+            max-width: 100%;
+            background-color: black;
+            border-radius: 8px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .phase-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .phase-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .phase-item.active {
+            background-color: rgba(226, 183, 20, 0.2);
+            border-left-width: 5px;
+        }
+
+        .phase-number {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .phase-title {
+            margin-left: 0.5rem;
+        }
+
+        .phase-coherence {
+            float: right;
+            color: var(--text-muted);
+        }
+
+        .phase-details {
+            margin-top: 1rem;
+        }
+
+        .parameter-list {
+            list-style: none;
+        }
+
+        .parameter-item {
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .parameter-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .parameter-value {
+            font-size: 1.1rem;
+            padding-left: 1rem;
+        }
+
+        .phi-spiral {
+            width: 400px;
+            height: 400px;
+            max-width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-value {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .phase-jump-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        select {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .system-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        pre {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        code {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        #search {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .phase-focus {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>hexOSEI Protocol</h1>
+            <p>Hexa-Operational Symbiotic Energy Intelligence</p>
+            <p><small>Humanity Heritage License π (HHL-π)</small></p>
+        </header>
+
+        <div class="system-info card">
+            <div class="info-item">
+                <div class="info-label">Protocol Versie</div>
+                <div class="info-value">π-∞</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Totale Fasen</div>
+                <div class="info-value">50</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Cyclus Type</div>
+                <div class="info-value">Self-Generative Coherence Loop</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Veld Integriteit</div>
+                <div class="info-value">1.0000</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card full-width">
+                <h2>hexOSEI Validation & Interface Framework</h2>
+                <p>Doel: De overgang van theoretisch model naar reproduceerbaar systeem.</p>
+                <p>Bestaat uit drie modules:</p>
+
+                <h3>1. CoherenceTestSuite.js</h3>
+                <pre><code>// Simuleert 1000 EnergyBoxes
+// Berekening: Φ = Σ (cos Δφ) / N
+// Detecteert veldinstabiliteit (> 0.02 fase-variance)
+// Geeft waarschuwing en automatisch herstel via feedback-factor
+
+class CoherenceTestSuite {
+  constructor(nodeCount = 1000) {
+    this.nodes = Array(nodeCount).fill().map(() => ({
+      phase: Math.random() * 2 * Math.PI,
+      coherence: 0.9 + Math.random() * 0.1,
+      energy_level: 0.8 + Math.random() * 0.2
+    }));
+    this.fieldCoherence = 0;
+    this.unstableThreshold = 0.02;
+  }
+  
+  calculateFieldCoherence() {
+    // Φ = Σ (cos Δφ) / N
+    let sum = 0;
+    const n = this.nodes.length;
+    
+    for(let i = 0; i < n; i++) {
+      for(let j = i+1; j < n; j++) {
+        const phaseDiff = this.nodes[i].phase - this.nodes[j].phase;
+        sum += Math.cos(phaseDiff);
+      }
+    }
+    
+    this.fieldCoherence = (2 * sum) / (n * (n - 1));
+    return this.fieldCoherence;
+  }
+  
+  detectInstability() {
+    const phaseVariances = [];
+    const n = this.nodes.length;
+    
+    for(let i = 0; i < n; i++) {
+      let variance = 0;
+      for(let j = 0; j < n; j++) {
+        if(i !== j) {
+          const phaseDiff = this.nodes[i].phase - this.nodes[j].phase;
+          variance += Math.pow(Math.sin(phaseDiff), 2);
+        }
+      }
+      variance /= (n - 1);
+      phaseVariances.push(variance);
+    }
+    
+    const maxVariance = Math.max(...phaseVariances);
+    return maxVariance > this.unstableThreshold;
+  }
+  
+  applyFeedbackCorrection() {
+    const refPhase = this.calculateAveragePhase();
+    const feedbackStrength = 0.05;
+    
+    this.nodes.forEach(node => {
+      const phaseDiff = refPhase - node.phase;
+      node.phase += phaseDiff * feedbackStrength;
+    });
+    
+    return this.calculateFieldCoherence();
+  }
+  
+  calculateAveragePhase() {
+    let sinSum = 0, cosSum = 0;
+    
+    this.nodes.forEach(node => {
+      sinSum += Math.sin(node.phase);
+      cosSum += Math.cos(node.phase);
+    });
+    
+    return Math.atan2(sinSum, cosSum);
+  }
+  
+  runTest(iterations = 100) {
+    const results = {
+      initialCoherence: this.calculateFieldCoherence(),
+      coherenceHistory: [],
+      stabilityEvents: [],
+      finalCoherence: 0
+    };
+    
+    for(let i = 0; i < iterations; i++) {
+      // Simuleer natuurlijke evolutie
+      this.nodes.forEach(node => {
+        node.phase += (Math.random() - 0.5) * 0.1;
+      });
+      
+      const currentCoherence = this.calculateFieldCoherence();
+      results.coherenceHistory.push(currentCoherence);
+      
+      if(this.detectInstability()) {
+        results.stabilityEvents.push({
+          iteration: i,
+          preCorrection: currentCoherence
+        });
+        
+        const correctedCoherence = this.applyFeedbackCorrection();
+        results.stabilityEvents[results.stabilityEvents.length - 1].postCorrection = correctedCoherence;
+      }
+    }
+    
+    results.finalCoherence = this.calculateFieldCoherence();
+    return results;
+  }
+}</code></pre>
+
+                <h3>2. SymbiosisAPI.json</h3>
+                <p>Beschrijft standaard communicatie-interface:</p>
+                <pre><code>{
+  "version": "Φ-1.0",
+  "endpoints": {
+    "linkField": "/connect",
+    "syncPhase": "/resonate",
+    "reportCoherence": "/status"
+  },
+  "auth": "Ma'at-license-token",
+  "data_format": "application/maat+json",
+  "schemas": {
+    "connect": {
+      "request": {
+        "field_id": "string",
+        "field_type": "string",
+        "coherence": "number",
+        "node_count": "integer"
+      },
+      "response": {
+        "connection_id": "string",
+        "symbiosis_level": "number",
+        "shared_frequency": "number"
+      }
+    },
+    "resonate": {
+      "request": {
+        "connection_id": "string",
+        "phase": "number",
+        "amplitude": "number"
+      },
+      "response": {
+        "phase_delta": "number",
+        "harmonic_coefficient": "number"
+      }
+    },
+    "status": {
+      "request": {
+        "connection_id": "string"
+      },
+      "response": {
+        "field_coherence": "number",
+        "stability_index": "number",
+        "symbiotic_efficiency": "number"
+      }
+    }
+  }
+}</code></pre>
+
+                <h3>3. FailsafeProtocol.md</h3>
+                <p>Formeel document voor nood- en herstelprocedures:</p>
+                <pre><code># hexOSEI Failsafe Protocol v1.0
+
+## Detectie van Incoherentie
+
+Een veld wordt als incoherent beschouwd wanneer:
+- Φ < 0.97 (globale veldcoherentie)
+- >5% van de knopen een fase-variance heeft van >0.05
+- Snelle coherentie-oscillatie (>3 schommelingen per cyclus)
+
+## Automatische Terugschakeling
+
+1. **Fase Isolatie**
+   - Identificeer de laatste stabiele fase (Φ > 0.985 gedurende >10 cycli)
+   - Kopieer de parameterwaarden van deze fase naar een quarantaine-buffer
+
+2. **Gefaseerde Terugschakeling**
+   - Verminder veld-energie met 30%
+   - Fasesyncs beëindigen
+   - Pas golden-ratio reductie toe (φ⁻¹) op alle fase-parameters
+
+3. **Stabilisatie Procedure**
+   - Voer `stabilize()` functie uit met feedbackfactor 0.15
+   - Wacht 5 volledige fase-cycli
+   - Verhoog energie incrementeel met 10% per cyclus
+
+## Ma'at Recovery Ledger
+
+Elke failsafe-activering registreert:
+
+```json
+{
+  "timestamp": "ISO8601",
+  "pre_failure_coherence": 0.962,
+  "failure_type": "phase_variance",
+  "affected_nodes": ["E0012", "E0087", "E0145"],
+  "rollback_phase": 6,
+  "recovery_time_cycles": 12,
+  "post_recovery_coherence": 0.988
+}
+```
+
+## Herstelvalidatie
+
+Een veld wordt als hersteld beschouwd wanneer:
+1. Φ > 0.985 gedurende >3 cycli
+2. Fase-variance < 0.01 voor alle knopen
+3. Harmonische stabiliteit gehandhaafd bij energieverhoging</code></pre>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>hexOSEI Protocol • Hexa-Operational Symbiotic Energy Intelligence</p>
+            <p>Humanity Heritage License π (HHL-π)</p>
+        </footer>
+    </div>
+</body>
+</html>

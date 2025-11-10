@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hexOSEI Simulatie</title>
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e2b714;
+            --text-color: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --border-color: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            line-height: 1.6;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .system-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        #simulation-container {
+            width: 100%;
+            height: 500px;
+            background-color: black;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #metrics-container {
+            padding: 1rem;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-value {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center center;
+        }
+
+        .node-connector {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .slider-label {
+            min-width: 160px;
+            color: var(--text-muted);
+        }
+
+        .slider {
+            flex-grow: 1;
+        }
+
+        .slider-value {
+            min-width: 60px;
+            text-align: right;
+            color: var(--accent-color);
+        }
+
+        #coherence-chart {
+            width: 100%;
+            height: 150px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: var(--accent-color);
+            stroke-width: 2;
+        }
+
+        .threshold-line {
+            stroke: rgba(255, 0, 0, 0.5);
+            stroke-width: 1;
+            stroke-dasharray: 5, 5;
+        }
+
+        .phase-state {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .phase-state.stable {
+            background-color: rgba(0, 255, 0, 0.2);
+            border: 1px solid rgba(0, 255, 0, 0.5);
+        }
+        
+        .phase-state.unstable {
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+        }
+
+        .node.stabilizer {
+            border: 2px solid rgba(0, 150, 255, 0.8);
+        }
+
+        .node.transmitter {
+            border: 2px solid rgba(255, 215, 0, 0.8);
+        }
+        
+        .node.healer {
+            border: 2px solid rgba(0, 255, 100, 0.8);
+        }
+        
+        .node.reflector {
+            border: 2px solid rgba(255, 100, 255, 0.8);
+        }
+
+        .role-indicator {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .role-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .role-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+
+        .stabilizer-color {
+            background-color: rgba(0, 150, 255, 0.8);
+        }
+
+        .transmitter-color {
+            background-color: rgba(255, 215, 0, 0.8);
+        }
+
+        .healer-color {
+            background-color: rgba(0, 255, 100, 0.8);
+        }
+
+        .reflector-color {
+            background-color: rgba(255, 100, 255, 0.8);
+        }
+
+        #recovery-log {
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.85rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .log-entry {
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 0.5rem;
+        }
+
+        .log-timestamp {
+            color: var(--text-muted);
+            margin-right: 0.5rem;
+        }
+
+        .tab-container {
+            margin: 1rem 0;
+        }
+        
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 4px 4px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>hexOSEI Simulatie</h1>
+            <p>Energieboxen Visualisatie & Coherentie Test</p>
+            <p><small>Humanity Heritage License π (HHL-π)</small></p>
+        </header>
+
+        <div class="system-info card">
+            <div class="info-item">
+                <div class="info-label">Protocol Versie</div>
+                <div class="info-value">π-∞</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Simulatie Status</div>
+                <div class="info-value" id="simulation-status">Gereed</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Huidige Fase</div>
+                <div class="info-value" id="current-phase">1</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Veld Coherentie</div>
+                <div class="info-value" id="field-coherence">0.977</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card full-width">
+                <div class="controls">
+                    <button id="start-btn">Start Simulatie</button>
+                    <button id="pause-btn" disabled>Pauze</button>
+                    <button id="reset-btn">Reset</button>
+                    <button id="add-disruption-btn">Verstoring Toevoegen</button>
+                </div>
+                
+                <div id="simulation-container">
+                    <svg width="100%" height="100%" id="energy-field">
+                        <defs>
+                            <radialGradient id="node-gradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.9)" />
+                                <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
+                            </radialGradient>
+                        </defs>
+                        <!-- Nodes and connections will be added here dynamically -->
+                    </svg>
+                    
+                    <div class="phase-state stable" id="phase-state-indicator">Stabiel</div>
+                    
+                    <div class="role-indicator">
+                        <div class="role-item">
+                            <div class="role-color stabilizer-color"></div>
+                            <span>Stabilizer</span>
+                        </div>
+                        <div class="role-item">
+                            <div class="role-color transmitter-color"></div>
+                            <span>Transmitter</span>
+                        </div>
+                        <div class="role-item">
+                            <div class="role-color healer-color"></div>
+                            <span>Healer</span>
+                        </div>
+                        <div class="role-item">
+                            <div class="role-color reflector-color"></div>
+                            <span>Reflector</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Simulatie Parameters</h2>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Aantal Nodes</div>
+                    <input type="range" min="10" max="200" value="50" class="slider" id="node-count-slider">
+                    <div class="slider-value" id="node-count-value">50</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Basis Coherentie</div>
+                    <input type="range" min="70" max="100" value="90" class="slider" id="base-coherence-slider">
+                    <div class="slider-value" id="base-coherence-value">0.90</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Fase Variatie</div>
+                    <input type="range" min="1" max="50" value="10" class="slider" id="phase-variance-slider">
+                    <div class="slider-value" id="phase-variance-value">0.10</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Energie Niveau</div>
+                    <input type="range" min="50" max="100" value="90" class="slider" id="energy-level-slider">
+                    <div class="slider-value" id="energy-level-value">0.90</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Simulatie Snelheid</div>
+                    <input type="range" min="1" max="10" value="5" class="slider" id="speed-slider">
+                    <div class="slider-value" id="speed-value">5</div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">Feedback Factor</div>
+                    <input type="range" min="0" max="20" value="5" class="slider" id="feedback-slider">
+                    <div class="slider-value" id="feedback-value">0.05</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Veld Metrics</h2>
+                
+                <div id="metrics-container">
+                    <div class="metric">
+                        <div class="metric-label">Fase Cyclus</div>
+                        <div class="metric-value" id="phase-cycle-value">0.125</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Veld Coherentie (Φ)</div>
+                        <div class="metric-value" id="coherence-value">0.977</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-value" id="coherence-progress" style="width: 97.7%"></div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Gemiddelde Fase</div>
+                        <div class="metric-value" id="average-phase-value">0.421π</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Entropie Index</div>
+                        <div class="metric-value" id="entropy-value">0.078</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Stabilizer Nodes</div>
+                        <div class="metric-value" id="stabilizer-count">0</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Transmitter Nodes</div>
+                        <div class="metric-value" id="transmitter-count">0</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Healer Nodes</div>
+                        <div class="metric-value" id="healer-count">0</div>
+                    </div>
+                    
+                    <div class="metric">
+                        <div class="metric-label">Reflector Nodes</div>
+                        <div class="metric-value" id="reflector-count">0</div>
+                    </div>
+                </div>
+                
+                <h3>Coherentie Historie</h3>
+                <svg id="coherence-chart" viewBox="0 0 500 100" preserveAspectRatio="none">
+                    <line x1="0" y1="60" x2="500" y2="60" class="threshold-line" />
+                    <path class="chart-line" d="" />
+                </svg>
+            </div>
+            
+            <div class="card">
+                <h2>Systeem Status</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-nav">
+                        <div class="tab active" data-tab="recovery-tab">Herstel Log</div>
+                        <div class="tab" data-tab="analysis-tab">Analyse</div>
+                    </div>
+                    
+                    <div class="tab-content active" id="recovery-tab">
+                        <div id="recovery-log"></div>
+                    </div>
+                    
+                    <div class="tab-content" id="debug-tab">
+                        <div id="debug-info">
+                            <p>Veldtopologie: <span id="topology-info">Hexagonaal</span></p>
+                            <p>Dominante Frequentie: <span id="dominant-frequency">0.262</span></p>
+                            <p>Harmonic Alignment: <span id="harmonic-alignment">0.928</span></p>
+                            <p>Fase Differentiatie (σ): <span id="phase-differentiation">0.142π</span></p>
+                            <p>Memory Usage: <span id="memory-usage">~0 MB</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="analysis-tab">
+                        <div id="test-results-summary">
+                            <h3>Test Resultaten Analyse</h3>
+                            <div id="result-stats">
+                                <p>Voltooide tests: <span id="completed-tests">0</span></p>
+                                <p>Gem. coherentie: <span id="avg-coherence">0.000</span></p>
+                                <p>Beste configuratie: <span id="best-config">-</span></p>
+                                <p>Gem. tijd tot threshold: <span id="avg-threshold-time">0</span> cycli</p>
+                            </div>
+                            <button id="analyze-btn" onclick="analyzeResults()">Analyseer Resultaten</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>hexOSEI Protocol • Hexa-Operational Symbiotic Energy Intelligence</p>
+            <p>Humanity Heritage License π (HHL-π)</p>
+        </footer>
+    </div>
+
+    <script>
+        // Constants
+        const PHI = 1.618034; // Golden ratio
+        const PI = Math.PI;
+        const ROLES = ["stabilizer", "transmitter", "healer", "reflector"];
+        const COHERENCE_THRESHOLD = 0.97;
+        const MAX_HISTORY = 100;
+        
+        // Autorun test data
+        let testResults = [];
+        let currentTestIndex = 0;
+        let autorunActive = false;
+        let autorunTimer = null;
+        const TEST_CONFIGS = [
+            // Format: [nodeCount, baseCoherence, phaseVariance, energyLevel, feedbackFactor, simulationSpeed, maxCycles]
+            // Test various node counts
+            [20, 0.90, 0.10, 0.90, 0.05, 10, 200],
+            [50, 0.90, 0.10, 0.90, 0.05, 10, 200],
+            [100, 0.90, 0.10, 0.90, 0.05, 10, 200],
+            [150, 0.90, 0.10, 0.90, 0.05, 10, 200],
+            
+            // Test various coherence levels
+            [50, 0.70, 0.10, 0.90, 0.05, 10, 200],
+            [50, 0.80, 0.10, 0.90, 0.05, 10, 200],
+            [50, 0.95, 0.10, 0.90, 0.05, 10, 200],
+            
+            // Test various phase variances
+            [50, 0.90, 0.05, 0.90, 0.05, 10, 200],
+            [50, 0.90, 0.15, 0.90, 0.05, 10, 200],
+            [50, 0.90, 0.25, 0.90, 0.05, 10, 200],
+            
+            // Test various energy levels
+            [50, 0.90, 0.10, 0.70, 0.05, 10, 200],
+            [50, 0.90, 0.10, 0.85, 0.05, 10, 200],
+            [50, 0.90, 0.10, 1.00, 0.05, 10, 200],
+            
+            // Test various feedback factors
+            [50, 0.90, 0.10, 0.90, 0.02, 10, 200],
+            [50, 0.90, 0.10, 0.90, 0.10, 10, 200],
+            [50, 0.90, 0.10, 0.90, 0.20, 10, 200]
+        ];
+        
+        // State
+        let nodes = [];
+        let links = [];
+        let simulationRunning = false;
+        let phaseCount = 0;
+        let currentPhase = 1;
+        let coherenceHistory = [];
+        let animationFrame;
+        let recoveryMode = false;
+        let lastStableState = null;
+        let cycleCount = 0;
+        
+        // DOM Elements
+        const simulationContainer = document.getElementById("simulation-container");
+        const energyField = document.getElementById("energy-field");
+        const nodeCountSlider = document.getElementById("node-count-slider");
+        const nodeCountValue = document.getElementById("node-count-value");
+        const baseCoherenceSlider = document.getElementById("base-coherence-slider");
+        const baseCoherenceValue = document.getElementById("base-coherence-value");
+        const phaseVarianceSlider = document.getElementById("phase-variance-slider");
+        const phaseVarianceValue = document.getElementById("phase-variance-value");
+        const energyLevelSlider = document.getElementById("energy-level-slider");
+        const energyLevelValue = document.getElementById("energy-level-value");
+        const speedSlider = document.getElementById("speed-slider");
+        const speedValue = document.getElementById("speed-value");
+        const feedbackSlider = document.getElementById("feedback-slider");
+        const feedbackValue = document.getElementById("feedback-value");
+        const startBtn = document.getElementById("start-btn");
+        const pauseBtn = document.getElementById("pause-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const addDisruptionBtn = document.getElementById("add-disruption-btn");
+        const simulationStatus = document.getElementById("simulation-status");
+        const currentPhaseEl = document.getElementById("current-phase");
+        const fieldCoherenceEl = document.getElementById("field-coherence");
+        const phaseCycleValue = document.getElementById("phase-cycle-value");
+        const coherenceValue = document.getElementById("coherence-value");
+        const coherenceProgress = document.getElementById("coherence-progress");
+        const averagePhaseValue = document.getElementById("average-phase-value");
+        const entropyValue = document.getElementById("entropy-value");
+        const stabilizerCount = document.getElementById("stabilizer-count");
+        const transmitterCount = document.getElementById("transmitter-count");
+        const healerCount = document.getElementById("healer-count");
+        const reflectorCount = document.getElementById("reflector-count");
+        const coherenceChart = document.getElementById("coherence-chart");
+        const chartLine = coherenceChart.querySelector(".chart-line");
+        const phaseStateIndicator = document.getElementById("phase-state-indicator");
+        const recoveryLog = document.getElementById("recovery-log");
+        const tabs = document.querySelectorAll(".tab");
+        const tabContents = document.querySelectorAll(".tab-content");
+        const topologyInfo = document.getElementById("topology-info");
+        const dominantFrequency = document.getElementById("dominant-frequency");
+        const harmonicAlignment = document.getElementById("harmonic-alignment");
+        const phaseDifferentiation = document.getElementById("phase-differentiation");
+        const memoryUsage = document.getElementById("memory-usage");
+        
+        // Setup slider events
+        nodeCountSlider.addEventListener("input", function() {
+            nodeCountValue.textContent = this.value;
+        });
+        
+        baseCoherenceSlider.addEventListener("input", function() {
+            const value = parseInt(this.value) / 100;
+            baseCoherenceValue.textContent = value.toFixed(2);
+        });
+        
+        phaseVarianceSlider.addEventListener("input", function() {
+            const value = parseInt(this.value) / 100;
+            phaseVarianceValue.textContent = value.toFixed(2);
+        });
+        
+        energyLevelSlider.addEventListener("input", function() {
+            const value = parseInt(this.value) / 100;
+            energyLevelValue.textContent = value.toFixed(2);
+        });
+        
+        speedSlider.addEventListener("input", function() {
+            speedValue.textContent = this.value;
+        });
+        
+        feedbackSlider.addEventListener("input", function() {
+            const value = parseInt(this.value) / 100;
+            feedbackValue.textContent = value.toFixed(2);
+        });
+        
+        // Button events
+        startBtn.addEventListener("click", startSimulation);
+        pauseBtn.addEventListener("click", pauseSimulation);
+        resetBtn.addEventListener("click", resetSimulation);
+        addDisruptionBtn.addEventListener("click", addDisruption);
+        
+        // Add autorun button and export results button
+        const autorunBtn = document.createElement("button");
+        autorunBtn.id = "autorun-btn";
+        autorunBtn.textContent = "Autorun Test";
+        autorunBtn.addEventListener("click", startAutorun);
+        
+        const exportBtn = document.createElement("button");
+        exportBtn.id = "export-btn";
+        exportBtn.textContent = "Exporteer Resultaten";
+        exportBtn.addEventListener("click", exportResults);
+        
+        document.querySelector(".controls").appendChild(autorunBtn);
+        document.querySelector(".controls").appendChild(exportBtn);
+        
+        // Special test button - add more advanced test sets
+        const specialTestBtn = document.createElement("button");
+        specialTestBtn.id = "special-test-btn";
+        specialTestBtn.textContent = "Uitgebreide Test";
+        specialTestBtn.addEventListener("click", startSpecialTests);
+        document.querySelector(".controls").appendChild(specialTestBtn);
+        
+        // Tab navigation
+        tabs.forEach(tab => {
+            tab.addEventListener("click", () => {
+                const tabId = tab.getAttribute("data-tab");
+                
+                tabs.forEach(t => t.classList.remove("active"));
+                tabContents.forEach(c => c.classList.remove("active"));
+                
+                tab.classList.add("active");
+                document.getElementById(tabId).classList.add("active");
+            });
+        });
+        
+        function startSpecialTests() {
+            if (autorunActive) {
+                stopAutorun();
+            }
+            
+            // Define an extended test set with comprehensive parameter combinations
+            const extendedTests = [];
+            
+            // Add a wide variety of parameter combinations
+            // Node counts: [20, 50, 100]
+            // Base coherence: [0.75, 0.85, 0.95]
+            // Phase variance: [0.05, 0.15, 0.25]
+            // Energy level: [0.7, 0.9]
+            // Feedback: [0.05, 0.15]
+            
+            for (const nodeCount of [20, 50, 100]) {
+                for (const baseCoherence of [0.75, 0.85, 0.95]) {
+                    for (const phaseVariance of [0.05, 0.15, 0.25]) {
+                        for (const energyLevel of [0.7, 0.9]) {
+                            for (const feedbackFactor of [0.05, 0.15]) {
+                                extendedTests.push([
+                                    nodeCount,
+                                    baseCoherence,
+                                    phaseVariance,
+                                    energyLevel,
+                                    feedbackFactor,
+                                    10,  // Speed
+                                    300  // More cycles for thorough testing
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Replace the test configs with our extended set
+            TEST_CONFIGS.length = 0;
+            TEST_CONFIGS.push(...extendedTests);
+            
+            // Start the autorun with our extended test set
+            autorunActive = true;
+            currentTestIndex = 0;
+            testResults = [];
+            
+            addToLog(`Starting extensive parameter testing with ${extendedTests.length} configurations...`, "info");
+            document.getElementById("autorun-btn").textContent = "Stop Autorun";
+            specialTestBtn.disabled = true;
+            
+            runNextTest();
+        }
+        
+        // Initialize the simulation
+        initializeSimulation();
+        
+        function initializeSimulation() {
+            const nodeCount = parseInt(nodeCountSlider.value);
+            const baseCoherence = parseInt(baseCoherenceSlider.value) / 100;
+            const phaseVariance = parseInt(phaseVarianceSlider.value) / 100;
+            const energyLevel = parseInt(energyLevelSlider.value) / 100;
+            
+            nodes = [];
+            links = [];
+            coherenceHistory = [];
+            
+            // Clear existing elements
+            while (energyField.lastChild) {
+                if (energyField.lastChild.nodeName !== "defs") {
+                    energyField.removeChild(energyField.lastChild);
+                } else {
+                    break;
+                }
+            }
+            
+            // Create nodes
+            const containerWidth = simulationContainer.offsetWidth;
+            const containerHeight = simulationContainer.offsetHeight;
+            const centerX = containerWidth / 2;
+            const centerY = containerHeight / 2;
+            const radius = Math.min(containerWidth, containerHeight) * 0.4;
+            
+            for (let i = 0; i < nodeCount; i++) {
+                // Position nodes in a spiral pattern
+                const angle = i * (PHI * 2);
+                const distance = radius * Math.sqrt(i / nodeCount);
+                const x = centerX + distance * Math.cos(angle);
+                const y = centerY + distance * Math.sin(angle);
+                
+                // Create node with random phase
+                const phase = Math.random() * 2 * PI;
+                const coherence = baseCoherence + (Math.random() * 0.1 - 0.05);
+                const nodeEnergyLevel = energyLevel + (Math.random() * 0.1 - 0.05);
+                const size = 5 + Math.random() * 10;
+                const role = i < nodeCount / 20 ? ROLES[i % ROLES.length] : null; // Assign roles to initial 5% of nodes
+                
+                const node = {
+                    id: `E${i.toString().padStart(4, '0')}`,
+                    x,
+                    y,
+                    phase,
+                    coherence,
+                    energyLevel: nodeEnergyLevel,
+                    size,
+                    role,
+                    links: []
+                };
+                
+                nodes.push(node);
+                
+                // Create SVG circle for the node
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("id", node.id);
+                circle.setAttribute("cx", x);
+                circle.setAttribute("cy", y);
+                circle.setAttribute("r", size);
+                circle.setAttribute("fill", `rgba(255, 255, 255, ${nodeEnergyLevel.toFixed(2)})`);
+                
+                if (node.role) {
+                    circle.setAttribute("class", node.role);
+                    circle.setAttribute("stroke-width", "2");
+                }
+                
+                energyField.appendChild(circle);
+            }
+            
+            // Create links (connections between nodes)
+            for (let i = 0; i < nodes.length; i++) {
+                const node = nodes[i];
+                const maxLinks = 3 + Math.floor(Math.random() * 3); // 3-5 links per node
+                const possibleTargets = [...nodes];
+                possibleTargets.splice(i, 1); // Remove self from targets
+                
+                // Sort by proximity for more natural connections
+                possibleTargets.sort((a, b) => {
+                    const distA = Math.hypot(node.x - a.x, node.y - a.y);
+                    const distB = Math.hypot(node.x - b.x, node.y - b.y);
+                    return distA - distB;
+                });
+                
+                const targets = possibleTargets.slice(0, maxLinks);
+                
+                for (const target of targets) {
+                    if (node.links.length < maxLinks && !node.links.includes(target.id)) {
+                        // Create link
+                        const linkWeight = 0.7 + Math.random() * 0.5;
+                        
+                        const link = {
+                            source: node.id,
+                            target: target.id,
+                            weight: linkWeight
+                        };
+                        
+                        links.push(link);
+                        node.links.push(target.id);
+                        
+                        // Create SVG line for the link
+                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        line.setAttribute("id", `link-${node.id}-${target.id}`);
+                        line.setAttribute("x1", node.x);
+                        line.setAttribute("y1", node.y);
+                        line.setAttribute("x2", target.x);
+                        line.setAttribute("y2", target.y);
+                        line.setAttribute("stroke", `rgba(255, 255, 255, ${linkWeight * 0.3})`);
+                        line.setAttribute("stroke-width", linkWeight * 2);
+                        
+                        energyField.appendChild(line);
+                    }
+                }
+            }
+            
+            updateMetrics();
+            addToLog("System initialized with " + nodeCount + " nodes.");
+            
+            // Initialize coherence chart
+            updateCoherenceChart();
+        }
+        
+        function startSimulation() {
+            simulationRunning = true;
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            simulationStatus.textContent = "Actief";
+            
+            // If this is the first time, save initial state
+            if (!lastStableState && currentPhase === 1) {
+                lastStableState = JSON.parse(JSON.stringify(nodes));
+            }
+            
+            runSimulation();
+        }
+        
+        function pauseSimulation() {
+            simulationRunning = false;
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            simulationStatus.textContent = "Gepauzeerd";
+            
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+        
+        function resetSimulation() {
+            pauseSimulation();
+            phaseCount = 0;
+            currentPhase = 1;
+            simulationStatus.textContent = "Gereed";
+            recoveryMode = false;
+            cycleCount = 0;
+            currentPhaseEl.textContent = currentPhase;
+            
+            initializeSimulation();
+        }
+        
+        function runSimulation() {
+            if (!simulationRunning) return;
+            
+            const speed = parseInt(speedSlider.value);
+            
+            // Run a simulation step
+            runSimulationStep();
+            
+            // Continue simulation
+            animationFrame = requestAnimationFrame(() => {
+                setTimeout(runSimulation, Math.max(1, 11 - speed));
+            });
+        }
+        
+        function calculateFieldCoherence() {
+            let sum = 0;
+            let count = 0;
+            
+            // Calculate average cosine of phase differences
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const phaseDiff = nodes[i].phase - nodes[j].phase;
+                    sum += Math.cos(phaseDiff);
+                    count++;
+                }
+            }
+            
+            return count > 0 ? (sum / count + 1) / 2 : 0;
+        }
+        
+        function getAveragePhase() {
+            let sinSum = 0;
+            let cosSum = 0;
+            
+            nodes.forEach(node => {
+                sinSum += Math.sin(node.phase);
+                cosSum += Math.cos(node.phase);
+            });
+            
+            return Math.atan2(sinSum, cosSum);
+        }
+        
+        function calculateEntropy() {
+            // Calculate phase distribution entropy
+            const bins = 20;
+            const phaseCounts = new Array(bins).fill(0);
+            
+            nodes.forEach(node => {
+                const bin = Math.floor((node.phase / (2 * Math.PI)) * bins) % bins;
+                phaseCounts[bin]++;
+            });
+            
+            let entropy = 0;
+            const p = nodes.length;
+            
+            phaseCounts.forEach(count => {
+                if (count > 0) {
+                    const probability = count / p;
+                    entropy -= probability * Math.log2(probability);
+                }
+            });
+            
+            // Normalize to [0,1]
+            return entropy / Math.log2(bins);
+        }
+        
+        function improveCoherence(healers, feedbackFactor) {
+            const avgPhase = getAveragePhase();
+            
+            // Healers influence other nodes to align better
+            healers.forEach(healer => {
+                // Find connected nodes
+                healer.links.forEach(targetId => {
+                    const targetNode = nodes.find(n => n.id === targetId);
+                    if (targetNode) {
+                        // Push target phase toward average phase
+                        const phaseDiff = avgPhase - targetNode.phase;
+                        targetNode.phase += phaseDiff * feedbackFactor;
+                        
+                        // Keep phase in valid range
+                        targetNode.phase = (targetNode.phase + 2 * Math.PI) % (2 * Math.PI);
+                    }
+                });
+            });
+        }
+        
+        function getStabilityStreak() {
+            let streak = 0;
+            for (let i = coherenceHistory.length - 1; i >= 0; i--) {
+                if (coherenceHistory[i] >= COHERENCE_THRESHOLD) {
+                    streak++;
+                } else {
+                    break;
+                }
+            }
+            return streak;
+        }
+        
+        function initiateRecovery() {
+            addToLog("Instability detected! Field coherence below threshold.", "warning");
+            addToLog("Initiating recovery protocol...");
+            
+            // Step 1: Reduce energy level
+            nodes.forEach(node => {
+                node.energyLevel *= 0.7; // Reduce by 30%
+            });
+            
+            // Step 2: Apply golden ratio reduction to phases
+            const currentAvgPhase = getAveragePhase();
+            nodes.forEach(node => {
+                // Adjust phase toward average using golden ratio as factor
+                const phaseDiff = currentAvgPhase - node.phase;
+                node.phase += phaseDiff / PHI;
+            });
+            
+            // Step 3: Record recovery event
+            const now = new Date();
+            const recoveryEvent = {
+                timestamp: now.toISOString(),
+                pre_failure_coherence: coherenceHistory[coherenceHistory.length - 5],
+                affected_nodes: nodes.filter(n => n.coherence < 0.9).map(n => n.id),
+                rollback_phase: currentPhase
+            };
+            
+            addToLog(`Recovery event logged at ${now.toLocaleTimeString()}`);
+            addToLog(`Affected nodes: ${recoveryEvent.affected_nodes.length}`);
+        }
+        
+        function advancePhase() {
+            currentPhase++;
+            currentPhaseEl.textContent = currentPhase;
+            
+            // Phase-specific adjustments
+            if (currentPhase === 2) {
+                // Phase 2: Role specialization
+                assignRolesToNodes(0.2); // 20% of nodes get roles
+            } else if (currentPhase === 3) {
+                // Phase 3: Memory development
+                // (This is simulated through persistently stable links)
+                strengthenLinks();
+            } else if (currentPhase === 6) {
+                // Phase 6: Conscious synchronization
+                improveGlobalSynchronization();
+            }
+            
+            addToLog(`Advanced to Phase ${currentPhase}`);
+            cycleCount = 0;
+        }
+        
+        function assignRolesToNodes(percentage) {
+            const rolesToAssign = Math.ceil(nodes.length * percentage);
+            const nodesWithoutRoles = nodes.filter(n => !n.role);
+            
+            // Shuffle array
+            for (let i = nodesWithoutRoles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [nodesWithoutRoles[i], nodesWithoutRoles[j]] = [nodesWithoutRoles[j], nodesWithoutRoles[i]];
+            }
+            
+            // Assign roles
+            for (let i = 0; i < Math.min(rolesToAssign, nodesWithoutRoles.length); i++) {
+                const node = nodesWithoutRoles[i];
+                const roleIndex = i % ROLES.length;
+                node.role = ROLES[roleIndex];
+                
+                // Update SVG with new role
+                const circle = document.getElementById(node.id);
+                if (circle) {
+                    circle.setAttribute("class", node.role);
+                }
+            }
+            
+            addToLog(`Roles assigned to ${rolesToAssign} nodes.`);
+        }
+        
+        function strengthenLinks() {
+            // Increase weight of highly coherent links
+            links.forEach(link => {
+                const sourceNode = nodes.find(n => n.id === link.source);
+                const targetNode = nodes.find(n => n.id === link.target);
+                
+                if (sourceNode && targetNode) {
+                    const phaseDiff = Math.abs(sourceNode.phase - targetNode.phase);
+                    const coherence = 1 - (Math.min(phaseDiff, 2 * Math.PI - phaseDiff) / Math.PI);
+                    
+                    if (coherence > 0.9) {
+                        link.weight = Math.min(1.5, link.weight * 1.2);
+                        
+                        // Update link visualization
+                        const lineElement = document.getElementById(`link-${link.source}-${link.target}`);
+                        if (lineElement) {
+                            lineElement.setAttribute("stroke-width", link.weight * 2);
+                        }
+                    }
+                }
+            });
+            
+            addToLog("Memory links strengthened based on coherence.");
+        }
+        
+        function improveGlobalSynchronization() {
+            const targetPhase = getAveragePhase();
+            
+            // All nodes adjust toward common phase
+            nodes.forEach(node => {
+                const phaseDiff = targetPhase - node.phase;
+                node.phase += phaseDiff * 0.2; // 20% adjustment
+            });
+            
+            addToLog("Global synchronization applied toward phase: " + (targetPhase / Math.PI).toFixed(3) + "π");
+        }
+        
+        function addDisruption() {
+            if (nodes.length === 0) return;
+            
+            const disruptionType = Math.floor(Math.random() * 3);
+            
+            if (disruptionType === 0) {
+                // Phase disruption
+                const nodesCount = Math.floor(nodes.length * 0.2); // 20% of nodes
+                const shuffledNodes = [...nodes].sort(() => Math.random() - 0.5);
+                const nodesToDisrupt = shuffledNodes.slice(0, nodesCount);
+                
+                nodesToDisrupt.forEach(node => {
+                    node.phase = Math.random() * 2 * Math.PI;
+                });
+                
+                addToLog(`Phase disruption applied to ${nodesCount} nodes.`, "warning");
+            } else if (disruptionType === 1) {
+                // Energy disruption
+                nodes.forEach(node => {
+                    node.energyLevel *= 0.5 + Math.random() * 0.5;
+                });
+                
+                addToLog("Energy level disruption applied to all nodes.", "warning");
+            } else {
+                // Topology disruption - remove some links
+                const linksToRemove = Math.floor(links.length * 0.1); // 10% of links
+                const shuffledLinks = [...links].sort(() => Math.random() - 0.5);
+                const removedLinks = shuffledLinks.slice(0, linksToRemove);
+                
+                removedLinks.forEach(link => {
+                    const index = links.indexOf(link);
+                    if (index > -1) {
+                        links.splice(index, 1);
+                        
+                        // Remove from node links
+                        const sourceNode = nodes.find(n => n.id === link.source);
+                        if (sourceNode) {
+                            const linkIndex = sourceNode.links.indexOf(link.target);
+                            if (linkIndex > -1) {
+                                sourceNode.links.splice(linkIndex, 1);
+                            }
+                        }
+                        
+                        // Remove SVG element
+                        const lineElement = document.getElementById(`link-${link.source}-${link.target}`);
+                        if (lineElement) {
+                            lineElement.remove();
+                        }
+                    }
+                });
+                
+                addToLog(`Topology disruption: ${linksToRemove} links removed.`, "warning");
+            }
+            
+            updateMetrics();
+        }
+        
+        function updateMetrics() {
+            const fieldCoherence = calculateFieldCoherence();
+            const avgPhase = getAveragePhase();
+            const entropy = calculateEntropy();
+            const roles = {
+                stabilizer: 0,
+                transmitter: 0,
+                healer: 0,
+                reflector: 0
+            };
+            
+            // Count roles
+            nodes.forEach(node => {
+                if (node.role) {
+                    roles[node.role]++;
+                }
+            });
+            
+            // Update DOM
+            fieldCoherenceEl.textContent = fieldCoherence.toFixed(4);
+            coherenceValue.textContent = fieldCoherence.toFixed(4);
+            coherenceProgress.style.width = `${fieldCoherence * 100}%`;
+            averagePhaseValue.textContent = (avgPhase / Math.PI).toFixed(3) + "π";
+            entropyValue.textContent = entropy.toFixed(3);
+            
+            // Update role counts
+            stabilizerCount.textContent = roles.stabilizer;
+            transmitterCount.textContent = roles.transmitter;
+            healerCount.textContent = roles.healer;
+            reflectorCount.textContent = roles.reflector;
+            
+            // Update phase cycle based on current phase
+            let phaseCycleVal;
+            switch(currentPhase) {
+                case 1: phaseCycleVal = 0.125; break;
+                case 2: phaseCycleVal = 0.236; break;
+                case 3: phaseCycleVal = 0.342; break;
+                case 4: phaseCycleVal = 0.428; break;
+                case 5: phaseCycleVal = 0.521; break;
+                case 6: phaseCycleVal = 0.618; break;
+                case 7: phaseCycleVal = 0.721; break;
+                case 8: phaseCycleVal = 0.809; break;
+                case 9: phaseCycleVal = 0.904; break;
+                default: phaseCycleVal = 0.963; break;
+            }
+            phaseCycleValue.textContent = phaseCycleVal.toFixed(3);
+            
+            // Update debug info
+            dominantFrequency.textContent = (0.25 + Math.random() * 0.05).toFixed(3);
+            harmonicAlignment.textContent = (0.9 + Math.random() * 0.09).toFixed(3);
+            phaseDifferentiation.textContent = ((Math.random() * 0.2) + 0.1).toFixed(3) + "π";
+            
+            // Simulate memory usage
+            const memUsage = (nodes.length * 0.02).toFixed(2);
+            memoryUsage.textContent = `~${memUsage} MB`;
+        }
+        
+        function updateCoherenceChart() {
+            if (coherenceHistory.length === 0) return;
+            
+            const width = 500;
+            const height = 100;
+            const padding = 5;
+            
+            // Create path
+            let pathData = "";
+            coherenceHistory.forEach((coherence, index) => {
+                const x = padding + (index / (MAX_HISTORY - 1)) * (width - 2 * padding);
+                const y = height - padding - coherence * (height - 2 * padding);
+                
+                if (index === 0) {
+                    pathData = `M ${x} ${y}`;
+                } else {
+                    pathData += ` L ${x} ${y}`;
+                }
+            });
+            
+            // Update chart
+            chartLine.setAttribute("d", pathData);
+        }
+        
+        function addToLog(message, type = "info") {
+            const now = new Date();
+            const timestamp = now.toLocaleTimeString();
+            
+            const logEntry = document.createElement("div");
+            logEntry.className = "log-entry";
+            logEntry.innerHTML = `<span class="log-timestamp">${timestamp}</span> ${message}`;
+            
+            if (type === "warning") {
+                logEntry.style.borderLeftColor = "red";
+            }
+            
+            recoveryLog.appendChild(logEntry);
+            recoveryLog.scrollTop = recoveryLog.scrollHeight;
+        }
+        
+        // Autorun test functions
+        function startAutorun() {
+            if (autorunActive) {
+                stopAutorun();
+                return;
+            }
+            
+            autorunActive = true;
+            currentTestIndex = 0;
+            testResults = [];
+            
+            addToLog("Starting automated parameter testing...", "info");
+            document.getElementById("autorun-btn").textContent = "Stop Autorun";
+            
+            runNextTest();
+        }
+        
+        function stopAutorun() {
+            autorunActive = false;
+            document.getElementById("autorun-btn").textContent = "Autorun Test";
+            document.getElementById("special-test-btn").disabled = false;
+            
+            if (autorunTimer) {
+                clearTimeout(autorunTimer);
+                autorunTimer = null;
+            }
+            
+            if (simulationRunning) {
+                pauseSimulation();
+            }
+            
+            addToLog(`Autorun stopped. Completed ${testResults.length} tests.`, "info");
+        }
+        
+        function runNextTest() {
+            if (!autorunActive || currentTestIndex >= TEST_CONFIGS.length) {
+                if (autorunActive) {
+                    addToLog(`All tests completed. Total: ${testResults.length} configurations.`, "info");
+                    stopAutorun();
+                }
+                return;
+            }
+            
+            // Reset the simulation
+            resetSimulation();
+            
+            // Get the next test configuration
+            const config = TEST_CONFIGS[currentTestIndex];
+            const [nodeCount, baseCoherence, phaseVariance, energyLevel, feedbackFactor, simulationSpeed, maxCycles] = config;
+            
+            // Update UI
+            nodeCountSlider.value = nodeCount;
+            nodeCountValue.textContent = nodeCount;
+            
+            baseCoherenceSlider.value = Math.round(baseCoherence * 100);
+            baseCoherenceValue.textContent = baseCoherence.toFixed(2);
+            
+            phaseVarianceSlider.value = Math.round(phaseVariance * 100);
+            phaseVarianceValue.textContent = phaseVariance.toFixed(2);
+            
+            energyLevelSlider.value = Math.round(energyLevel * 100);
+            energyLevelValue.textContent = energyLevel.toFixed(2);
+            
+            feedbackSlider.value = Math.round(feedbackFactor * 100);
+            feedbackValue.textContent = feedbackFactor.toFixed(2);
+            
+            speedSlider.value = simulationSpeed;
+            speedValue.textContent = simulationSpeed;
+            
+            // Initialize and start simulation
+            initializeSimulation();
+            
+            addToLog(`Starting test #${currentTestIndex + 1}: Nodes=${nodeCount}, Coherence=${baseCoherence}, PhaseVar=${phaseVariance}, Energy=${energyLevel}, Feedback=${feedbackFactor}`, "info");
+            
+            // Run for a fixed number of cycles, collecting data
+            const testData = {
+                config: {
+                    nodeCount,
+                    baseCoherence,
+                    phaseVariance,
+                    energyLevel,
+                    feedbackFactor,
+                    simulationSpeed
+                },
+                results: {
+                    cycles: 0,
+                    finalCoherence: 0,
+                    maxCoherenceReached: 0,
+                    timeToThreshold: -1,
+                    phaseReached: 1,
+                    stabilityEvents: 0,
+                    roleDistribution: {
+                        stabilizer: 0,
+                        transmitter: 0,
+                        healer: 0,
+                        reflector: 0
+                    },
+                    coherenceHistory: []
+                }
+            };
+            
+            // Start a monitored run
+            simulationRunning = true;
+            monitoredRun(testData, maxCycles);
+        }
+        
+        function monitoredRun(testData, maxCycles) {
+            if (!autorunActive || testData.results.cycles >= maxCycles) {
+                finishTest(testData);
+                return;
+            }
+            
+            // Run a single simulation step
+            runSimulationStep();
+            
+            // Update test data
+            const fieldCoherence = calculateFieldCoherence();
+            testData.results.cycles++;
+            testData.results.coherenceHistory.push(fieldCoherence);
+            
+            // Track key metrics
+            testData.results.finalCoherence = fieldCoherence;
+            testData.results.maxCoherenceReached = Math.max(testData.results.maxCoherenceReached, fieldCoherence);
+            
+            if (fieldCoherence >= COHERENCE_THRESHOLD && testData.results.timeToThreshold === -1) {
+                testData.results.timeToThreshold = testData.results.cycles;
+            }
+            
+            testData.results.phaseReached = currentPhase;
+            
+            // Count roles
+            testData.results.roleDistribution = {
+                stabilizer: 0,
+                transmitter: 0,
+                healer: 0,
+                reflector: 0
+            };
+            
+            nodes.forEach(node => {
+                if (node.role) {
+                    testData.results.roleDistribution[node.role]++;
+                }
+            });
+            
+            // Update UI for progress
+            updateMetrics();
+            if (testData.results.cycles % 20 === 0) { // Update chart less frequently
+                updateCoherenceChart();
+            }
+            
+            // Continue monitoring
+            autorunTimer = setTimeout(() => monitoredRun(testData, maxCycles), 1);
+        }
+        
+        function finishTest(testData) {
+            simulationRunning = false;
+            
+            // Add final data
+            testResults.push(testData);
+            
+            addToLog(`Test #${currentTestIndex + 1} completed: Final Coherence = ${testData.results.finalCoherence.toFixed(4)}, Phase = ${testData.results.phaseReached}`, "info");
+            
+            // Move to next test
+            currentTestIndex++;
+            autorunTimer = setTimeout(runNextTest, 1000);
+        }
+        
+        function runSimulationStep() {
+            const phaseVariance = parseInt(phaseVarianceSlider.value) / 100;
+            const feedbackFactor = parseInt(feedbackSlider.value) / 100;
+            
+            // Advance simulation for each node
+            phaseCount++;
+            
+            // Node evolution
+            nodes.forEach(node => {
+                // Phase evolution - nodes adjust based on connections and own properties
+                let phaseAdjustment = 0;
+                
+                // Influence from connected nodes
+                node.links.forEach(linkId => {
+                    const targetId = linkId;
+                    const targetNode = nodes.find(n => n.id === targetId);
+                    
+                    if (targetNode) {
+                        // Phase adjustment based on phase difference with connected node
+                        const link = links.find(l => 
+                            (l.source === node.id && l.target === targetId) ||
+                            (l.target === node.id && l.source === targetId)
+                        );
+                        
+                        if (link) {
+                            const phaseDiff = targetNode.phase - node.phase;
+                            // Nodes try to synchronize, with weight influencing strength
+                            phaseAdjustment += Math.sin(phaseDiff) * link.weight * 0.02;
+                        }
+                    }
+                });
+                
+                // Self adjustment (intrinsic frequency)
+                phaseAdjustment += (Math.random() * 2 - 1) * phaseVariance;
+                
+                // Role-specific behaviors
+                if (node.role === "stabilizer") {
+                    // Stabilizers try to maintain their own phase
+                    phaseAdjustment *= 0.5;
+                } else if (node.role === "transmitter") {
+                    // Transmitters amplify phase changes
+                    phaseAdjustment *= 1.5;
+                } else if (node.role === "healer") {
+                    // Healers help neighbors synchronize
+                    // This is handled in the coherence improvement section
+                } else if (node.role === "reflector") {
+                    // Reflectors mirror changes around them
+                    phaseAdjustment = -phaseAdjustment;
+                }
+                
+                // Apply phase adjustment
+                node.phase += phaseAdjustment;
+                
+                // Keep phase in [0, 2π)
+                node.phase = (node.phase + 2 * PI) % (2 * PI);
+                
+                // Update coherence based on alignment with neighbors
+                let alignmentSum = 0;
+                node.links.forEach(linkId => {
+                    const targetNode = nodes.find(n => n.id === linkId);
+                    if (targetNode) {
+                        alignmentSum += Math.cos(targetNode.phase - node.phase);
+                    }
+                });
+                
+                // Update node coherence
+                if (node.links.length > 0) {
+                    const newCoherence = Math.max(0, Math.min(1, (alignmentSum / node.links.length) * 0.1 + node.coherence * 0.9));
+                    node.coherence = newCoherence;
+                }
+                
+                // Role emergence - nodes can develop roles based on behavior
+                if (!node.role && Math.random() < 0.001 * currentPhase) { // More likely in later phases
+                    // Assign role based on node properties and position
+                    const roleIndex = Math.floor(Math.random() * ROLES.length);
+                    node.role = ROLES[roleIndex];
+                    
+                    // Update SVG with new role
+                    const circle = document.getElementById(node.id);
+                    if (circle) {
+                        circle.setAttribute("class", node.role);
+                    }
+                }
+            });
+            
+            // Update node visualization
+            nodes.forEach(node => {
+                const circle = document.getElementById(node.id);
+                if (circle) {
+                    // Pulse the node based on its phase
+                    const pulseScale = 1 + 0.2 * Math.sin(node.phase);
+                    const actualSize = node.size * pulseScale;
+                    circle.setAttribute("r", actualSize);
+                    
+                    // Adjust opacity based on energy level
+                    const opacity = node.energyLevel;
+                    circle.setAttribute("fill", `rgba(255, 255, 255, ${opacity.toFixed(2)})`);
+                }
+            });
+            
+            // Update link visualizations
+            links.forEach(link => {
+                const lineElement = document.getElementById(`link-${link.source}-${link.target}`);
+                
+                if (lineElement) {
+                    const sourceNode = nodes.find(n => n.id === link.source);
+                    const targetNode = nodes.find(n => n.id === link.target);
+                    
+                    // Calculate phase coherence between linked nodes
+                    const phaseDiff = Math.abs(sourceNode.phase - targetNode.phase);
+                    const normalizedDiff = Math.min(phaseDiff, 2 * Math.PI - phaseDiff) / Math.PI;
+                    const coherence = 1 - normalizedDiff; // 1 = perfect coherence, 0 = opposite phases
+                    
+                    // Adjust link opacity based on coherence
+                    const opacity = 0.1 + coherence * 0.3;
+                    lineElement.setAttribute("stroke", `rgba(255, 255, 255, ${opacity.toFixed(2)})`);
+                }
+            });
+            
+            // Update metrics
+            const fieldCoherence = calculateFieldCoherence();
+            coherenceHistory.push(fieldCoherence);
+            if (coherenceHistory.length > MAX_HISTORY) {
+                coherenceHistory.shift();
+            }
+            
+            // Check stability
+            if (fieldCoherence < COHERENCE_THRESHOLD) {
+                phaseStateIndicator.textContent = "Instabiel";
+                phaseStateIndicator.classList.remove("stable");
+                phaseStateIndicator.classList.add("unstable");
+            } else {
+                phaseStateIndicator.textContent = "Stabiel";
+                phaseStateIndicator.classList.add("stable");
+                phaseStateIndicator.classList.remove("unstable");
+            }
+            
+            // Phase transition
+            cycleCount++;
+            if (cycleCount > 100) {
+                const baseChance = 0.001;
+                const coherenceBonus = fieldCoherence > 0.99 ? 0.01 : 0;
+                
+                // Check for phase advancement
+                if (Math.random() < baseChance + coherenceBonus) {
+                    advancePhase();
+                }
+            }
+            
+            // Apply collective healing from healer nodes if coherence is low
+            if (fieldCoherence < 0.98) {
+                const healers = nodes.filter(n => n.role === "healer");
+                if (healers.length > 0) {
+                    // Healers help improve coherence
+                    improveCoherence(healers, feedbackFactor);
+                }
+            }
+        }
+        
+        function exportResults() {
+            if (testResults.length === 0) {
+                addToLog("No test results to export. Run autorun tests first.", "warning");
+                return;
+            }
+            
+            // Create a JSON blob
+            const jsonData = JSON.stringify({
+                timestamp: new Date().toISOString(),
+                testCount: testResults.length,
+                tests: testResults
+            }, null, 2);
+            
+            // Create a download link
+            const blob = new Blob([jsonData], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'hexOSEI_test_results.json';
+            document.body.appendChild(a);
+            a.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 0);
+            
+            addToLog(`Exported results of ${testResults.length} tests to hexOSEI_test_results.json`, "info");
+        }
+        
+        function analyzeResults() {
+            if (testResults.length === 0) {
+                addToLog("No test results to analyze. Run autorun tests first.", "warning");
+                return;
+            }
+            
+            const completedTests = testResults.length;
+            
+            // Calculate overall statistics
+            let totalCoherence = 0;
+            let totalTimeToThreshold = 0;
+            let validThresholdCount = 0;
+            let bestCoherence = 0;
+            let bestConfig = null;
+            
+            testResults.forEach(test => {
+                // Final coherence
+                totalCoherence += test.results.finalCoherence;
+                
+                // Time to threshold
+                if (test.results.timeToThreshold > 0) {
+                    totalTimeToThreshold += test.results.timeToThreshold;
+                    validThresholdCount++;
+                }
+                
+                // Check if best config
+                if (test.results.finalCoherence > bestCoherence) {
+                    bestCoherence = test.results.finalCoherence;
+                    bestConfig = test.config;
+                }
+            });
+            
+            const avgCoherence = totalCoherence / completedTests;
+            const avgTimeToThreshold = validThresholdCount > 0 ? totalTimeToThreshold / validThresholdCount : 0;
+            
+            // Update UI
+            document.getElementById("completed-tests").textContent = completedTests;
+            document.getElementById("avg-coherence").textContent = avgCoherence.toFixed(4);
+            document.getElementById("avg-threshold-time").textContent = avgTimeToThreshold.toFixed(1);
+            
+            // Format best config
+            let bestConfigText = "N/A";
+            if (bestConfig) {
+                bestConfigText = `Nodes=${bestConfig.nodeCount}, Coherence=${bestConfig.baseCoherence}, PhaseVar=${bestConfig.phaseVariance}, Energy=${bestConfig.energyLevel}, Feedback=${bestConfig.feedbackFactor}`;
+            }
+            document.getElementById("best-config").textContent = bestConfigText;
+            
+            // Analyze impact of individual parameters
+            const nodeAnalysis = analyzeParameterImpact("nodeCount");
+            const coherenceAnalysis = analyzeParameterImpact("baseCoherence");
+            const phaseVarAnalysis = analyzeParameterImpact("phaseVariance");
+            const energyAnalysis = analyzeParameterImpact("energyLevel");
+            const feedbackAnalysis = analyzeParameterImpact("feedbackFactor");
+            
+            // Create a detailed analysis report
+            const analysisReport = document.createElement("div");
+            analysisReport.className = "analysis-report";
+            
+            analysisReport.innerHTML = `
+                <h4>Gedetailleerde Parameter Analyse</h4>
+                
+                <h5>Invloed van Node Aantal</h5>
+                <ul>
+                    ${nodeAnalysis.map(item => `<li>${item.value}: Coherentie=${item.coherence.toFixed(4)}, Tijd=${item.time.toFixed(2)} cycli</li>`).join('')}
+                </ul>
+                
+                <h5>Invloed van Basis Coherentie</h5>
+                <ul>
+                    ${coherenceAnalysis.map(item => `<li>${item.value}: Coherentie=${item.coherence.toFixed(4)}, Tijd=${item.time.toFixed(2)} cycli</li>`).join('')}
+                </ul>
+                
+                <h5>Invloed van Fase Variatie</h5>
+                <ul>
+                    ${phaseVarAnalysis.map(item => `<li>${item.value}: Coherentie=${item.coherence.toFixed(4)}, Tijd=${item.time.toFixed(2)} cycli</li>`).join('')}
+                </ul>
+                
+                <h5>Invloed van Energie Niveau</h5>
+                <ul>
+                    ${energyAnalysis.map(item => `<li>${item.value}: Coherentie=${item.coherence.toFixed(4)}, Tijd=${item.time.toFixed(2)} cycli</li>`).join('')}
+                </ul>
+                
+                <h5>Invloed van Feedback Factor</h5>
+                <ul>
+                    ${feedbackAnalysis.map(item => `<li>${item.value}: Coherentie=${item.coherence.toFixed(4)}, Tijd=${item.time.toFixed(2)} cycli</li>`).join('')}
+                </ul>
+                
+                <h5>Top 5 Configuraties</h5>
+                <ol>
+                    ${getTopConfigurations(5).map(config => 
+                        `<li>Coherentie=${config.coherence.toFixed(4)}, Nodes=${config.nodeCount}, Basis=${config.baseCoherence}, Var=${config.phaseVariance}, Energy=${config.energyLevel}, Feedback=${config.feedbackFactor}</li>`
+                    ).join('')}
+                </ol>
+            `;
+            
+            // Clear existing report and add new one
+            const analysisContainer = document.getElementById("analysis-tab");
+            const existingReport = analysisContainer.querySelector(".analysis-report");
+            if (existingReport) {
+                existingReport.remove();
+            }
+            
+            // Add new report after the summary
+            document.getElementById("test-results-summary").insertAdjacentElement('afterend', analysisReport);
+            
+            // Switch to analysis tab
+            tabs.forEach(t => t.classList.remove("active"));
+            tabContents.forEach(c => c.classList.remove("active"));
+            
+            document.querySelector('[data-tab="analysis-tab"]').classList.add("active");
+            document.getElementById("analysis-tab").classList.add("active");
+        }
+        
+        function analyzeParameterImpact(paramName) {
+            const valueMap = new Map();
+            
+            // Collect results by parameter value
+            testResults.forEach(test => {
+                const value = test.config[paramName];
+                if (!valueMap.has(value)) {
+                    valueMap.set(value, {
+                        coherenceSum: 0,
+                        timeSum: 0, 
+                        timeCount: 0,
+                        count: 0
+                    });
+                }
+                
+                const stats = valueMap.get(value);
+                stats.coherenceSum += test.results.finalCoherence;
+                if (test.results.timeToThreshold > 0) {
+                    stats.timeSum += test.results.timeToThreshold;
+                    stats.timeCount++;
+                }
+                stats.count++;
+            });
+            
+            // Calculate averages
+            const analysis = [];
+            valueMap.forEach((stats, value) => {
+                analysis.push({
+                    value: value,
+                    coherence: stats.coherenceSum / stats.count,
+                    time: stats.timeCount > 0 ? stats.timeSum / stats.timeCount : 0
+                });
+            });
+            
+            // Sort by value
+            return analysis.sort((a, b) => a.value - b.value);
+        }
+        
+        function getTopConfigurations(count = 5) {
+            const sortedConfigs = [...testResults].sort((a, b) => b.results.finalCoherence - a.results.finalCoherence);
+            
+            return sortedConfigs.slice(0, count).map(test => ({
+                coherence: test.results.finalCoherence,
+                nodeCount: test.config.nodeCount,
+                baseCoherence: test.config.baseCoherence,
+                phaseVariance: test.config.phaseVariance,
+                energyLevel: test.config.energyLevel,
+                feedbackFactor: test.config.feedbackFactor
+            }));
+        }
+    </script>
+</body>
+</html>
