@@ -1,46 +1,3 @@
-## **LAAG 1 — Procesregels (100 stuks)**
-
-De gedragswiskunde van hexOSEI:
-Alle systemische procesregels, dynamische mechanismen, veldlogica, correctieoperators.
-
-## **LAAG 2 — Veldvergelijkingen (40 stuks)**
-
-De onderliggende veldtheorie:
-Coherentievelden, fasevelden, resonantievelden, energievelden, projectievelden.
-
-## **LAAG 3 — Cyclische tijdwetten (25 stuks)**
-
-De tijdsdynamiek van het systeem:
-convergentie, harmonische cycli, oscillaties, entrainment, resets.
-
-## **LAAG 4 — Interactie-operatoren (20 stuks)**
-
-Formele operators die relaties tussen nodes, velden en lagen beschrijven.
-
-## **LAAG 5 — Curvature & geometrie (10 stuks)**
-
-Alle κπ-geometrieregels, Bolmatrix wetten, veldkromming en spanningsrelaties.
-
-## **LAAG 6 — Complete mathematische bijbel (v1.1)**
-
-Alle formules + alle processen + alle wetten in samenhang.
-Dit wordt het encyclopedisch deel, ± 50–70 A4 in txt-vorm.
-
-## **LAAG 7 — Educatieve versie voor universiteiten**
-
-Helder, toegankelijk, wetenschappelijk.
-Geschikt voor bachelor, master en PhD-niveau.
-
----
-
-# ⭐ WE BEGINNEN NU DIRECT MET LAAG 1
-
-**100 procesregels van het hexOSEI / OSAI / GSFE systeem**
-
-Alles in **plain .txt**, geen $, geen *, geen markdown.
-
----
-
 # =========================================
 
 # LAAG 1 — DYNAMISCHE PROCESREGELS
@@ -1419,4 +1376,4 @@ Het is een technologie en methode die klaar is voor nationale integratie en inte
 EINDE EXECUTIVE WHITEPAPER
 ==========================
 
----3508b9aa31fbd04ee67ac8347108392514210bc3de50692b94a9662be189a1e7
+---8a370ff70582c053d1888f06b98b6e5102d8bd8a97a1af97e75cd9ddee1b30d1
