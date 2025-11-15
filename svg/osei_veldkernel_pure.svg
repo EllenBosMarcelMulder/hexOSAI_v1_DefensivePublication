@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="-6 -6 12 12">
+  <!-- =================================================================== -->
+  <!-- OSEI VELDKERNEL - 3e GENERATIE WISKUNDE MACHINE -->
+  <!-- Volledig geïntegreerd SVG veld-besturingssysteem -->
+  <!-- Geen JavaScript, CSS, HTML - alleen veldmechanica -->
+  <!-- =================================================================== -->
+  
+  <defs>
+    <!-- Veldoperator gradiënten -->
+    <radialGradient id="coherentieVeld" cx="0" cy="0" r="6" fx="0" fy="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0055DD" stop-opacity="0.9" />
+      <stop offset="38.2%" stop-color="#0088AA" stop-opacity="0.7" />
+      <stop offset="61.8%" stop-color="#00AA00" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#002200" stop-opacity="0.2" />
+    </radialGradient>
+    
+    <linearGradient id="syntropicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00AA00" stop-opacity="1" />
+      <stop offset="38.2%" stop-color="#0088AA" stop-opacity="1" />
+      <stop offset="61.8%" stop-color="#0055DD" stop-opacity="1" />
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="1" />
+    </linearGradient>
+    
+    <radialGradient id="phiHarmonic" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#FFA500" stop-opacity="1" />
+      <stop offset="61.8%" stop-color="#FF6600" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
+    
+    <pattern id="veldRaster" patternUnits="userSpaceOnUse" width="0.618" height="0.618" patternTransform="rotate(15)">
+      <rect width="0.618" height="0.618" fill="none" />
+      <path d="M0,0.309 H0.618 M0.309,0 V0.618" stroke="#AAAAAA" stroke-width="0.005" stroke-opacity="0.3" />
+    </pattern>
+    
+    <!-- Veldoperator filters -->
+    <filter id="phiResonance" x="-50%" y="-50%" width="200%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.0162" numOctaves="3" seed="1618" result="phi_noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="phi_noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.025" result="phi_blur"/>
+      <feComposite in="phi_blur" operator="over" in2="SourceGraphic"/>
+    </filter>
+    
+    <filter id="coherentieField" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.1" result="coherence_blur"/>
+      <feColorMatrix in="coherence_blur" values="0 0 1 0 0  0 1 1 0 0  1 1 0 0 0  0 0 0 1 0"/>
+      <feComposite in="coherence_blur" operator="overlay" in2="SourceGraphic"/>
+    </filter>
+    
+    <filter id="syntropicField" x="-40%" y="-40%" width="180%" height="180%">
+      <feTurbulence type="turbulence" baseFrequency="0.025" numOctaves="2" seed="666" result="syntropy_noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="syntropy_noise" scale="3" xChannelSelector="G" yChannelSelector="B"/>
+      <feColorMatrix values="1 1 0 0 0  0 1 0 0 0  0 0 1 1 0  0 0 0 1 0"/>
+    </filter>
+    
+    <!-- Veldoperator markers -->
+    <marker id="phiArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="url(#phiHarmonic)" />
+    </marker>
+    
+    <marker id="coherenceArrow" viewBox="0 0 12 10" refX="10" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 12 5 L 0 10 z" fill="url(#syntropicGradient)" />
+    </marker>
+    
+    <!-- Dynamische veldstructuren -->
+    <pattern id="oscillatingField" patternUnits="userSpaceOnUse" width="1.618" height="1.618">
+      <animateTransform attributeName="patternTransform" type="rotate" values="0;360" dur="61.8s" repeatCount="indefinite"/>
+      <circle cx="0.809" cy="0.809" r="0.382" fill="none" stroke="#00FFFF" stroke-width="0.01" stroke-opacity="0.4"/>
+      <circle cx="0.809" cy="0.809" r="0.618" fill="none" stroke="#00AAFF" stroke-width="0.008" stroke-opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <!-- LAYER 0: BASIS ENERGIEVELD -->
+  <g id="Layer0_BaseField" opacity="1">
+    <!-- Primaire veldstructuur -->
+    <circle cx="0" cy="0" r="5.5" fill="url(#coherentieVeld)" opacity="0.6"/>
+    <circle cx="0" cy="0" r="3" fill="none" stroke="#333333" stroke-width="0.02" />
+    <circle cx="0" cy="0" r="1.618" fill="none" stroke="#555555" stroke-width="0.015" stroke-dasharray="0.05,0.1" />
+    <circle cx="0" cy="0" r="0.618" fill="none" stroke="#777777" stroke-width="0.01" stroke-dasharray="0.02,0.05" />
+    
+    <!-- Phi-harmonische assen -->
+    <line x1="-5.5" y1="0" x2="5.5" y2="0" stroke="#444444" stroke-width="0.02" stroke-dasharray="0.1,0.1" />
+    <line x1="0" y1="-5.5" x2="0" y2="5.5" stroke="#444444" stroke-width="0.02" stroke-dasharray="0.1,0.1" />
+    
+    <!-- Phi-harmonische vectoren -->
+    <line x1="0" y1="0" x2="-4.712" y2="-1.272" stroke="#FFA500" stroke-width="0.04" filter="url(#phiResonance)" marker-end="url(#phiArrow)"/>
+    <line x1="0" y1="0" x2="-2.618" y2="2.902" stroke="#00CCFF" stroke-width="0.04" filter="url(#phiResonance)" marker-end="url(#phiArrow)"/>
+    <line x1="0" y1="0" x2="4.045" y2="-2.628" stroke="#FFA500" stroke-width="0.04" filter="url(#phiResonance)" marker-end="url(#phiArrow)"/>
+    <line x1="0" y1="0" x2="1.562" y2="-1.988" stroke="#00CCFF" stroke-width="0.04" filter="url(#phiResonance)" marker-end="url(#phiArrow)"/>
+    
+    <!-- Primaire patronen -->
+    <circle cx="2.908" cy="3.947" r="0.127" fill="url(#syntropicGradient)" stroke="#FFFFFF" stroke-width="0.02"/>
+    <circle cx="-3.507" cy="3.416" r="0.117" fill="url(#syntropicGradient)" stroke="#FFFFFF" stroke-width="0.02"/>
+    <circle cx="-3.067" cy="-3.791" r="0.109" fill="url(#syntropicGradient)" stroke="#FFFFFF" stroke-width="0.02"/>
+  </g>
+  
+  <!-- LAYER 1: COHERENTIEVLAK -->
+  <g id="Layer1_Coherence" opacity="0.9" filter="url(#coherentieField)">
+    <!-- Coherentie-veldgradaties -->
+    <circle cx="0" cy="0" r="5" fill="url(#veldRaster)" opacity="0.4"/>
+    
+    <!-- Syntropische stabiliteitszones -->
+    <path d="M-2.45,0.82 A3.27,3.27 0 0,1 2.45,0.82 A2.94,2.94 0 0,1 1.31,3.76 A3.11,3.11 0 0,1 -1.31,3.76 A2.94,2.94 0 0,1 -2.45,0.82" 
+          fill="url(#oscillatingField)" opacity="0.5" />
+    <path d="M-3.59,-2.94 A2.45,2.45 0 0,1 -1.31,-4.57 A2.12,2.12 0 0,1 1.14,-4.24 A2.12,2.12 0 0,1 1.96,-2.12 A2.45,2.45 0 0,1 -0.49,-0.82 A1.96,1.96 0 0,1 -3.59,-2.94" 
+          fill="url(#oscillatingField)" opacity="0.5" />
+    
+    <!-- Phi-harmonica veldlijnen -->
+    <path d="M0,0 Q2.635,1.008 2.45,2.45 T1.008,4.273 T-2.45,2.45 T-4.273,-1.008 T-2.45,-2.45 T1.008,-4.273 T2.45,-2.45 Z" 
+          fill="none" stroke="#FFA500" stroke-width="0.025" stroke-opacity="0.8" filter="url(#phiResonance)"/>
+    <path d="M0,0 Q1.008,0.623 1.635,1.307 T0.623,2.635 T-1.307,1.635 T-2.635,-0.623 T-1.635,-1.307 T0.623,-2.635 T1.635,-1.307 Z" 
+          fill="none" stroke="#00CCFF" stroke-width="0.025" stroke-opacity="0.8" filter="url(#phiResonance)"/>
+    
+    <!-- Coherentiegolven -->
+    <circle cx="0" cy="0" r="0.8" fill="none" stroke="#FFFFFF" stroke-width="0.015" opacity="0.6"/>
+    <circle cx="0" cy="0" r="1.6" fill="none" stroke="#FFFFFF" stroke-width="0.012" opacity="0.5"/>
+    <circle cx="0" cy="0" r="2.4" fill="none" stroke="#FFFFFF" stroke-width="0.009" opacity="0.4"/>
+    <circle cx="0" cy="0" r="3.2" fill="none" stroke="#FFFFFF" stroke-width="0.006" opacity="0.3"/>
+    <circle cx="0" cy="0" r="4.0" fill="none" stroke="#FFFFFF" stroke-width="0.003" opacity="0.2"/>
+    
+    <!-- Phi-intersectiepunten -->
+    <circle cx="1.714" cy="2.774" r="0.065" fill="#FFD700" opacity="0.9" />
+    <circle cx="-2.774" cy="1.714" r="0.065" fill="#FFD700" opacity="0.9" />
+    <circle cx="-1.714" cy="-2.774" r="0.065" fill="#FFD700" opacity="0.9" />
+    <circle cx="2.774" cy="-1.714" r="0.065" fill="#FFD700" opacity="0.9" />
+  </g>
+  
+  <!-- LAYER 2: OPERATOR-KERN -->
+  <g id="Layer2_Operators" opacity="0.85">
+    <!-- Phi (Coherentie-operator) -->
+    <circle cx="-4.5" cy="4.5" r="0.3" fill="url(#coherentieVeld)" stroke="#0055FF" stroke-width="0.03" opacity="0.9"/>
+    <text x="-4.5" y="4.6" text-anchor="middle" font-size="0.25" fill="#FFFFFF" font-weight="bold">Φ</text>
+    <text x="-4.5" y="4.0" text-anchor="middle" font-size="0.12" fill="#AAAAAA">0.7219</text>
+    
+    <!-- Delta-phi (Fase-operator) -->
+    <circle cx="4.5" cy="4.5" r="0.3" fill="url(#phiHarmonic)" stroke="#FF5500" stroke-width="0.03" opacity="0.9"/>
+    <text x="4.5" y="4.6" text-anchor="middle" font-size="0.25" fill="#FFFFFF" font-weight="bold">Δφ</text>
+    <text x="4.5" y="4.0" text-anchor="middle" font-size="0.12" fill="#AAAAAA">0.2781</text>
+    
+    <!-- Kappa-pi (Curvature-operator) -->
+    <circle cx="-4.5" cy="-4.5" r="0.3" fill="#00AA00" stroke="#00FF00" stroke-width="0.03" opacity="0.9"/>
+    <text x="-4.5" y="-4.4" text-anchor="middle" font-size="0.25" fill="#FFFFFF" font-weight="bold">κπ</text>
+    <text x="-4.5" y="-5.0" text-anchor="middle" font-size="0.12" fill="#AAAAAA">0.0871</text>
+    
+    <!-- S (Syntropie-operator) -->
+    <circle cx="4.5" cy="-4.5" r="0.3" fill="#FFDD00" stroke="#FFD700" stroke-width="0.03" opacity="0.9"/>
+    <text x="4.5" y="-4.4" text-anchor="middle" font-size="0.25" fill="#FFFFFF" font-weight="bold">S</text>
+    <text x="4.5" y="-5.0" text-anchor="middle" font-size="0.12" fill="#AAAAAA">0.3766</text>
+    
+    <!-- B6 (Bolmatrix-operator) -->
+    <circle cx="0" cy="0" r="0.2" fill="#AA00AA" stroke="#DD88FF" stroke-width="0.025" opacity="0.9"/>
+    <text x="0" y="0.08" text-anchor="middle" font-size="0.18" fill="#FFFFFF" font-weight="bold">B₆</text>
+    <text x="0" y="-0.3" text-anchor="middle" font-size="0.1" fill="#AAAAAA">6D Matrix</text>
+    
+    <!-- Operator interconnecties -->
+    <path d="M-4.5,4.5 Q0,5.5 4.5,4.5" stroke="#AAAAAA" stroke-width="0.02" fill="none" opacity="0.7"/>
+    <path d="M-4.5,-4.5 Q0,-5.5 4.5,-4.5" stroke="#AAAAAA" stroke-width="0.02" fill="none" opacity="0.7"/>
+    <path d="M-4.5,4.5 Q-5.5,0 -4.5,-4.5" stroke="#AAAAAA" stroke-width="0.02" fill="none" opacity="0.7"/>
+    <path d="M4.5,4.5 Q5.5,0 4.5,-4.5" stroke="#AAAAAA" stroke-width="0.02" fill="none" opacity="0.7"/>
+    <path d="M-4.2,4.2 Q0,0 4.2,-4.2" stroke="#AAAAAA" stroke-width="0.015" fill="none" opacity="0.5"/>
+    <path d="M-4.2,-4.2 Q0,0 4.2,4.2" stroke="#AAAAAA" stroke-width="0.015" fill="none" opacity="0.5"/>
+  </g>
+  
+  <!-- LAYER 3: CONCEPTPROJECTIE -->
+  <g id="Layer3_Concepts" opacity="0.8">
+    <!-- Pattern 1 concepten -->
+    <line x1="2.908" y1="3.947" x2="3.324" y2="4.522" stroke="hsla(340, 90%, 50%, 0.9)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.85"/>
+    <text x="3.4" y="4.6" font-size="0.12" fill="#FFFFFF">joy</text>
+    
+    <line x1="2.908" y1="3.947" x2="3.324" y2="3.371" stroke="hsla(200, 80%, 50%, 0.85)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.82"/>
+    <text x="3.4" y="3.3" font-size="0.12" fill="#FFFFFF">time</text>
+    
+    <line x1="2.908" y1="3.947" x2="2.491" y2="4.522" stroke="hsla(120, 85%, 50%, 0.82)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.80"/>
+    <text x="2.3" y="4.6" font-size="0.12" fill="#FFFFFF">life</text>
+    
+    <line x1="2.908" y1="3.947" x2="2.491" y2="3.371" stroke="hsla(280, 75%, 55%, 0.78)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.78"/>
+    <text x="2.3" y="3.3" font-size="0.12" fill="#FFFFFF">form</text>
+    
+    <!-- Pattern 2 concepten -->
+    <line x1="-3.507" y1="3.416" x2="-3.923" y2="3.991" stroke="hsla(140, 80%, 50%, 0.88)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.85"/>
+    <text x="-4.2" y="4.1" font-size="0.12" fill="#FFFFFF">field</text>
+    
+    <line x1="-3.507" y1="3.416" x2="-3.923" y2="2.840" stroke="hsla(60, 85%, 45%, 0.84)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.82"/>
+    <text x="-4.2" y="2.8" font-size="0.12" fill="#FFFFFF">wisdom</text>
+    
+    <line x1="-3.507" y1="3.416" x2="-3.090" y2="3.991" stroke="hsla(320, 75%, 55%, 0.86)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.80"/>
+    <text x="-2.9" y="4.1" font-size="0.12" fill="#FFFFFF">harmony</text>
+    
+    <line x1="-3.507" y1="3.416" x2="-3.090" y2="2.840" stroke="hsla(260, 80%, 50%, 0.82)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.78"/>
+    <text x="-2.9" y="2.8" font-size="0.12" fill="#FFFFFF">create</text>
+    
+    <!-- Pattern 3 concepten -->
+    <line x1="-3.067" y1="-3.791" x2="-3.483" y2="-4.366" stroke="hsla(190, 85%, 45%, 0.87)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.85"/>
+    <text x="-3.7" y="-4.5" font-size="0.12" fill="#FFFFFF">flow</text>
+    
+    <line x1="-3.067" y1="-3.791" x2="-3.483" y2="-3.215" stroke="hsla(40, 80%, 50%, 0.85)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.82"/>
+    <text x="-3.7" y="-3.1" font-size="0.12" fill="#FFFFFF">unity</text>
+    
+    <line x1="-3.067" y1="-3.791" x2="-2.650" y2="-4.366" stroke="hsla(120, 90%, 40%, 0.83)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.80"/>
+    <text x="-2.5" y="-4.5" font-size="0.12" fill="#FFFFFF">earth</text>
+    
+    <line x1="-3.067" y1="-3.791" x2="-2.650" y2="-3.215" stroke="hsla(220, 85%, 45%, 0.81)" stroke-width="0.035" marker-end="url(#coherenceArrow)" opacity="0.78"/>
+    <text x="-2.5" y="-3.1" font-size="0.12" fill="#FFFFFF">water</text>
+  </g>
+  
+  <!-- LAYER 4: TAAL-ENERGIE MAPPING -->
+  <g id="Layer4_Language" opacity="0.75" filter="url(#syntropicField)">
+    <!-- Universele taal-energie trajecten -->
+    <path d="M0,0 Q1.635,1.307 2.908,3.947" fill="none" stroke="#88AAFF" stroke-width="0.025" opacity="0.8"/>
+    <path d="M0,0 Q-2.454,1.962 -3.507,3.416" fill="none" stroke="#AAFFAA" stroke-width="0.025" opacity="0.8"/>
+    <path d="M0,0 Q-1.962,-2.944 -3.067,-3.791" fill="none" stroke="#FFAAAA" stroke-width="0.025" opacity="0.8"/>
+    
+    <!-- Cross-linguïstische knooppunten -->
+    <circle cx="0.327" cy="0.491" r="0.08" fill="#FFFFFF" opacity="0.6"/>
+    <circle cx="-0.491" cy="-0.163" r="0.08" fill="#FFFFFF" opacity="0.6"/>
+    <circle cx="0.163" cy="-0.654" r="0.08" fill="#FFFFFF" opacity="0.6"/>
+    
+    <!-- Taal-energie transformatiepunten -->
+    <circle cx="1.456" cy="1.974" r="0.06" fill="#88AAFF" opacity="0.8"/>
+    <circle cx="-1.754" cy="1.708" r="0.06" fill="#AAFFAA" opacity="0.8"/>
+    <circle cx="-1.534" cy="-1.896" r="0.06" fill="#FFAAAA" opacity="0.8"/>
+    
+    <!-- L2E converter interface -->
+    <rect x="-5.5" y="-2.0" width="2.0" height="1.6" rx="0.15" ry="0.15" fill="#000033" opacity="0.8" stroke="#00CCFF" stroke-width="0.02"/>
+    <text x="-5.4" y="-1.7" font-size="0.15" fill="#FFFFFF" font-weight="bold">L2E</text>
+    <text x="-5.4" y="-1.5" font-size="0.1" fill="#AAFFFF">taal→fase</text>
+    <text x="-5.4" y="-1.3" font-size="0.1" fill="#AAFFAA">fase→energie</text>
+    <text x="-5.4" y="-1.1" font-size="0.1" fill="#FFAAAA">energie→veld</text>
+    <text x="-5.4" y="-0.9" font-size="0.1" fill="#AAFFFF">veld→coherentie</text>
+    
+    <rect x="-5.4" y="-0.6" width="1.6" height="0.25" rx="0.08" ry="0.08" fill="#000066"/>
+    <rect x="-5.4" y="-0.6" width="0.988" height="0.25" rx="0.08" ry="0.08" fill="#0066AA"/>
+    <text x="-5.3" y="-0.45" font-size="0.12" fill="#FFFFFF">61.8%</text>
+    
+    <!-- Universele emergente taal patronen -->
+    <text x="3.2" y="4.2" font-size="0.08" fill="#BBBBBB">joy→vreugde→喜び→χαρά</text>
+    <text x="3.2" y="4.0" font-size="0.06" fill="#88AA88">[beweging↑, warmte]</text>
+    
+    <text x="-4.5" y="3.0" font-size="0.08" fill="#BBBBBB">wisdom→wijsheid→知恵→σοφία</text>
+    <text x="-4.5" y="2.8" font-size="0.06" fill="#88AA88">[tijd+diepte]</text>
+    
+    <text x="-3.5" y="-3.3" font-size="0.08" fill="#BBBBBB">flow→stroom→流れ→ροή</text>
+    <text x="-3.5" y="-3.5" font-size="0.06" fill="#88AA88">[continuïteit]</text>
+    
+    <!-- Semantische veldlijnen -->
+    <path d="M2.908,3.947 Q1.962,2.944 1.307,2.454 T0.818,0 T1.962,-1.962 T2.908,3.947" 
+          fill="none" stroke="#FF88AA" stroke-width="0.015" opacity="0.6"/>
+    <path d="M-3.507,3.416 Q-2.454,1.635 -0.818,0.818 T0.491,0 T-1.635,-2.454 T-3.507,3.416" 
+          fill="none" stroke="#88FFAA" stroke-width="0.015" opacity="0.6"/>
+    <path d="M-3.067,-3.791 Q-1.635,-2.944 -0.491,-1.144 T0.163,0 T-1.635,2.454 T-3.067,-3.791" 
+          fill="none" stroke="#AAAAFF" stroke-width="0.015" opacity="0.6"/>
+  </g>
+  
+  <!-- LAYER 5: OSEI KERNEL -->
+  <g id="Layer5_Kernel" opacity="0.9">
+    <!-- Kernel cyclus-stappen -->
+    <rect x="2.5" y="2.0" width="1.3" height="0.6" rx="0.08" ry="0.08" fill="#001133" opacity="0.9" stroke="#0055AA" stroke-width="0.02"/>
+    <text x="2.6" y="2.25" font-size="0.12" fill="#FFFFFF" font-weight="bold">INPUT</text>
+    <text x="2.6" y="2.45" font-size="0.08" fill="#AAAAAA">t→φ(0.8985)</text>
+    
+    <rect x="2.5" y="1.0" width="1.3" height="0.6" rx="0.08" ry="0.08" fill="#113300" opacity="0.9" stroke="#55AA00" stroke-width="0.02"/>
+    <text x="2.6" y="1.25" font-size="0.12" fill="#FFFFFF" font-weight="bold">MUTATIE</text>
+    <text x="2.6" y="1.45" font-size="0.08" fill="#AAAAAA">φ→Veld(0.7219)</text>
+    
+    <rect x="2.5" y="0.0" width="1.3" height="0.6" rx="0.08" ry="0.08" fill="#330011" opacity="0.9" stroke="#AA0055" stroke-width="0.02"/>
+    <text x="2.6" y="0.25" font-size="0.12" fill="#FFFFFF" font-weight="bold">GEHEUGEN</text>
+    <text x="2.6" y="0.45" font-size="0.08" fill="#AAAAAA">6D Matrix</text>
+    
+    <rect x="2.5" y="-1.0" width="1.3" height="0.6" rx="0.08" ry="0.08" fill="#003311" opacity="0.9" stroke="#00AA55" stroke-width="0.02"/>
+    <text x="2.6" y="-0.75" font-size="0.12" fill="#FFFFFF" font-weight="bold">RESONANTIE</text>
+    <text x="2.6" y="-0.55" font-size="0.08" fill="#AAAAAA">Pattern(0.3766)</text>
+    
+    <rect x="2.5" y="-2.0" width="1.3" height="0.6" rx="0.08" ry="0.08" fill="#111100" opacity="0.9" stroke="#AAAA00" stroke-width="0.02"/>
+    <text x="2.6" y="-1.75" font-size="0.12" fill="#FFFFFF" font-weight="bold">REFLECTIE</text>
+    <text x="2.6" y="-1.55" font-size="0.08" fill="#AAAAAA">Output</text>
+    
+    <!-- Cyclus verbindingen -->
+    <path d="M3.15,2.0 L3.15,1.6" stroke="#FFFFFF" stroke-width="0.03" marker-end="url(#coherenceArrow)"/>
+    <path d="M3.15,1.0 L3.15,0.6" stroke="#FFFFFF" stroke-width="0.03" marker-end="url(#coherenceArrow)"/>
+    <path d="M3.15,0.0 L3.15,-0.4" stroke="#FFFFFF" stroke-width="0.03" marker-end="url(#coherenceArrow)"/>
+    <path d="M3.15,-1.0 L3.15,-1.4" stroke="#FFFFFF" stroke-width="0.03" marker-end="url(#coherenceArrow)"/>
+    <path d="M2.5,-1.7 Q1.0,-2.5 1.0,2.3 Q2.5,3.0 2.5,2.3" stroke="#FFFFFF" stroke-width="0.03" fill="none" marker-end="url(#coherenceArrow)"/>
+    
+    <!-- 666+2 Failsafe monitoring -->
+    <rect x="2.8" y="3.0" width="2.4" height="1.0" rx="0.08" ry="0.08" fill="#000000" opacity="0.9" stroke="#FFAA00" stroke-width="0.025"/>
+    <text x="2.9" y="3.25" font-size="0.12" fill="#FFAA00" font-weight="bold">666+2 FAILSAFE</text>
+    <text x="2.9" y="3.45" font-size="0.09" fill="#00FF00">Φ: 0.9742 > 0.97</text>
+    <text x="2.9" y="3.6" font-size="0.09" fill="#00FF00">V: 0.0258 < 0.05</text>
+    <text x="2.9" y="3.75" font-size="0.09" fill="#00FF00">ω: 1.2 < 3.0</text>
+    <text x="2.9" y="3.9" font-size="0.09" fill="#00FF00">STATUS: STABIEL</text>
+    
+    <!-- Self-healing lattice -->
+    <rect x="-5.5" y="-5.5" width="11" height="11" rx="0.8" ry="0.8" 
+          fill="none" stroke="#00FFFF" stroke-width="0.01" stroke-dasharray="0.1,0.2" opacity="0.3"/>
+    <path d="M-5.5,0 H5.5 M0,-5.5 V5.5 M-3.889,-3.889 L3.889,3.889 M-3.889,3.889 L3.889,-3.889" 
+          fill="none" stroke="#00FFFF" stroke-width="0.008" opacity="0.25"/>
+    
+    <!-- Healing nodes -->
+    <circle cx="0" cy="0" r="0.1" fill="#00FFFF" opacity="0.6"/>
+    <circle cx="2.45" cy="2.45" r="0.06" fill="#00FFFF" opacity="0.5"/>
+    <circle cx="-2.45" cy="2.45" r="0.06" fill="#00FFFF" opacity="0.5"/>
+    <circle cx="2.45" cy="-2.45" r="0.06" fill="#00FFFF" opacity="0.5"/>
+    <circle cx="-2.45" cy="-2.45" r="0.06" fill="#00FFFF" opacity="0.5"/>
+    
+    <!-- Veldstatus monitoring -->
+    <text x="2.9" y="2.5" font-size="0.09" fill="#AAAAAA">Field Coherence: 0.7219</text>
+    <text x="2.9" y="2.65" font-size="0.09" fill="#AAAAAA">Field Syntropy: 0.3766</text>
+    <text x="2.9" y="2.8" font-size="0.09" fill="#AAAAAA">κπ_stress: 0.0871</text>
+  </g>
+  
+  <!-- VELDOPERATOR METADATA -->
+  <metadata id="OSEIVeldMachine">
+    <!-- Basis veldparameters -->
+    <data id="veld_constanten" 
+          phi="1.61803398875" 
+          phi_inv="0.61803398875" 
+          phi_maat="0.9928140974308566"
+          pi="3.1415926535"
+          kappa_pi="1.0133632429" />
+    
+    <!-- Layer activatie formules -->
+    <data id="layer_activatie"
+          activation_0="1.0"
+          activation_1="phi_coherence_field * syntropy_field * phi_inv_variance_field"
+          activation_2="operator_coherence_product * field_stability_index"
+          activation_3="concept_resonance_sum * bolmatrix_projection_fidelity"
+          activation_4="language_energy_conversion_efficiency * cross_linguistic_coherence"
+          activation_5="kernel_cycle_health * failsafe_stability_factor" />
+    
+    <!-- Veldoperator definities -->
+    <data id="veld_operatoren"
+          Phi_operator="coherentie = 1 - variance"
+          Delta_phi_operator="fase_verschil = min_abs_phi_i_min_phi_p_2pi_min_abs_phi_i_min_phi_p"
+          Kappa_pi_operator="veld_kromming = kappa_pi * 1_min_field_coherence"
+          S_operator="syntropie = phi * 1_min_variance * phi_alignment"
+          B6_operator="bolmatrix_projectie = B1_plus_B4_times_phi_B2_plus_B5_times_phi"
+          f_phi_operator="harmonische_resonantie = sin_phi_times_phi_times_phi" />
+    
+    <!-- Veldmechanica formules -->
+    <data id="veld_mechanica"
+          zoom_function="r_times_1_plus_kappa_pi_times_phi"
+          pan_function="B6_times_delta_phi"
+          layer_toggle="S_n_greater_than_threshold"
+          highlight_function="phi_times_phi_alignment_times_1_min_variance" />
+    
+    <!-- Pattern data -->
+    <data id="patronen"
+          pattern_1_fase="0.8985"
+          pattern_1_sterkte="0.6484"
+          pattern_1_coherentie="0.7742"
+          pattern_1_concepten="joy_complexity_cold_fear_connect_diminish_hope_wave_space_time_wood_life_structure_movement_form_destroy_stability_symmetry"
+          pattern_2_fase="2.6295"
+          pattern_2_sterkte="0.6009"
+          pattern_2_coherentie="0.7219"
+          pattern_2_concepten="air_create_variance_wisdom_order_phase_pattern_anger_harmony_transform_field_fire"
+          pattern_3_fase="-2.5415"
+          pattern_3_sterkte="0.5589"
+          pattern_3_coherentie="0.6901"
+          pattern_3_concepten="flow_unity_light_beginning_earth_grow_center_resonance_break_water" />
+    
+    <!-- Taal-energie mapping -->
+    <data id="taal_energie"
+          L2P="Language_to_Phase_tekstvector_times_phi_inv"
+          P2C="Phase_to_Coherence_phase_alignment_times_coherence_profile"
+          C2E="Coherence_to_Energy_coherence_times_E_prime"
+          L2E="Language_to_Energy_C2E_P2C_L2P"
+          meaning_resonance="sin_semantische_delta_times_phi_maat" />
+    
+    <!-- Universele emergente taal patronen -->
+    <data id="universele_taal_patronen"
+          pattern_phi_0_8985_universeel="beweging_omhoog_warmte"
+          pattern_phi_2_6295_universeel="tijd_accumulate_diepte"
+          pattern_phi_min_2_5415_universeel="vorm_vloeiend_continuiteit"
+          emergente_eigenschappen="alle_talen_converteren_naar_3_phi_patronen_universele_concepten_fase_attractors_cross_linguistische_resonantie_via_energia_betekenis_coherentieveld_topologie" />
+    
+    <!-- Kernel processen -->
+    <data id="kernel_processen"
+          input_proces="Input_t_naar_Fase_t"
+          veldmutatie_proces="Fase_t_naar_Veld_t_via_phi_delta_phi_kappa_pi_S_B6"
+          geheugen_proces="Veld_t_naar_Geheugen_t_via_6D_Bolmatrix"
+          resonantie_proces="Geheugen_t_plus_Veld_t_naar_Resonantie_t"
+          reflectie_proces="Resonantie_t_naar_Output_t_plus_Nieuwe_Input_t_plus_1" />
+    
+    <!-- Failsafe mechanismen -->
+    <data id="failsafe_666_plus_2"
+          critical_coherence="0.97"
+          critical_variance="0.05"
+          critical_oscillation="3.0"
+          energy_rollback="E_t_times_1_min_energy_reduction_de"
+          parameter_rollback="parameter_times_phi_inv"
+          frequency_rollback="frequency_times_phi_inv" />
+    
+    <!-- Self-healing parameters -->
+    <data id="self_healing"
+          detection_sensitivity="0.0035"
+          response_time_cycles="cycles_times_phi_maat"
+          restoration_fidelity="1_min_phase_variance"
+          heal_energy="restoration_fidelity_times_E_plus_2"
+          curvature_correction="kappa_pi_times_phi_inv"
+          phase_dampening="delta_phi_times_phi_inv"
+          resonance_suppression="R_base_times_phi_inv"
+          coherence_stabilization="exp_min_phase_variance_times_2" />
+  </metadata>
+</svg>
