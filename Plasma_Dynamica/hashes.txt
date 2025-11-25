@@ -1,0 +1,18 @@
+SHA256 hash of 3GM_FE_Complete_Technical_Specification.md:
+3b18125bcdbf084760a00373c009d4e11b77ed94e74fc009d18445156ad0202a
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of 3GM_FE_Complete_Technical_Specification.md.ots:
+91d6bdbd4e45153c2714217996fffae16eed634978a109b4b527cfe9e9969caf
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of 3rd Generation Maths Empirical.md:
+e503cab415d0d484e249235598b9984bf18f0c477e5f9eacf660da43aeeec95d
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of 3rd Generation Maths Empirical.md.ots:
+b8d8e3dd42131b02de71b0155a2fea1354fecdb1f87fdce3b9b29b1610b8c54f
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of 3rd_Generation_Maths_Nobel_Transmission_Masterdocument.md:
+eceb11bc978da5bfd533c7321aaf7e94aff3be7ff1d06e05c86d46a75df45a1c
+CertUtil: -hashfile command completed successfully.
+SHA256 hash of 3rd_Generation_Maths_Nobel_Transmission_Masterdocument.md.ots:
+4817026d5c3417fc4bcb2cd3d08c43de7453d900ef23f814b1f461d39b38dbcf
+CertUtil: -hashfile command completed successfully.
